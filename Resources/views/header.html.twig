@@ -1,0 +1,57 @@
+<table cellpadding="0" cellspacing="0" border="0" class="nt_datatables_table" id="datatables_table_{{ datatable.route }}">
+<thead>
+    <tr>
+        {% for column in datatable.columns %}
+        <th>{{ column.caption }}</th>
+        {% endfor %}
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+{% macro bVisible(loop) %}
+{# nie działa razem z bStateSave: true #}
+{% spaceless %}"bVisible": {{ column.isVisible ? 'true' : 'false' }}{% endspaceless %}
+{% endmacro %}
+
+{% macro bSortable(column) %}
+{% spaceless %}"bSortable": {{ column.isSortable ? 'true' : 'false' }}{% endspaceless %}
+{% endmacro %}
+
+{% macro sClass(column) %}
+{% spaceless %}"sClass": "{{ column.getClass }}"{% endspaceless %}
+{% endmacro %}
+
+{% macro sWidth(column) %}
+{% spaceless %}"sWidth": "{{ column.hasWidth ? column.getWidth : '' }}"{% endspaceless %}
+{% endmacro %}
+
+
+<script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+               var dTable = $('#datatables_table_{{ datatable.route }}').dataTable( {
+                    "aoColumns": [
+                        {% for key, column in datatable.columns %}
+                            { {{ _self.bSortable(column) }}, {{ _self.sClass(column) }}, {{ _self.sWidth(column) }} } {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    ],
+                    "aaSorting": [
+                        {% for key, column in datatable.getColumnsSortedByDefault() %}
+                            [ {{ key }}, '{{ column.getDefaultSorting() }}' ]{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    ],
+                    "iDisplayLength": 25,
+                    "aLengthMenu": [[25, 50, 100, 200, 500], [25, 50,100,200,500]],
+                    "bJQueryUI" : {{ datatable.hasJQueryUI() ? 'true' : 'false' }},
+                    "bAutoWidth" : false,
+                    "bStateSave" : true,
+                    "sPaginationType": "full_numbers",
+                    "sDom": '<"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
+                    "bServerSide": true,
+                    "sAjaxSource": "{{ path(datatable.route, datatable.routeParameters) }}",
+                    "oLanguage": {% include "NetTeamDataTableBundle::lang.txt.twig" %},
+                    "bProcessing": true
+                } );
+        } );
+</script>

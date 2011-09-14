@@ -1,0 +1,9 @@
+{% spaceless %}
+{% autoescape false %}
+{% set value = value|default('') %}
+{% if translate %}
+    {% set value = value|trans %}
+{% endif %}
+{{ value|e|replace({ '\n' : '<br />',  '\r' : '' }) }}
+{% endautoescape %}
+{% endspaceless %}

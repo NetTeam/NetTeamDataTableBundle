@@ -1,0 +1,5 @@
+{% for item in value  %}
+{% autoescape false %}
+{{ item|e|replace({ '\n' : '<br />' }) }}{% if not loop.last %}, {% endif %}
+{% endautoescape %}
+{% endfor %}

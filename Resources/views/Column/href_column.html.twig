@@ -1,0 +1,3 @@
+{% spaceless %}
+<a class=\"{{ value.class|default('')|join(' ') }}\" href=\"{{ path(value.route, value.params) }}\" title=\"{{ value.value|default('')|join(' ') }}\">{% include "NetTeamDataTableBundle:Column:" ~ value.column.template ~ ".html.twig" with { 'value' : value.value } %}</a>
+{% endspaceless %}

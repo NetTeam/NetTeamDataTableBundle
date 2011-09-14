@@ -1,0 +1,7 @@
+{% spaceless %}
+{% autoescape false %}
+    {% if value != null %}
+        {{ value|date("Y-m-d H:i:s") }}
+    {% endif %}
+{% endautoescape %}
+{% endspaceless %}

@@ -1,0 +1,18 @@
+{
+    "sEcho" : {{ echo }},
+    "iTotalRecords": {{ count }},
+    "iTotalDisplayRecords": {{ count }},
+    "aaData" : [
+        {% for row in data %}
+            {% spaceless %}
+                [
+                {% for key, value in row %}
+                    "{% include "NetTeamDataTableBundle:Column:" ~ columns[key].getTemplate ~ ".html.twig" with { 'value' : value, 'translate' : columns[key].getTranslate } %}"{% if not loop.last %}, {% endif %}
+                {% endfor %}
+                ]
+                {% if not loop.last %},{% endif %}
+            {% endspaceless %}
+
+        {% endfor %}
+    ]
+}

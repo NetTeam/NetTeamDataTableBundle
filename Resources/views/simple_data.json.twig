@@ -1,0 +1,8 @@
+{
+    "aaData" : [
+        {% for datum in data %}
+        {% set row %}{% include template with { 'row': datum } %}{% endset %}
+        {{ row|raw }}{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
