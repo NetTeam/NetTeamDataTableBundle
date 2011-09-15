@@ -5,13 +5,13 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="nt_datatable.twig.class">NetTeam\System\DataTableBundle\Twig\Extension\DataTableExtension</parameter>
+        <parameter key="nt_datatable.twig.extension.class">NetTeam\System\DataTableBundle\Twig\Extension\DataTableExtension</parameter>
     </parameters>
 
     <services>
-        <service id="twig.extension.datatable" class="%nt_datatable.twig.class%" public="false">
+        <service id="nt_datatable.twig.extension" class="%nt_datatable.twig.extension.class%" public="false">
             <tag name="twig.extension" />
-            <argument type="service" id="nt_datatable.factory" />
+            <argument type="service" id="service_container" />
         </service>
     </services>
 </container>

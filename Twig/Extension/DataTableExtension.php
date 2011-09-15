@@ -2,23 +2,16 @@
 
 namespace NetTeam\System\DataTableBundle\Twig\Extension;
 
-use Twig_Environment;
 use Twig_Function_Method;
-use NetTeam\System\DataTableBundle\DataTableFactory;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DataTableExtension extends \Twig_Extension
 {
-    private $factory;
-    private $environment;
+    private $container;
 
-    public function __construct(DataTableFactory $factory)
+    public function __construct(ContainerInterface $container)
     {
-        $this->factory = $factory;
-    }
-
-    public function initRuntime(Twig_Environment $environment)
-    {
-        $this->environment = $environment;
+        $this->container = $container;
     }
 
     public function getFunctions()
@@ -30,8 +23,7 @@ class DataTableExtension extends \Twig_Extension
 
     public function datatable($name)
     {
-        $datatable = $this->factory->get($name);
-        return $this->environment->render('NetTeamDataTableBundle::main.html.twig', array('datatable' => $datatable));
+        return $this->container->get('nt_datatable.templating.helper')->render($name);
     }
 
     /**
@@ -39,6 +31,6 @@ class DataTableExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'nt.datatable';
+        return 'nt_datatable';
     }
 }
