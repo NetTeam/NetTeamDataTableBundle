@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="nt_datatable.factory.class">NetTeam\System\DataTableBundle\DataTableFactory</parameter>
+        <parameter key="nt_datatable.controller.class">NetTeam\System\DataTableBundle\Controller\DataTableController</parameter>
+        <parameter key="nt_datatable.base.class">NetTeam\System\DataTableBundle\DataTableContainerAware</parameter>
+    </parameters>
+
+    <services>
+        <service id="nt_datatable.factory" class="%nt_datatable.factory.class%" public="false">
+            <argument type="service" id="service_container" />
+            <argument type="collection" />
+        </service>
+
+        <service id="nt_datatable.controller" class="%nt_datatable.controller.class%" scope="request">
+            <argument type="service" id="nt_datatable.factory" />
+            <argument type="service" id="templating" />
+            <argument type="service" id="request" />
+        </service>
+
+        <service id="nt_datatable.base" class="%nt_datatable.base.class%" abstract="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+    </services>
+</container>
