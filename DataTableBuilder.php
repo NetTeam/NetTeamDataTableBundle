@@ -4,6 +4,8 @@ namespace NetTeam\System\DataTableBundle;
 
 use NetTeam\System\DataTableBundle\Source\SourceInterface;
 use NetTeam\System\DataTableBundle\Column\ColumnInterface;
+use NetTeam\System\DataTableBundle\BulkAction\BulkAction;
+use NetTeam\System\DataTableBundle\BulkAction\Column as BulkActionColumn;
 
 /**
  * Description of DataTableBuilder
@@ -33,6 +35,9 @@ class DataTableBuilder
 
     private $globalSearch;
 
+    private $bulkActions;
+    private $bulkActionsColumn;
+
     private $searchableKeys = array();
 
     private $sortingColumn;
@@ -50,6 +55,7 @@ class DataTableBuilder
     {
         $this->route = $route;
         $this->source = $source;
+        $this->bulkActionsColumn = new BulkActionColumn();
     }
 
     public function getRoute()
@@ -75,6 +81,11 @@ class DataTableBuilder
     public function getColumns()
     {
         return $this->columns;
+    }
+
+    public function getBulkActions()
+    {
+        return $this->bulkActions;
     }
 
     public function getColumnsSortedByDefault()
@@ -229,11 +240,11 @@ class DataTableBuilder
 
     private function parseRow($row)
     {
-        $parsedRow = array();
+        $parsedRow = array('columns' => array(), 'bulk' => '');
         foreach ($this->columns as $column) {
-            $parsedRow[] = $column->getValue($row);
+            $parsedRow['columns'][] = $column->getValue($row);
         }
-
+        $parsedRow['bulk'] = $this->bulkActionsColumn->getValue($row);
         return $parsedRow;
     }
 
@@ -246,5 +257,23 @@ class DataTableBuilder
     public function hasJQueryUI()
     {
         return $this->jQueryUI;
+    }
+
+    public function addBulkAction($caption, $route,array $params = array())
+    {
+        $bulkAction = new BulkAction($caption, $route, $params);
+        $this->bulkActions[] = $bulkAction;
+        return $bulkAction;
+    }
+
+    public function setBulkActionsColumn(BulkActionColumn $column)
+    {
+        $this->bulkActionsColumn = $column;
+        return $this;
+    }
+
+    public function getBulkActionsColumn()
+    {
+        return $this->bulkActionsColumn;
     }
 }

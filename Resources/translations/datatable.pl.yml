@@ -12,3 +12,6 @@ oPaginate:
     sPrevious: 'Poprzednia'
     sNext:     'Następna'
     sLast:     'Ostatnia'
+no_record_selected: Nie wybrano żadnego rekordu
+apply: Wybierz
+actions: Akcje

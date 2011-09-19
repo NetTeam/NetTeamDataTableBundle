@@ -1,15 +1,34 @@
 <table cellpadding="0" cellspacing="0" border="0" class="nt_datatables_table" id="datatables_table_{{ datatable.route }}">
-<thead>
-    <tr>
-        {% for column in datatable.columns %}
-        <th>{{ column.caption }}</th>
+{% if datatable.bulkActions %}
+<form>
+<div class="bulk_container">
+    {{ 'actions'|trans({}, 'datatable') }}:
+    <select id="bulk-action-select" name="bulk-action-select">
+        {% for key, action in datatable.bulkActions %}
+            <option value="{{ path(action.route, action.params) }}">{{ action.description }}</option>
         {% endfor %}
-    </tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-
+    </select>
+     <button type="button" id="bulk-apply-button">{{ 'apply'|trans({}, 'datatable') }}</button>
+</div>
+{% endif %}
+    <thead>
+        <tr>
+            {% if datatable.bulkActions %}
+                <th>
+                    {% include "NetTeamDataTableBundle:BulkAction:" ~ datatable.bulkActionsColumn.getHeaderTemplate ~ ".html.twig" with { 'column' : datatable.bulkActionsColumn }%}
+                </th>
+            {% endif %}
+            {% for column in datatable.columns %}
+            <th>{{ column.caption }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    </table>
+{% if datatable.bulkActions %}
+</form>
+{% endif %}
 {% macro bVisible(loop) %}
 {# nie działa razem z bStateSave: true #}
 {% spaceless %}"bVisible": {{ column.isVisible ? 'true' : 'false' }}{% endspaceless %}
@@ -32,6 +51,9 @@
         $(document).ready(function() {
                var dTable = $('#datatables_table_{{ datatable.route }}').dataTable( {
                     "aoColumns": [
+                        {% if datatable.bulkActions %}
+                            { "bSortable": false, {{ _self.sClass(datatable.bulkActionsColumn) }}, {{ _self.sWidth(datatable.bulkActionsColumn) }} },
+                        {% endif %}
                         {% for key, column in datatable.columns %}
                             { {{ _self.bSortable(column) }}, {{ _self.sClass(column) }}, {{ _self.sWidth(column) }} } {% if not loop.last %}, {% endif %}
                         {% endfor %}
@@ -53,5 +75,64 @@
                     "oLanguage": {% include "NetTeamDataTableBundle::lang.txt.twig" %},
                     "bProcessing": true
                 } );
+
+              (function(){
+                  var SELECTORS = {
+                          APPLY_BUTTON : '#bulk-apply-button',
+                          ACTION_SELECT : '#bulk-action-select',
+                          ALL_ITEMS_CHECKBOX : '#bulk-all-checkbox',
+                          ITEMS : ':checkbox[id^="bulk-row"]',
+                          CHECKED : ':checked'
+                      },
+                      URL_SEPARATOR = ',',
+                      URL_REPLACE_VALUE = '$values',
+                      TEXTS = {
+                          NO_RECORD_SELECTED : '{{ 'no_record_selected'|trans({}, 'datatable') }}'
+                      }
+
+                  function init() {
+                      $(SELECTORS.APPLY_BUTTON).click(goToAction);
+                      $(SELECTORS.ALL_ITEMS_CHECKBOX).change(switchAll);
+                  }
+
+                  function goToAction(event) {
+                      var selected = [],
+                          urlParams = {},
+                          checked = $(SELECTORS.ITEMS + SELECTORS.CHECKED),
+                          url;
+
+                      if (0 === checked.length) {
+                          alert(TEXTS.NO_RECORD_SELECTED);
+                          return;
+                      }
+
+                      checked.each(function(index, value) {
+                          selected.push($(value).val());
+                      });
+                      urlParams[URL_REPLACE_VALUE] = selected.join(URL_SEPARATOR);
+                      url = Utils.Url.populateVars(
+                          $(SELECTORS.ACTION_SELECT).val(),
+                          urlParams
+                      );
+
+                      if (typeof tab_open === 'function') {
+                          tab_open(url);
+                          return;
+                      }
+                      window.location = url;
+                  }
+
+                  function switchAll(event) {
+                      var items = $(SELECTORS.ITEMS);
+
+                      if ($(this).is(SELECTORS.CHECKED)) {
+                          items.attr('checked', 'checked');
+                          return;
+                      }
+                      items.removeAttr('checked');
+                  }
+
+                  init();
+              })();
         } );
 </script>

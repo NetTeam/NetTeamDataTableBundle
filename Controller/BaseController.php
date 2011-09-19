@@ -66,12 +66,16 @@ abstract class BaseController extends Controller
         $data = $this->dtb->getDataArray($this->offset, $this->limit);
         $columns = $this->dtb->getColumns();
         $count = $this->dtb->countRows();
+        $bulkActions = $this->dtb->getBulkActions();
+        $bulkColumn = $this->dtb->getBulkActionsColumn();
 
         return $this->render('NetTeamDataTableBundle::data.json.twig', array(
             'echo' => $this->echo,
             'data' => $data,
             'count' => $count,
             'columns' => $columns,
+            'bulkActions' => $bulkActions,
+            'bulkColumn' => $bulkColumn
         ));
     }
 
