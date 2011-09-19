@@ -5,7 +5,7 @@
     {{ 'actions'|trans({}, 'datatable') }}:
     <select id="bulk-action-select" name="bulk-action-select">
         {% for key, action in datatable.bulkActions %}
-            <option value="{{ path(action.route, action.params) }}">{{ action.description }}</option>
+            <option value="{{ path(action.route, action.params) }}">{{ action.description|trans }}</option>
         {% endfor %}
     </select>
      <button type="button" id="bulk-apply-button">{{ 'apply'|trans({}, 'datatable') }}</button>
