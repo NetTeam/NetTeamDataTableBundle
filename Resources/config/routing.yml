@@ -1,3 +1,3 @@
 nt_datatable:
     pattern:  /list/{name}
-    defaults: { _controller: nt_datatable.controller:process }
+    defaults: { _controller: nt_datatable.controller:process, _format: json }
