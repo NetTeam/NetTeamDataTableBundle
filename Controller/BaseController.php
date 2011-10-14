@@ -3,7 +3,7 @@
 namespace NetTeam\System\DataTableBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use NetTeam\System\DataTableBundle\DataTableBuilder;
+use NetTeam\System\DataTableBundle\DataTable\DataTableBuilder;
 
 /**
  * Obsługuje tabelę z paginacją i sortowaniem po stronie serwera

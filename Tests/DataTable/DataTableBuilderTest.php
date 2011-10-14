@@ -2,7 +2,7 @@
 
 namespace NetTeam\System\DataTableBundle\Tests\DataTable;
 
-use NetTeam\System\DataTableBundle\DataTableBuilder;
+use NetTeam\System\DataTableBundle\DataTable\DataTableBuilder;
 use NetTeam\System\DataTableBundle\Column\TextColumn;
 use NetTeam\System\CoreBundle\Tests\TestCase;
 

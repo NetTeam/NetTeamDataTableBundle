@@ -1,11 +1,14 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle;
+namespace NetTeam\System\DataTableBundle\DataTable;
 
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 use NetTeam\System\DataTableBundle\Source\SourceInterface;
 use NetTeam\System\DataTableBundle\Column\ColumnInterface;
 use NetTeam\System\DataTableBundle\BulkAction\BulkAction;
 use NetTeam\System\DataTableBundle\BulkAction\Column as BulkActionColumn;
+use NetTeam\System\DataTableBundle\Test\Filter;
 
 /**
  * Description of DataTableBuilder
@@ -14,7 +17,6 @@ use NetTeam\System\DataTableBundle\BulkAction\Column as BulkActionColumn;
  */
 class DataTableBuilder
 {
-
     /**
      * Url zwracający dane
      */

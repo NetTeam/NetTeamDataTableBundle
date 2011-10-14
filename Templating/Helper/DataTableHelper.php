@@ -5,7 +5,7 @@ namespace NetTeam\System\DataTableBundle\Templating\Helper;
 use Symfony\Component\Templating\Helper\Helper;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use NetTeam\System\DataTableBundle\DataTableFactory;
+use NetTeam\System\DataTableBundle\DataTable\DataTableFactory;
 
 class DataTableHelper extends Helper
 {
