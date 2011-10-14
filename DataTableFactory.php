@@ -3,6 +3,7 @@
 namespace NetTeam\System\DataTableBundle;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 class DataTableFactory
 {
@@ -22,6 +23,10 @@ class DataTableFactory
         }
 
         $datatable = $this->container->get($this->datatables[$name]);
+        if ($datatable instanceof ContainerAwareInterface) {
+            $datatable->setContainer($this->container);
+        }
+
         $builder = new DataTableBuilder('nt_datatable', $datatable->getSource());
         $builder->setRouteParameters(array('name' => $name));
 

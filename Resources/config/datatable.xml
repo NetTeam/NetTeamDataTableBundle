@@ -7,7 +7,6 @@
     <parameters>
         <parameter key="nt_datatable.factory.class">NetTeam\System\DataTableBundle\DataTableFactory</parameter>
         <parameter key="nt_datatable.controller.class">NetTeam\System\DataTableBundle\Controller\DataTableController</parameter>
-        <parameter key="nt_datatable.base.class">NetTeam\System\DataTableBundle\DataTable</parameter>
     </parameters>
 
     <services>
@@ -20,12 +19,6 @@
             <argument type="service" id="nt_datatable.factory" />
             <argument type="service" id="templating" />
             <argument type="service" id="request" />
-        </service>
-
-        <service id="nt_datatable.base" class="%nt_datatable.base.class%" abstract="true">
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
         </service>
 
         <service id="nt_datatable.helper" alias="nt_datatable.templating.helper" />
