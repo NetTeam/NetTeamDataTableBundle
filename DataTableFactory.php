@@ -16,7 +16,7 @@ class DataTableFactory
         $this->datatables = $datatables;
     }
 
-    public function get($name)
+    public function create($name)
     {
         $datatable = $this->getDatatable($name);
         if ($datatable instanceof ContainerAwareInterface) {
