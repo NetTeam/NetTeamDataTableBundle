@@ -33,7 +33,7 @@ class DataTableBuilder
     /**
      * Definicje kolumn
      */
-    private $columns;
+    private $columns = array();
 
     private $globalSearch;
 
