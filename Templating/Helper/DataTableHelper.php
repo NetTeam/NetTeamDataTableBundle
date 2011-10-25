@@ -21,7 +21,10 @@ class DataTableHelper extends Helper
     public function render($name)
     {
         $datatable = $this->factory->create($name);
-        return $this->templating->render('NetTeamDataTableBundle::main.html.twig', array('datatable' => $datatable));
+        return $this->templating->render('NetTeamDataTableBundle::main.html.twig', array(
+            'datatable' => $datatable,
+            'alias'     => $name
+        ));
     }
 
     public function renderResponse($name)

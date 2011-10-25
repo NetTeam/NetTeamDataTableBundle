@@ -45,7 +45,8 @@ abstract class BaseController extends Controller
     {
         $this->dtb = $this->dataTable();
         return $this->render($this->datatableTemplate, array(
-            'datatable' => $this->dtb
+            'datatable' => $this->dtb,
+            'alias'     => $this->dtb->getRoute()
         ));
     }
 
