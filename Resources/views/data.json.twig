@@ -10,7 +10,7 @@
                     "{% include "NetTeamDataTableBundle:BulkAction:" ~ bulkColumn.getTemplate ~ ".html.twig" with { 'key' : rowKey, 'value' : row.bulk, 'column' : bulkColumn } %}",
                 {% endif %}
                 {% for key, value in row.columns %}
-                    "{% include "NetTeamDataTableBundle:Column:" ~ columns[key].getTemplate ~ ".html.twig" with { 'value' : value, 'translate' : columns[key].getTranslate } %}"{% if not loop.last %}, {% endif %}
+                    "{% include columns[key].getTemplate with { 'value' : value, 'translate' : columns[key].getTranslate } %}"{% if not loop.last %}, {% endif %}
                 {% endfor %}
                 ]
                 {% if not loop.last %},{% endif %}

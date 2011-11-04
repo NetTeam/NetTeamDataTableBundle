@@ -19,7 +19,7 @@
                 </th>
             {% endif %}
             {% for column in datatable.columns %}
-            <th>{{ column.caption }}</th>
+            <th>{{ column.caption|trans }}</th>
             {% endfor %}
         </tr>
     </thead>
