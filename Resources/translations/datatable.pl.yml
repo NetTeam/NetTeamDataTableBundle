@@ -13,5 +13,6 @@ oPaginate:
     sNext:     'Następna'
     sLast:     'Ostatnia'
 no_record_selected: Nie wybrano żadnego rekordu
+no_action_selected: Nie wybrano akcji
 apply: Wybierz
 actions: Akcje

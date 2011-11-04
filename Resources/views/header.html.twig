@@ -3,23 +3,24 @@
 <form>
 <div class="bulk_container">
     {{ 'actions'|trans({}, 'datatable') }}:
-    <select id="bulk-action-select" name="bulk-action-select">
+    <select id="bulk-action-select-{{ alias }}" name="bulk-action-select-{{ alias }}">
+        <option value=""></option>
         {% for key, action in datatable.bulkActions %}
             <option value="{{ path(action.route, action.params) }}">{{ action.description|trans }}</option>
         {% endfor %}
     </select>
-     <button type="button" id="bulk-apply-button">{{ 'apply'|trans({}, 'datatable') }}</button>
+     <button type="button" id="bulk-apply-button-{{ alias }}">{{ 'apply'|trans({}, 'datatable') }}</button>
 </div>
 {% endif %}
     <thead>
         <tr>
             {% if datatable.bulkActions %}
                 <th>
-                    {% include "NetTeamDataTableBundle:BulkAction:" ~ datatable.bulkActionsColumn.getHeaderTemplate ~ ".html.twig" with { 'column' : datatable.bulkActionsColumn }%}
+                    {% include "NetTeamDataTableBundle:BulkAction:" ~ datatable.bulkActionsColumn.getHeaderTemplate ~ ".html.twig" with { 'column' : datatable.bulkActionsColumn, 'alias' : alias }%}
                 </th>
             {% endif %}
             {% for column in datatable.columns %}
-            <th>{{ column.caption }}</th>
+            <th>{{ column.caption|trans }}</th>
             {% endfor %}
         </tr>
     </thead>
@@ -76,18 +77,19 @@
                     "bProcessing": true
                 } );
 
-              (function(){
+              (function(alias, dataTable){
                   var SELECTORS = {
-                          APPLY_BUTTON : '#bulk-apply-button',
-                          ACTION_SELECT : '#bulk-action-select',
-                          ALL_ITEMS_CHECKBOX : '#bulk-all-checkbox',
-                          ITEMS : ':checkbox[id^="bulk-row"]',
+                          APPLY_BUTTON : '#bulk-apply-button-' + alias,
+                          ACTION_SELECT : '#bulk-action-select-' + alias,
+                          ALL_ITEMS_CHECKBOX : '#bulk-all-checkbox-' + alias,
+                          ITEMS : ':checkbox[id^="bulk-row-' + alias + '"]',
                           CHECKED : ':checked'
                       },
                       URL_SEPARATOR = ',',
                       URL_REPLACE_VALUE = '$values',
                       TEXTS = {
-                          NO_RECORD_SELECTED : '{{ 'no_record_selected'|trans({}, 'datatable') }}'
+                          NO_RECORD_SELECTED : '{{ 'no_record_selected'|trans({}, 'datatable') }}',
+                          NO_ACTION_SELECTED : '{{ 'no_action_selected'|trans({}, 'datatable') }}',
                       }
 
                   function init() {
@@ -99,7 +101,13 @@
                       var selected = [],
                           urlParams = {},
                           checked = $(SELECTORS.ITEMS + SELECTORS.CHECKED),
+                          action = $(SELECTORS.ACTION_SELECT).val(),
                           url;
+
+                      if (!action) {
+                          alert(TEXTS.NO_ACTION_SELECTED);
+                          return;
+                      }
 
                       if (0 === checked.length) {
                           alert(TEXTS.NO_RECORD_SELECTED);
@@ -111,15 +119,22 @@
                       });
                       urlParams[URL_REPLACE_VALUE] = selected.join(URL_SEPARATOR);
                       url = Utils.Url.populateVars(
-                          $(SELECTORS.ACTION_SELECT).val(),
+                          action,
                           urlParams
                       );
 
-                      if (typeof tab_open === 'function') {
-                          tab_open(url);
-                          return;
+                      if (typeof dataTable == 'undefined') {
+                          if (typeof tab_open === 'function') {
+                              tab_open(url);
+                              return;
+                          }
+                          window.location = url;
                       }
-                      window.location = url;
+                      $.getJSON(url, updated);
+                  }
+
+                  function updated(data) {
+                      dataTable.fnDraw();
                   }
 
                   function switchAll(event) {
@@ -133,6 +148,6 @@
                   }
 
                   init();
-              })();
+              })('{{ alias }}', dTable);
         } );
 </script>

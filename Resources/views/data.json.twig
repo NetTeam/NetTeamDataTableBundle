@@ -7,7 +7,7 @@
             {% spaceless %}
                 [
                 {% if bulkActions %}
-                    "{% include "NetTeamDataTableBundle:BulkAction:" ~ bulkColumn.getTemplate ~ ".html.twig" with { 'key' : rowKey, 'value' : row.bulk, 'column' : bulkColumn } %}",
+                    "{% include "NetTeamDataTableBundle:BulkAction:" ~ bulkColumn.getTemplate ~ ".html.twig" with { 'key' : rowKey, 'value' : row.bulk, 'column' : bulkColumn, 'alias' : alias } %}",
                 {% endif %}
                 {% for key, value in row.columns %}
                     "{% include "NetTeamDataTableBundle:Column:" ~ columns[key].getTemplate ~ ".html.twig" with { 'value' : value, 'translate' : columns[key].getTranslate } %}"{% if not loop.last %}, {% endif %}
