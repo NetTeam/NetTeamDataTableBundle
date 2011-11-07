@@ -42,7 +42,8 @@ class DataTableController
             'count' => $count,
             'columns' => $columns,
             'bulkActions' => $builder->getBulkActions(),
-            'bulkColumn' => $builder->getBulkActionsColumn()
+            'bulkColumn' => $builder->getBulkActionsColumn(),
+            'alias' => $name
         ));
     }
 

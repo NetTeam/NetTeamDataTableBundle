@@ -268,6 +268,13 @@ class DataTableBuilder
         return $bulkAction;
     }
 
+    public function addBulkActions(array $actions)
+    {
+        foreach ($actions as $action) {
+            $this->addBulkAction($action[0], $action[1], isset($action[2]) ? $action[2] : array());
+        }
+    }
+
     public function setBulkActionsColumn(BulkActionColumn $column)
     {
         $this->bulkActionsColumn = $column;
