@@ -31,7 +31,7 @@ class HrefColumn extends ColumnDecorator
 
     public function getTemplate()
     {
-        return 'href_column';
+        return 'NetTeamDataTableBundle:Column:href_column.html.twig';
     }
 
     public function setRoute($route, array $params, $class = null)
