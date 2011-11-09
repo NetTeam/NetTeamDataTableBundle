@@ -14,6 +14,8 @@ use NetTeam\System\DataTableBundle\Column\ValueGetter\PropertyValueGetter;
  */
 abstract class Column implements ColumnInterface
 {
+    const TEMPLATE_PATTERN = 'NetTeamDataTableBundle:Column:%s.html.twig';
+    
     protected $caption;
     protected $width = null;
     protected $getters = array();
@@ -22,7 +24,7 @@ abstract class Column implements ColumnInterface
     protected $priority = 0;
     protected $class = array();
     protected $template = 'column';
-    protected $translate = false;
+    protected $translate = true;
 
     public function __construct($caption, $getters)
     {
@@ -207,7 +209,7 @@ abstract class Column implements ColumnInterface
 
     public function getTemplate()
     {
-        return $this->template;
+        return sprintf(self::TEMPLATE_PATTERN, $this->template);
     }
 
     public function getTranslate()
