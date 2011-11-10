@@ -1,0 +1,5 @@
+{% spaceless %}
+{% autoescape false %}
+    {% if value[0] is not sameas(null) %}{{ value[0]|money_format }} {{ value[1] }} {% endif %}
+{% endautoescape %}
+{% endspaceless %}
