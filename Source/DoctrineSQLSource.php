@@ -61,7 +61,9 @@ class DoctrineSQLSource implements SourceInterface
 
     public function addSorting($column, $order)
     {
-        return null;
+        $sql = $this->query->getSQL();
+        $sql .= sprintf(" ORDER BY %s %s", $column, $order);
+        $this->query->setSQL($sql);
     }
 
     public function count()
