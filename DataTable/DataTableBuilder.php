@@ -90,10 +90,19 @@ class DataTableBuilder
         return $this->bulkActions;
     }
 
+    public function hasBulkActions()
+    {
+        return 0 !== count($this->bulkActions);
+    }
+
     public function getColumnsSortedByDefault()
     {
         $columns = array();
         foreach ($this->columns as $no => $column) {
+            if ($this->hasBulkActions()) {
+                $no++;
+            }
+
             if ($column->isSortedByDefault()) {
                 $columns[$no] = $column;
             }
@@ -214,6 +223,10 @@ class DataTableBuilder
      */
     public function setSorting($sortingColumn, $sortingOrder)
     {
+        if ($this->hasBulkActions() && $sortingColumn > 0) {
+            $sortingColumn--;
+        }
+
         $this->sortingColumn = $sortingColumn;
         $this->sortingOrder = $sortingOrder;
     }
