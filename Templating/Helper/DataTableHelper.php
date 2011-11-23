@@ -18,9 +18,9 @@ class DataTableHelper extends Helper
         $this->factory    = $factory;
     }
 
-    public function render($name)
+    public function render($name, array $options)
     {
-        $datatable = $this->factory->create($name);
+        $datatable = $this->factory->create($name, $options);
         return $this->templating->render('NetTeamDataTableBundle::main.html.twig', array(
             'datatable' => $datatable,
             'alias'     => $name

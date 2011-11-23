@@ -66,15 +66,22 @@
                     ],
                     "iDisplayLength": 25,
                     "aLengthMenu": [[25, 50, 100, 200, 500], [25, 50,100,200,500]],
-                    "bJQueryUI" : {{ datatable.hasJQueryUI() ? 'true' : 'false' }},
+                    //"bJQueryUI" : {{ datatable.hasJQueryUI() ? 'true' : 'false' }},
                     "bAutoWidth" : false,
                     "bStateSave" : true,
-                    "sPaginationType": "full_numbers",
-                    "sDom": '<"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
-                    "bServerSide": true,
                     "sAjaxSource": "{{ path(datatable.route, datatable.routeParameters) }}",
                     "oLanguage": {% include "NetTeamDataTableBundle::lang.txt.twig" %},
-                    "bProcessing": true
+                    "bProcessing": true,
+                    {% if not datatable.isSimple %}
+                    "bServerSide": true,
+                    {% endif %}
+                    {% if datatable.hasPagination %}
+                    "sPaginationType": "full_numbers",
+                    "sDom": '<"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
+                    {% endif %}
+                    "bPaginate": {{ datatable.hasPagination() ? 'true' : 'false' }},
+                    "bInfo": {{ datatable.hasPagination() ? 'true' : 'false' }},
+                    "bFilter": {{ datatable.hasPagination() ? 'true' : 'false' }}
                 } );
 
               (function(alias, dataTable){

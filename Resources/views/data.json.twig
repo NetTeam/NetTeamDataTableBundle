@@ -1,7 +1,9 @@
 {
+{% if echo is not none  %}
     "sEcho" : {{ echo }},
     "iTotalRecords": {{ count }},
     "iTotalDisplayRecords": {{ count }},
+{% endif %}
     "aaData" : [
         {% for rowKey, row in data %}
             {% spaceless %}

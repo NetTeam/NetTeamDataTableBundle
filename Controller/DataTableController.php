@@ -23,7 +23,7 @@ class DataTableController
 
     public function process($name)
     {
-        $builder = $this->factory->create($name);
+        $builder = $this->factory->create($name, $this->request->query->all());
 
         $offset = $this->request->get('iDisplayStart');
         $limit = $this->request->get('iDisplayLength');

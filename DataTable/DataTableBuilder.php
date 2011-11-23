@@ -21,7 +21,7 @@ class DataTableBuilder
      * Url zwracający dane
      */
     private $route;
-
+    private $requiredRouteParameters = array();
     private $routeParameters = array();
 
     /**
@@ -29,6 +29,9 @@ class DataTableBuilder
      * @var NetTeam\System\DataTableBundle\Source\SourceInterface
      */
     private $source;
+
+    private $isSimple = false;
+    private $pagination = true;
 
     /**
      * Definicje kolumn
@@ -53,9 +56,10 @@ class DataTableBuilder
      * @param string $route Unikatowa nazwa listy, nazwa routingu w routing.yml
      * @param string $source Żródło danych
      */
-    public function __construct($route, SourceInterface $source)
+    public function __construct($route, SourceInterface $source, array $requiredRouteParameters = array())
     {
         $this->route = $route;
+        $this->requiredRouteParameters = $requiredRouteParameters;
         $this->source = $source;
         $this->bulkActionsColumn = new BulkActionColumn();
     }
@@ -67,7 +71,7 @@ class DataTableBuilder
 
     public function getRouteParameters()
     {
-        return $this->routeParameters;
+        return array_merge($this->routeParameters, $this->requiredRouteParameters);
     }
 
     public function setRouteParameters(array $parameters)
@@ -75,9 +79,36 @@ class DataTableBuilder
         $this->routeParameters = $parameters;
     }
 
+    public function addRouteParameter($name, $value)
+    {
+        $this->routeParameters[$name] = $value;
+    }
+
     public function getSource()
     {
         return $this->source;
+    }
+
+    public function simple()
+    {
+        $this->isSimple = true;
+        return $this;
+    }
+
+    public function isSimple()
+    {
+        return $this->isSimple;
+    }
+
+    public function noPagination()
+    {
+        $this->pagination = false;
+        return $this;
+    }
+
+    public function hasPagination()
+    {
+        return $this->pagination;
     }
 
     public function getColumns()

@@ -4,6 +4,9 @@ namespace NetTeam\System\DataTableBundle\DataTable;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use NetTeam\System\DataTableBundle\SimpleSource\SimpleSourceInterface;
+use NetTeam\System\DataTableBundle\Source\SourceInterface;
+use NetTeam\System\DataTableBundle\Source\SimpleSourceAdapter;
 
 class DataTableFactory
 {
@@ -16,17 +19,21 @@ class DataTableFactory
         $this->datatables = $datatables;
     }
 
-    public function create($name)
+    public function create($name, array $options)
     {
-        $datatable = $this->getDatatable($name);
+        $datatable = $this->getDatatable($name, $options);
         if ($datatable instanceof ContainerAwareInterface) {
             $datatable->setContainer($this->container);
         }
 
-        $builder = new DataTableBuilder('nt_datatable', $datatable->getSource());
-        $builder->setRouteParameters(array('name' => $name));
+        $source = $datatable->getSource();
+
+        $builder = new DataTableBuilder('nt_datatable', $this->prepareSource($source), array('name' => $name));
+        $builder->setRouteParameters($options);
 
         $datatable->build($builder);
+
+        $this->checkSource($name, $builder, $source);
 
         return $builder;
     }
@@ -36,10 +43,10 @@ class DataTableFactory
         return isset($this->datatables[$name]);
     }
 
-    private function getDatatable($name)
+    private function getDatatable($name, array $options)
     {
         if (!is_string($name)) {
-            throw new \InvalidArgumentException(sprintf('Expected argument of type "string", "%s" given', is_object($name) ? get_class($name) : gettype($name)));
+            throw new \InvalidArgumentException(sprintf('Expected argument of type "string", "%s" given.', is_object($name) ? get_class($name) : gettype($name)));
         }
 
         if (!isset($this->datatables[$name])) {
@@ -51,6 +58,34 @@ class DataTableFactory
             throw new \InvalidArgumentException(sprintf('The service "%s" must implement DataTableInterface.', $name));
         }
 
+        foreach ($datatable->getRequiredOptions() as $option) {
+            if (!isset($options[$option])) {
+                throw new \InvalidArgumentException(sprintf('The option "%s" in the DataTable "%s" is required.', $option, $name));
+            }
+        }
+
+        $datatable->setOptions($options);
+
         return $datatable;
+    }
+
+    private function prepareSource($source)
+    {
+        if ($source instanceof SimpleSourceInterface) {
+            return new SimpleSourceAdapter($source);
+        }
+
+        return $source;
+    }
+
+    private function checkSource($name, DataTableBuilder $builder, $source)
+    {
+        if (!$builder->isSimple() && !$source instanceof SourceInterface) {
+            throw new \InvalidArgumentException(sprintf('Method "getSource()" in the DateTable "%s" must return SourceInterface implementation.', $name));
+        }
+
+        if ($builder->isSimple() && !$source instanceof SimpleSourceInterface) {
+            throw new \InvalidArgumentException(sprintf('Method "getSource()" in the DateTable "%s" must return SimpleSourceInterface implementation.', $name));
+        }
     }
 }

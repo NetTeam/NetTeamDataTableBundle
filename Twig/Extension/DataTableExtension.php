@@ -21,9 +21,9 @@ class DataTableExtension extends \Twig_Extension
         );
     }
 
-    public function datatable($name)
+    public function datatable($name, array $options = array())
     {
-        return $this->container->get('nt_datatable.templating.helper')->render($name);
+        return $this->container->get('nt_datatable.templating.helper')->render($name, $options);
     }
 
     /**
