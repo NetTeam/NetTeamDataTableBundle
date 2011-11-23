@@ -1,5 +1,5 @@
-{% for item in value  %}
+{% for item in value.items  %}
 {% autoescape false %}
-{{ item|e|replace({ '\n' : '<br />' }) }}{% if not loop.last %}, {% endif %}
+{{ item|e|replace({ '\n' : '<br />' }) }}{% if not loop.last %}{{ value.separator }}{% endif %}
 {% endautoescape %}
 {% endfor %}
