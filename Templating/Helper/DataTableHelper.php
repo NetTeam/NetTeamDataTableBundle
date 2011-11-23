@@ -18,7 +18,7 @@ class DataTableHelper extends Helper
         $this->factory    = $factory;
     }
 
-    public function render($name, array $options)
+    public function render($name, array $options = array())
     {
         $datatable = $this->factory->create($name, $options);
         return $this->templating->render('NetTeamDataTableBundle::main.html.twig', array(
@@ -27,9 +27,9 @@ class DataTableHelper extends Helper
         ));
     }
 
-    public function renderResponse($name)
+    public function renderResponse($name, array $options = array())
     {
-        return new Response($this->render($name));
+        return new Response($this->render($name, $options));
     }
 
     public function getName()
