@@ -23,6 +23,7 @@ class DoctrineORMSource implements SourceInterface
 
     protected $sortingCallbacks = array();
     protected $rowCallback;
+    protected $dataCallback;
 
     public function __construct(QueryBuilder $queryBuilder)
     {
@@ -32,6 +33,10 @@ class DoctrineORMSource implements SourceInterface
     public function getData($offset, $limit)
     {
         $results = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit)->getResult();
+
+        if (null !== $callback = $this->dataCallback) {
+            $results = $callback($results);
+        }
 
         if ($this->rowCallback !== null) {
             $results = array_map($this->rowCallback, $results);
@@ -68,6 +73,11 @@ class DoctrineORMSource implements SourceInterface
     public function setRowCallback(\Closure $callback)
     {
         $this->rowCallback = $callback;
+    }
+
+    public function setDataCallback(\Closure $callback)
+    {
+        $this->dataCallback = $callback;
     }
 
     public function count()
