@@ -69,7 +69,7 @@
                     "bJQueryUI" : {{ datatable.hasJQueryUI() ? 'true' : 'false' }},
                     "bAutoWidth" : false,
                     "bStateSave" : true,
-                    "sAjaxSource": "{{ path(datatable.route, datatable.routeParameters) }}",
+                    "sAjaxSource": "{{ path(datatable.route, datatable.routeParameters)|raw }}",
                     "oLanguage": {% include "NetTeamDataTableBundle::lang.txt.twig" %},
                     "bProcessing": true,
                     {% if not datatable.isSimple %}
