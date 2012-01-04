@@ -26,7 +26,7 @@ class MongoBuilderSource implements SourceInterface
     public function getData($offset, $limit)
     {
         $this->builder->skip($offset)->limit($limit);
-        $cursor = $this->builder->getQuery()->execute();
+        $cursor = $this->builder->hydrate(false)->getQuery()->execute();
 
         return $cursor->toArray();
     }
