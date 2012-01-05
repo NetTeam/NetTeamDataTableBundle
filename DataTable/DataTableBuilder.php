@@ -290,7 +290,11 @@ class DataTableBuilder
         foreach ($this->columns as $column) {
             $parsedRow['columns'][] = $column->getValue($row);
         }
-        $parsedRow['bulk'] = $this->bulkActionsColumn->getValue($row);
+        
+        if (!empty($this->bulkActions)) {
+            $parsedRow['bulk'] = $this->bulkActionsColumn->getValue($row);
+        }
+
         return $parsedRow;
     }
 
@@ -328,5 +332,16 @@ class DataTableBuilder
     public function getBulkActionsColumn()
     {
         return $this->bulkActionsColumn;
+    }
+    
+    public function setBulkActionId($field)
+    {
+        $this->bulkActionsColumn->setGetter($field);
+        return $this;
+    }
+    
+    public function bulkActionId($field)
+    {
+        return $this->setBulkActionId($field);
     }
 }
