@@ -9,6 +9,7 @@ use NetTeam\System\DataTableBundle\Column\ColumnInterface;
 use NetTeam\System\DataTableBundle\BulkAction\BulkAction;
 use NetTeam\System\DataTableBundle\BulkAction\Column as BulkActionColumn;
 use NetTeam\System\DataTableBundle\Test\Filter;
+use NetTeam\System\DataTableBundle\Extras\TableTools;
 
 /**
  * Description of DataTableBuilder
@@ -42,6 +43,8 @@ class DataTableBuilder
 
     private $bulkActions;
     private $bulkActionsColumn;
+    
+    private $tableTools;
 
     private $searchableKeys = array();
 
@@ -62,6 +65,7 @@ class DataTableBuilder
         $this->requiredRouteParameters = $requiredRouteParameters;
         $this->source = $source;
         $this->bulkActionsColumn = new BulkActionColumn();
+        $this->tableTools = new TableTools();
     }
 
     public function getRoute()
@@ -110,7 +114,7 @@ class DataTableBuilder
     {
         return $this->pagination;
     }
-
+    
     public function getColumns()
     {
         return $this->columns;
@@ -124,6 +128,21 @@ class DataTableBuilder
     public function hasBulkActions()
     {
         return 0 !== count($this->bulkActions);
+    }
+    
+    public function hasTableTools()
+    {
+        return $this->tableTools->isEnabled();
+    }
+    
+    public function hasExportCsv()
+    {
+        return $this->tableTools->hasCsv();
+    }
+    
+    public function setExportCsv($csv)
+    {
+        return $this->tableTools->setCsv($csv);
     }
 
     public function getColumnsSortedByDefault()
