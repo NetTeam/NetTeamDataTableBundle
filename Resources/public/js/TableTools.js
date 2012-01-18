@@ -663,7 +663,7 @@ TableTools.prototype = {
 		var
 		  nButton = document.createElement('button'),
 		  nSpan = document.createElement('span'),
-			masterS = this._fnGetMasterSettings();s;
+			masterS = this._fnGetMasterSettings();
 		
 		nButton.className = "DTTT_button "+o.sButtonClass;
 		nButton.setAttribute('id', "ToolTables_"+this.s.dt.sInstance+"_"+masterS.buttonCounter );
