@@ -23,6 +23,15 @@ class DataTableController
 
     public function process($name)
     {
+        if ($this->request->query->has('export')) {
+            return $this->export($name);
+        } else {
+            return $this->data($name);
+        }
+    }
+
+    public function data($name)
+    {
         $builder = $this->factory->create($name, $this->request->query->all());
 
         $offset = $this->request->get('iDisplayStart');
@@ -37,14 +46,49 @@ class DataTableController
         $count = $builder->countRows();
 
         return $this->templating->renderResponse('NetTeamDataTableBundle::data.json.twig', array(
+                    'echo' => $echo,
+                    'data' => $data,
+                    'count' => $count,
+                    'columns' => $columns,
+                    'bulkActions' => $builder->getBulkActions(),
+                    'bulkColumn' => $builder->getBulkActionsColumn(),
+                    'alias' => $name
+                ));
+    }
+
+    public function export($name)
+    {
+        $builder = $this->factory->create($name, $this->request->query->all());
+
+        $offset = $this->request->get('iDisplayStart');
+        $limit = $this->request->get('iDisplayLength');
+        $echo = $this->request->get('sEcho');
+
+        $this->updateSearch($builder);
+        $this->updateSorting($builder);
+
+        $data = $builder->getDataAllArray();
+        $columns = $builder->getColumns();
+        $count = $builder->countRows();
+
+        $export = $builder->getExport($this->request->get('export'));
+
+
+        $content = $this->templating->render('NetTeamDataTableBundle:Export:export.csv.twig', array(
             'echo' => $echo,
             'data' => $data,
             'count' => $count,
             'columns' => $columns,
             'bulkActions' => $builder->getBulkActions(),
             'bulkColumn' => $builder->getBulkActionsColumn(),
-            'alias' => $name
-        ));
+            'alias' => $name,
+            'export' => $export
+                ));
+        $response = new Response($content);
+        foreach ($export->getHeaders() as $key => $val) {
+            $response->headers->set($key, $val);
+        }
+        return $response;
     }
 
     private function updateSearch(DataTableBuilder $builder)

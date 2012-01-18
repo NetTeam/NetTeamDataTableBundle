@@ -22,6 +22,11 @@ class SimpleSourceAdapter implements SourceInterface
     {
         return $this->source->getData();
     }
+    
+    public function getDataAll()
+    {
+        return $this->source->getData();
+    }
 
     public function globalSearch(array $keys, $search)
     {

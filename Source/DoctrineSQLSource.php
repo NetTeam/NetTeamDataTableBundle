@@ -53,6 +53,12 @@ class DoctrineSQLSource implements SourceInterface
         $results = $this->query->getResult();
         return $results;
     }
+    
+    public function getDataAll()
+    {
+        $results = $this->query->getResult();
+        return $results;
+    }
 
     public function globalSearch(array $keys, $search)
     {

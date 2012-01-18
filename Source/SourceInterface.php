@@ -4,6 +4,8 @@ namespace NetTeam\System\DataTableBundle\Source;
 interface SourceInterface extends \Countable
 {
     public function getData($offset, $limit);
+    
+    public function getDataAll();
 
     public function addSorting($column, $order);
 

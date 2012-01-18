@@ -9,7 +9,8 @@ use NetTeam\System\DataTableBundle\Column\ColumnInterface;
 use NetTeam\System\DataTableBundle\BulkAction\BulkAction;
 use NetTeam\System\DataTableBundle\BulkAction\Column as BulkActionColumn;
 use NetTeam\System\DataTableBundle\Test\Filter;
-use NetTeam\System\DataTableBundle\Extras\TableTools;
+use NetTeam\System\DataTableBundle\Export\CsvExport;
+use NetTeam\System\DataTableBundle\Export\ExportInterface;
 
 /**
  * Description of DataTableBuilder
@@ -18,6 +19,8 @@ use NetTeam\System\DataTableBundle\Extras\TableTools;
  */
 class DataTableBuilder
 {
+
+
     /**
      * Url zwracający dane
      */
@@ -30,7 +33,6 @@ class DataTableBuilder
      * @var NetTeam\System\DataTableBundle\Source\SourceInterface
      */
     private $source;
-
     private $isSimple = false;
     private $pagination = true;
 
@@ -38,20 +40,17 @@ class DataTableBuilder
      * Definicje kolumn
      */
     private $columns = array();
-
     private $globalSearch;
-
     private $bulkActions;
     private $bulkActionsColumn;
-    
-    private $tableTools;
-
+    private $exports;
     private $searchableKeys = array();
-
     private $sortingColumn;
     private $sortingOrder;
-
     private $jQueryUI = false;
+    private static $exportTypes = array(
+        'csv' => 'NetTeam\System\DataTableBundle\Export\CsvExport'
+    );
 
     /**
      * Konstruktor
@@ -65,7 +64,7 @@ class DataTableBuilder
         $this->requiredRouteParameters = $requiredRouteParameters;
         $this->source = $source;
         $this->bulkActionsColumn = new BulkActionColumn();
-        $this->tableTools = new TableTools();
+        $this->exports = array();
     }
 
     public function getRoute()
@@ -76,6 +75,11 @@ class DataTableBuilder
     public function getRouteParameters()
     {
         return array_merge($this->routeParameters, $this->requiredRouteParameters);
+    }
+
+    public function getRouteExportParameters($exportName)
+    {
+        return array_merge($this->routeParameters, $this->requiredRouteParameters, array('export' => $exportName));
     }
 
     public function setRouteParameters(array $parameters)
@@ -114,7 +118,7 @@ class DataTableBuilder
     {
         return $this->pagination;
     }
-    
+
     public function getColumns()
     {
         return $this->columns;
@@ -129,20 +133,39 @@ class DataTableBuilder
     {
         return 0 !== count($this->bulkActions);
     }
-    
-    public function hasTableTools()
+
+    public function setExportOption($name, $key, $value)
     {
-        return $this->tableTools->isEnabled();
+        $this->export[$name]->setOptions($key, $value);
     }
-    
-    public function hasExportCsv()
+
+    public function addExport($name, $type, $options)
     {
-        return $this->tableTools->hasCsv();
+        if (self::$exportTypes[$type]) {
+            $this->exports[$name] = new self::$exportTypes[$type];
+            $this->exports[$name]->setOptions($options);
+        }
     }
-    
-    public function setExportCsv($csv)
+
+    public function getExports()
     {
-        return $this->tableTools->setCsv($csv);
+        return $this->exports;
+    }
+
+    public function buildExports()
+    {
+        foreach ($this->exports as $export) {
+            if (!($export instanceof ExportInterface)) {
+                throw new \Exception('export should be instance of ExportInterface');
+            }
+            $export->build();
+        }
+    }
+
+    public function getExport($name)
+    {
+        //sprawdzić czy istnieje
+        return $this->exports[$name];
     }
 
     public function getColumnsSortedByDefault()
@@ -229,7 +252,7 @@ class DataTableBuilder
 
     public function hasGlobalSearch()
     {
-        return !empty($this->searchableKeys);
+        return!empty($this->searchableKeys);
     }
 
     private function sorting()
@@ -281,26 +304,46 @@ class DataTableBuilder
         $this->sortingOrder = $sortingOrder;
     }
 
-    public function getData($offset, $limit)
+    private function prepareData()
     {
         // TODO: pofiltrować
         $this->filtering();
 
         //posortować
         $this->sorting();
+    }
 
-        //wypluć
+    public function getData($offset, $limit)
+    {
+        $this->prepareData();
         return $this->source->getData($offset, $limit);
     }
 
-    public function getDataArray($offset, $limit)
+    public function getDataAll()
     {
-        $data = $this->getData($offset, $limit);
+        $this->prepareData();
+        return $this->source->getDataAll();
+    }
+
+    private function dataToArray($data)
+    {
         $dataArray = array();
         foreach ($data as $row) {
             $dataArray[] = $this->parseRow($row);
         }
         return $dataArray;
+    }
+
+    public function getDataArray($offset, $limit)
+    {
+        $data = $this->getData($offset, $limit);
+        return $this->dataToArray($data);
+    }
+
+    public function getDataAllArray()
+    {
+        $data = $this->getDataAll();
+        return $this->dataToArray($data);
     }
 
     private function parseRow($row)
@@ -309,7 +352,7 @@ class DataTableBuilder
         foreach ($this->columns as $column) {
             $parsedRow['columns'][] = $column->getValue($row);
         }
-        
+
         if (!empty($this->bulkActions)) {
             $parsedRow['bulk'] = $this->bulkActionsColumn->getValue($row);
         }
@@ -328,7 +371,7 @@ class DataTableBuilder
         return $this->jQueryUI;
     }
 
-    public function addBulkAction($caption, $route,array $params = array())
+    public function addBulkAction($caption, $route, array $params = array())
     {
         $bulkAction = new BulkAction($caption, $route, $params);
         $this->bulkActions[] = $bulkAction;
@@ -352,15 +395,16 @@ class DataTableBuilder
     {
         return $this->bulkActionsColumn;
     }
-    
+
     public function setBulkActionId($field)
     {
         $this->bulkActionsColumn->setGetter($field);
         return $this;
     }
-    
+
     public function bulkActionId($field)
     {
         return $this->setBulkActionId($field);
     }
+
 }

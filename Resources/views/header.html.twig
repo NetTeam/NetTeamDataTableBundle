@@ -73,11 +73,9 @@
                     {% endif %}
                     {% if datatable.hasPagination %}
                     "sPaginationType": "full_numbers",
-                    "sDom": '{{ datatable.hasTableTools ? 'T<"clear">' : '' }}<"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
+                    "sDom": 'T<"clear"><"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
                     {% endif %}
-                    {% if datatable.hasTableTools %}
-                        {% include "NetTeamDataTableBundle:TableTools:config.js.twig" %},
-                    {% endif %}                        
+                    {% include "NetTeamDataTableBundle:TableTools:config.js.twig" %},                        
                     "bPaginate": {{ datatable.hasPagination() ? 'true' : 'false' }},
                     "bInfo": {{ datatable.hasPagination() ? 'true' : 'false' }},
                     "bFilter": {{ datatable.hasPagination() ? 'true' : 'false' }}

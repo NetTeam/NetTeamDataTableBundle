@@ -32,6 +32,7 @@ class DataTableFactory
         $builder->setRouteParameters($options);
 
         $datatable->build($builder);
+        $builder->buildExports();
 
         $this->checkSource($name, $builder, $source);
 

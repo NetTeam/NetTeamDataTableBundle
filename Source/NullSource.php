@@ -15,6 +15,11 @@ class NullSource implements SourceInterface
         return array();
     }
 
+    public function getDataAll()
+    {
+        return array();
+    }
+    
     public function globalSearch(array $keys, $search)
     {
     }

@@ -1,11 +1,13 @@
 "oTableTools": {
     "sSwfPath": "{{ asset('bundles/netteamdatatable/swf/copy_cvs_xls.swf') }}",
     "aButtons": [
-        {% if datatable.hasExportCsv %}
+    {% for key, export in datatable.exports %}
         {
-            "sExtends": "csv",
-            "sButtonText": "CSV"
-        },
-        {% endif %}
+            "sExtends": "download",
+            "sButtonText": "{{ export.getLabel() }}",
+            "sUrl": "{{ path(datatable.route, datatable.routeExportParameters(key))|raw }}"
+        }
+        {{ loop.last ? '' : ','}} 
+    {% endfor %}
     ]
 }

@@ -34,6 +34,12 @@ class DoctrineDQLSource implements SourceInterface
 
         return $results;
     }
+    
+    public function getDataAll()
+    {
+        $results = $this->query->getArrayResult();
+        return $results;
+    }
 
     public function globalSearch(array $keys, $search)
     {

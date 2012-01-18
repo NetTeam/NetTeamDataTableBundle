@@ -30,10 +30,7 @@ class DoctrineORMSource implements SourceInterface
         $this->queryBuilder = $queryBuilder;
     }
 
-    public function getData($offset, $limit)
-    {
-        $results = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit)->getResult();
-
+    private function setResultCallbacks($results){
         if (null !== $callback = $this->dataCallback) {
             $results = $callback($results);
         }
@@ -42,7 +39,18 @@ class DoctrineORMSource implements SourceInterface
             $results = array_map($this->rowCallback, $results);
         }
 
-        return $results;
+        return $results;        
+    }
+    
+    public function getData($offset, $limit)
+    {
+        $results = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit)->getResult();
+        return $this->setResultCallbacks($results);
+    }
+    
+    public function getDataAll(){
+        $results = $this->queryBuilder->getQuery()->getResult();
+        return $this->setResultCallbacks($results);
     }
 
     public function globalSearch(array $keys, $search)

@@ -37,6 +37,11 @@ class MongoQuerySource implements SourceInterface
 
         return $cursor->toArray();
     }
+    
+    public function getDataAll()
+    {
+        throw new  RuntimeException('Not yet implemented');
+    }
 
     public function globalSearch(array $keys, $search)
     {
