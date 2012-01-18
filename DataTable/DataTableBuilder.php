@@ -139,7 +139,7 @@ class DataTableBuilder
         $this->export[$name]->setOptions($key, $value);
     }
 
-    public function addExport($name, $type, $options)
+    public function addExport($name, $type, $options = array())
     {
         if (self::$exportTypes[$type]) {
             $this->exports[$name] = new self::$exportTypes[$type];
