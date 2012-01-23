@@ -7,6 +7,7 @@
     <parameters>
         <parameter key="nt_datatable.factory.class">NetTeam\System\DataTableBundle\DataTable\DataTableFactory</parameter>
         <parameter key="nt_datatable.controller.class">NetTeam\System\DataTableBundle\Controller\DataTableController</parameter>
+        <parameter key="nt_datatable.util.json_response.class">NetTeam\System\DataTableBundle\Util\JsonResponseBuilder</parameter>
     </parameters>
 
     <services>
@@ -17,8 +18,13 @@
 
         <service id="nt_datatable.controller" class="%nt_datatable.controller.class%" scope="request">
             <argument type="service" id="nt_datatable.factory" />
+            <argument type="service" id="nt_datatable.util.json_response" />
             <argument type="service" id="templating" />
             <argument type="service" id="request" />
+        </service>
+        
+        <service id="nt_datatable.util.json_response" class="%nt_datatable.util.json_response.class%" public="false">
+            <argument type="service" id="templating" />
         </service>
 
         <service id="nt_datatable.helper" alias="nt_datatable.templating.helper" />

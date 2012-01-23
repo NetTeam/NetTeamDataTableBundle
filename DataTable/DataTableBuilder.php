@@ -11,6 +11,7 @@ use NetTeam\System\DataTableBundle\BulkAction\Column as BulkActionColumn;
 use NetTeam\System\DataTableBundle\Test\Filter;
 use NetTeam\System\DataTableBundle\Export\CsvExport;
 use NetTeam\System\DataTableBundle\Export\ExportInterface;
+use NetTeam\System\DataTableBundle\Column\ColumnFactory;
 
 /**
  * Description of DataTableBuilder
@@ -19,15 +20,12 @@ use NetTeam\System\DataTableBundle\Export\ExportInterface;
  */
 class DataTableBuilder
 {
-
-
     /**
      * Url zwracający dane
      */
     private $route;
     private $requiredRouteParameters = array();
     private $routeParameters = array();
-
     /**
      * Źródło danych
      * @var NetTeam\System\DataTableBundle\Source\SourceInterface
@@ -35,7 +33,6 @@ class DataTableBuilder
     private $source;
     private $isSimple = false;
     private $pagination = true;
-
     /**
      * Definicje kolumn
      */
@@ -195,11 +192,20 @@ class DataTableBuilder
     }
 
     /**
-     * @param ColumnInterface $column
+     * @param $column
      */
-    public function addColumn(ColumnInterface $column)
+    public function addColumn($column, $name = null, $getter = null, array $parameters = array())
     {
+        if (is_object($column) && $column instanceof ColumnInterface) {
+            $this->columns[] = $column;
+
+            return $column;
+        }
+
+        $columnFactory = new ColumnFactory();
+        $column = $columnFactory->create($column, $name, $getter, $parameters);
         $this->columns[] = $column;
+
         return $column;
     }
 
@@ -348,7 +354,7 @@ class DataTableBuilder
 
     private function parseRow($row)
     {
-        $parsedRow = array('columns' => array(), 'bulk' => '');
+        $parsedRow = array('columns' => array(), 'bulk' => '', 'routeParams' => array());
         foreach ($this->columns as $column) {
             $parsedRow['columns'][] = $column->getValue($row);
         }

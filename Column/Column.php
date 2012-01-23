@@ -2,10 +2,11 @@
 
 namespace NetTeam\System\DataTableBundle\Column;
 
-use NetTeam\System\DataTableBundle\Column\ValueGetter\ClosureValueGetter;
-
 use NetTeam\System\CoreBundle\Exception\NetTeamException;
 use NetTeam\System\DataTableBundle\Column\ValueGetter\PropertyValueGetter;
+use NetTeam\System\DataTableBundle\Column\ValueGetter\ClosureValueGetter;
+use NetTeam\System\DataTableBundle\Column\ValueGetter\AsIsValueGetter;
+use NetTeam\System\DataTableBundle\Column\Value\ColumnValue;
 
 /**
  * Column
@@ -15,7 +16,7 @@ use NetTeam\System\DataTableBundle\Column\ValueGetter\PropertyValueGetter;
 abstract class Column implements ColumnInterface
 {
     const TEMPLATE_PATTERN = 'NetTeamDataTableBundle:Column:%s.html.twig';
-    
+
     protected $caption;
     protected $width = null;
     protected $getters = array();
@@ -25,6 +26,9 @@ abstract class Column implements ColumnInterface
     protected $class = array();
     protected $template = 'column';
     protected $translate = true;
+    protected $route;
+    protected $routeClass;
+    protected $routeParams = array();
 
     public function __construct($caption, $getters)
     {
@@ -39,9 +43,9 @@ abstract class Column implements ColumnInterface
         }
     }
 
-    public static function create($caption, $keys)
+    public static function create($caption, $getter, array $parameters)
     {
-        return new static($caption, $keys);
+        return new static($caption, $getter);
     }
 
     public function getValue($objectOrArray)
@@ -51,7 +55,9 @@ abstract class Column implements ColumnInterface
             $values[] = $getter->get($objectOrArray);
         }
 
-        return count($values) === 1 ? $values[0] : $values;
+        $value = count($values) === 1 ? $values[0] : $values;
+        
+        return new ColumnValue($value, $this->route, $this->parseRouteParams($objectOrArray), $this->routeClass);
     }
 
     public function addGetter($getterKey)
@@ -63,6 +69,10 @@ abstract class Column implements ColumnInterface
 
     private function createValueGetter($getterKey)
     {
+        if (is_string($getterKey) && 0 === strpos($getterKey, '@')) {
+            return new AsIsValueGetter(substr($getterKey, 1));
+        }
+
         if (is_string($getterKey)) {
             return new PropertyValueGetter($getterKey);
         }
@@ -123,7 +133,6 @@ abstract class Column implements ColumnInterface
         return implode(" ", $this->class);
     }
 
-
     public function setWidth($width)
     {
         $this->width = $width;
@@ -183,7 +192,7 @@ abstract class Column implements ColumnInterface
 
     public function isSortable()
     {
-        return !empty($this->sortableKeys);
+        return!empty($this->sortableKeys);
     }
 
     public function sortByDefault($order = 'ASC')
@@ -221,5 +230,32 @@ abstract class Column implements ColumnInterface
     {
         $this->translate = $translate;
         return $this;
+    }
+
+    public function setRoute($route, array $params, $routeClass = null)
+    {
+        $this->route = $route;
+        $this->routeClass = $routeClass;
+
+        foreach ($params as $key => $getterKey) {
+            $this->routeParams[$key] = $this->createValueGetter($getterKey);
+        }
+
+        return $this;
+    }
+
+    public function route($route, array $params, $routeClass = null)
+    {
+        return $this->setRoute($route, $params, $routeClass);
+    }
+
+    protected function parseRouteParams($objectOrArray)
+    {
+        $params = array();
+        foreach ($this->routeParams as $key => $path) {
+            $params[$key] = $path->get($objectOrArray);
+        }
+
+        return $params;
     }
 }

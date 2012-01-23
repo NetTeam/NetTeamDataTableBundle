@@ -12,6 +12,8 @@ use NetTeam\System\DataTableBundle\DataTable\DataTableBuilder;
  */
 abstract class BaseController extends Controller
 {
+    const DEFAULT_NAME = 'datatable';
+    
     protected $echo;
     protected $offset;
     protected $limit;
@@ -70,14 +72,7 @@ abstract class BaseController extends Controller
         $bulkActions = $this->dtb->getBulkActions();
         $bulkColumn = $this->dtb->getBulkActionsColumn();
 
-        return $this->render('NetTeamDataTableBundle::data.json.twig', array(
-            'echo' => $this->echo,
-            'data' => $data,
-            'count' => $count,
-            'columns' => $columns,
-            'bulkActions' => $bulkActions,
-            'bulkColumn' => $bulkColumn
-        ));
+        return $this->get('nt_datatable.util.json_response')->build($data, $this->dtb, self::DEFAULT_NAME, $count, $this->echo);
     }
 
     private function dataTable()

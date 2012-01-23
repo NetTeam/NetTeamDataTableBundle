@@ -1,5 +1,8 @@
-{% spaceless %}
-{% autoescape false %}
-    {{ value|join(' ')|e|replace({ '\n' : '<br />' }) }}
-{% endautoescape %}
-{% endspaceless %}
+{% if record.route %}
+    <a class="{{ record.routeClasses|default('')|join(' ') }}" href="{{ path(record.route, record.routeParams) }}" title="{{ record.value|default('')|join(' ')|trans }}">
+{% endif %}
+{% block columnValue %}
+{% endblock %}
+{% if record.route %}
+    </a>
+{% endif %}

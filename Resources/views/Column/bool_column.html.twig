@@ -1,5 +1,4 @@
-{% spaceless %}
-{% autoescape false %}
-{{  value ? 'tak' : 'nie' }}
-{% endautoescape %}
-{% endspaceless %}
+{% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
+{% block columnValue %}
+{{  record.value ? 'tak' : 'nie' }}
+{% endblock %}

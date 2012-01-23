@@ -20,6 +20,11 @@ namespace NetTeam\System\DataTableBundle\Column;
  */
 interface ColumnInterface
 {
+    public static function create($name, $getter, array $parameters);
+    
+    /**
+     * @return Value\ColumnValueInterface
+     */
     public function getValue($objectOrArray);
 
     public function addGetter($getter);
@@ -78,8 +83,14 @@ interface ColumnInterface
      * Pobiera domyślny kierunek sortowania
      */
     public function getSortableKeys();
+    
+    public function route($route, array $params, $routeClass = null);
+    public function setRoute($route, array $params, $routeClass = null);
 
     public function getCaption();
 
     public function getTemplate();
+    
+    
+    
 }

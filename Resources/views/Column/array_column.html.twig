@@ -1,9 +1,10 @@
-{% for item in value.items  %}
-{% autoescape false %}
+{% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
+{% block columnValue %}
+{% for item in record.value.items  %}
 {% if item is array %}
-    {% include "NetTeamDataTableBundle:Column:array_column_recursive.html.twig" with { 'value' : item, 'translate' : translate, 'separator': value.separator } %}
+    {% include "NetTeamDataTableBundle:Column:array_column_recursive.html.twig" with { 'value' : item, 'translate' : translate, 'separator': record.value.separator } %}
 {% else %}
     {{ item|e|replace({ '\n' : '<br />' }) }}{% if not loop.last %}{{ value.separator }}{% endif %}
 {% endif %}
-{% endautoescape %}
 {% endfor %}
+{% endblock %}

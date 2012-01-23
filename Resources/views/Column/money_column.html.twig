@@ -1,5 +1,4 @@
-{% spaceless %}
-{% autoescape false %}
-    {% if value is not sameas(null) %}{{ value|money_format }} {% endif %}
-{% endautoescape %}
-{% endspaceless %}
+{% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
+{% block columnValue %}
+    {% if record.value is not sameas(null) %}{{ record.value|money_format }} {% endif %}
+{% endblock %}

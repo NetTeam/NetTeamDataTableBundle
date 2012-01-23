@@ -1,3 +1,0 @@
-{% spaceless %}
-<a class=\"{{ value.class|default('')|join(' ') }}\" href=\"{{ path(value.route, value.params) }}\" title=\"{{ value.value|default('')|join(' ') }}\">{% include value.column.template with { 'value' : value.value } %}</a>
-{% endspaceless %}

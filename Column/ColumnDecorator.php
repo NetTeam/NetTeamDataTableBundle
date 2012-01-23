@@ -11,9 +11,24 @@ abstract class ColumnDecorator implements ColumnInterface
 {
     protected $column;
 
+    public static function create($name, $getters, array $parameters)
+    {
+        throw new \BadMethodCallException('You mustn\'t use "create" method on ColumnDecorator');
+    }
+
     public function __construct(ColumnInterface $column)
     {
         $this->column = $column;
+    }
+    
+    public function getValue($objectOrArray)
+    {
+        return $this->column->getValue($objectOrArray);
+    }
+    
+    public function getTemplate()
+    {
+        return $this->column->getTemplate();
     }
 
     public function addGetter($key)
@@ -42,7 +57,6 @@ abstract class ColumnDecorator implements ColumnInterface
     {
         return $this->column->getPriority();
     }
-
 
     public function addClass($class)
     {
@@ -138,5 +152,15 @@ abstract class ColumnDecorator implements ColumnInterface
     {
         $this->column->setTranslate($translate);
         return $this;
+    }
+
+    public function setRoute($route, array $params, $routeClass = null)
+    {
+        return $this->column->setRoute($route, $params, $routeClass);
+    }
+
+    public function route($route, array $params, $routeClass = null)
+    {
+        return $this->column->route($route, $params, $routeClass);
     }
 }

@@ -6,19 +6,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use NetTeam\System\DataTableBundle\DataTable\DataTableFactory;
+use NetTeam\System\DataTableBundle\Util\JsonResponseBuilder;
 use NetTeam\System\DataTableBundle\DataTable\DataTableBuilder;
 
 class DataTableController
 {
     private $factory;
+    private $jsonBuilder;
     private $templating;
     private $request;
 
-    public function __construct(DataTableFactory $factory, EngineInterface $templating, Request $request)
+    public function __construct(DataTableFactory $factory, JsonResponseBuilder $jsonBuilder, EngineInterface $templating, Request $request)
     {
-        $this->factory    = $factory;
-        $this->templating = $templating;
-        $this->request    = $request;
+        $this->factory     = $factory;
+        $this->jsonBuilder = $jsonBuilder;
+        $this->templating  = $templating;
+        $this->request     = $request;
     }
 
     public function process($name)
@@ -44,16 +47,8 @@ class DataTableController
         $data = $builder->getDataArray($offset, $limit);
         $columns = $builder->getColumns();
         $count = $builder->countRows();
-
-        return $this->templating->renderResponse('NetTeamDataTableBundle::data.json.twig', array(
-                    'echo' => $echo,
-                    'data' => $data,
-                    'count' => $count,
-                    'columns' => $columns,
-                    'bulkActions' => $builder->getBulkActions(),
-                    'bulkColumn' => $builder->getBulkActionsColumn(),
-                    'alias' => $name
-                ));
+        
+        return $this->jsonBuilder->build($data, $builder, $name, $count, $echo);
     }
 
     public function export($name)

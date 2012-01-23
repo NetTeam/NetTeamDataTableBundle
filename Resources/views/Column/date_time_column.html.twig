@@ -1,7 +1,6 @@
-{% spaceless %}
-{% autoescape false %}
-    {% if value != null %}
-        {{ value|date("Y-m-d H:i:s") }}
-    {% endif %}
-{% endautoescape %}
-{% endspaceless %}
+{% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
+{% block columnValue %}
+{% if record.value != null %}
+    {{ record.value|date("Y-m-d H:i:s") }}
+{% endif %}
+{% endblock %}

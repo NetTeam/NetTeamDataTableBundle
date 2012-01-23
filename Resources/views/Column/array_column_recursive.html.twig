@@ -1,9 +1,7 @@
 {% for item in value  %}
-{% autoescape false %}
 {% if item is array %}
     {% include "NetTeamDataTableBundle:Column:array_column_recursive.html.twig" with { 'value' : item, 'translate' : translate, 'separator' : separator } %}
 {% else %}
     {{ item|e|replace({ '\n' : '<br />' }) }}{% if not loop.last %}{{ separator }}{% endif %}
 {% endif %}
-{% endautoescape %}
 {% endfor %}
