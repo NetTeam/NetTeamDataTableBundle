@@ -40,7 +40,7 @@ final class JsonResponseBuilder
 
         foreach ($data as $rowKey => $row) {
             if ($builder->getBulkActions()) {
-                $built[$rowKey][] = $this->templating->render('NetTeamDataTableBundle:BulkAction:' . $bulkTemplate . 'html.twig', array(
+                $built[$rowKey][] = $this->templating->render('NetTeamDataTableBundle:BulkAction:' . $bulkTemplate . '.html.twig', array(
                     'key'    => $rowKey,
                     'value'  => $row['bulk'],
                     'column' => $bulkColumn,
