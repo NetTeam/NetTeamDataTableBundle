@@ -15,10 +15,10 @@ class ArrayColumn extends Column
 
     public function getValue($objectOrArray)
     {
-        return array(
-            'items'     => parent::getValue($objectOrArray),
-            'separator' => $this->separator
-        );
+        $value = parent::getValue($objectOrArray);
+        $value->add('separator', $this->separator);
+
+        return $value;
     }
 
     public function setSeparator($separator)

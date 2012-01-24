@@ -56,7 +56,7 @@ abstract class Column implements ColumnInterface
         }
 
         $value = count($values) === 1 ? $values[0] : $values;
-        
+
         return new ColumnValue($value, $this->route, $this->parseRouteParams($objectOrArray), $this->routeClass);
     }
 
