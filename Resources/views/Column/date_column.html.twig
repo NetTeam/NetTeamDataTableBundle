@@ -2,7 +2,7 @@
 {% block columnValue %}
 {% block value %}
     {% if record.value != null %}
-        {{ record.value|date("Y-m-d") }}
+        {{ record.value|date(record.format) }}
     {% endif %}
 {% endblock %}
 {% endblock %}
