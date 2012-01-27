@@ -5,7 +5,7 @@ namespace NetTeam\System\DataTableBundle\Source;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr;
-use DoctrineExtensions\Paginate\Paginate;
+use NetTeam\System\DataTableBundle\Util\CountWalker;
 use Doctrine\ORM\Query\Lexer;
 use NetTeam\System\CoreBundle\Util\String;
 
@@ -20,7 +20,6 @@ class DoctrineORMSource implements SourceInterface
      * @var QueryBuilder
      */
     protected $queryBuilder;
-
     protected $sortingCallbacks = array();
     protected $rowCallback;
     protected $dataCallback;
@@ -30,7 +29,8 @@ class DoctrineORMSource implements SourceInterface
         $this->queryBuilder = $queryBuilder;
     }
 
-    private function setResultCallbacks($results){
+    private function setResultCallbacks($results)
+    {
         if (null !== $callback = $this->dataCallback) {
             $results = $callback($results);
         }
@@ -39,16 +39,17 @@ class DoctrineORMSource implements SourceInterface
             $results = array_map($this->rowCallback, $results);
         }
 
-        return $results;        
+        return $results;
     }
-    
+
     public function getData($offset, $limit)
     {
         $results = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit)->getResult();
         return $this->setResultCallbacks($results);
     }
-    
-    public function getDataAll(){
+
+    public function getDataAll()
+    {
         $results = $this->queryBuilder->getQuery()->getResult();
         return $this->setResultCallbacks($results);
     }
@@ -90,6 +91,44 @@ class DoctrineORMSource implements SourceInterface
 
     public function count()
     {
-        return Paginate::getTotalQueryResults($this->queryBuilder->getQuery());
+        /* @var $countQuery Query */
+        $query = $this->queryBuilder->getQuery();
+        $countQuery = $this->cloneQuery($query);
+
+        $countQuery->setHint(Query::HINT_CUSTOM_TREE_WALKERS, array('NetTeam\System\DataTableBundle\Util\CountWalker'));
+        $countQuery->setFirstResult(null)->setMaxResults(null);
+
+        try {
+            $data = $countQuery->getScalarResult();
+            $data = array_map('current', $data);
+            
+            if (count($this->queryBuilder->getDQLPart('groupBy'))) {
+                return count($data);
+            }
+
+            return array_sum($data);
+        } catch (NoResultException $e) {
+            return 0;
+        }
     }
+
+    /**
+     * Clones a query.
+     *
+     * @param Query $query The query.
+     *
+     * @return Query The cloned query.
+     */
+    private function cloneQuery(Query $query)
+    {
+        /* @var $cloneQuery Query */
+        $cloneQuery = clone $query;
+        $cloneQuery->setParameters($query->getParameters());
+        foreach ($query->getHints() as $name => $value) {
+            $cloneQuery->setHint($name, $value);
+        }
+
+        return $cloneQuery;
+    }
+
 }
