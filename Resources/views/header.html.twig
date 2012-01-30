@@ -1,5 +1,6 @@
 <table cellpadding="0" cellspacing="0" border="0" class="nt_datatables_table" id="datatables_table_{{ alias }}">
 {% if datatable.bulkActions %}
+<form>
 <div class="bulk_container">
     {{ 'actions'|trans({}, 'datatable') }}:
     <select id="bulk-action-select-{{ alias }}" name="bulk-action-select-{{ alias }}">
@@ -26,6 +27,9 @@
     <tbody>
     </tbody>
     </table>
+{% if datatable.bulkActions %}
+</form>
+{% endif %}
 {% macro bVisible(loop) %}
 {# nie działa razem z bStateSave: true #}
 {% spaceless %}"bVisible": {{ column.isVisible ? 'true' : 'false' }}{% endspaceless %}
@@ -45,6 +49,7 @@
 
 
 <script type="text/javascript" charset="utf-8">
+{% include "NetTeamDataTableBundle::datatable.js.twig" %}
         $(document).ready(function() {
                var dTable = $('#datatables_table_{{ alias }}').dataTable( {
                     "aoColumns": [
@@ -61,11 +66,15 @@
                         {% endfor %}
                     ],
                     "iDisplayLength": 25,
+                    "bRetrieve": true,
                     "aLengthMenu": [[25, 50, 100, 200, 500], [25, 50,100,200,500]],
                     "bJQueryUI" : {{ datatable.hasJQueryUI() ? 'true' : 'false' }},
                     "bAutoWidth" : false,
                     "bStateSave" : true,
-                    "sAjaxSource": "{{ path(datatable.route, datatable.routeParameters)|raw }}",
+                    "sPaginationType": "full_numbers",
+                    "sDom": '<"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
+                    "bServerSide": true,
+                    "sAjaxSource": "{{ path(datatable.route, datatable.routeParameters) }}",
                     "oLanguage": {% include "NetTeamDataTableBundle::lang.txt.twig" %},
                     "bProcessing": true,
                     {% if not datatable.isSimple %}

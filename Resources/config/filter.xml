@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="nt_datatable.filter_factory.class">NetTeam\System\DataTableBundle\Filter\FilterFactory</parameter>
+        <parameter key="nt_datatable.filter_container.class">NetTeam\System\DataTableBundle\Filter\FilterContainer</parameter>
+
+        <parameter key="nt_datatable.filter.type.default.class">NetTeam\System\DataTableBundle\Filter\Type\DefaultFilter</parameter>
+        <parameter key="nt_datatable.filter.type.checkbox.class">NetTeam\System\DataTableBundle\Filter\Type\CheckboxFilter</parameter>
+    </parameters>
+
+    <services>
+        <service id="nt_datatable.filter_factory" class="%nt_datatable.filter_factory.class%" public="false">
+            <argument type="service" id="service_container" />
+            <argument type="collection" />
+        </service>
+
+        <service id="nt_datatable.filter_container" class="%nt_datatable.filter_container.class%" scope="prototype">
+            <argument type="service" id="nt_datatable.filter_factory" />
+            <argument type="service" id="form.factory" />
+        </service>
+
+        <service id="nt_datatable.filter.type.default" class="%nt_datatable.filter.type.default.class%">
+            <tag name="nt_datatable.filter" alias="default" />
+        </service>
+
+        <service id="nt_datatable.filter.type.checkbox" class="%nt_datatable.filter.type.checkbox.class%">
+            <tag name="nt_datatable.filter" alias="checkbox" />
+        </service>
+    </services>
+</container>

@@ -8,7 +8,7 @@ use NetTeam\System\DataTableBundle\Source\SourceInterface;
 use NetTeam\System\DataTableBundle\Column\ColumnInterface;
 use NetTeam\System\DataTableBundle\BulkAction\BulkAction;
 use NetTeam\System\DataTableBundle\BulkAction\Column as BulkActionColumn;
-use NetTeam\System\DataTableBundle\Test\Filter;
+use NetTeam\System\DataTableBundle\Filter\FilterContainer;
 use NetTeam\System\DataTableBundle\Export\CsvExport;
 use NetTeam\System\DataTableBundle\Export\ExportInterface;
 use NetTeam\System\DataTableBundle\Column\ColumnFactory;
@@ -48,6 +48,7 @@ class DataTableBuilder
     private static $exportTypes = array(
         'csv' => 'NetTeam\System\DataTableBundle\Export\CsvExport'
     );
+    private $filterContainer;
 
     /**
      * Konstruktor
@@ -402,6 +403,39 @@ class DataTableBuilder
         return $this->bulkActionsColumn;
     }
 
+    public function setFilterContainer(FilterContainer $container)
+    {
+        $this->filterContainer = $container;
+    }
+
+    public function hasFilters()
+    {
+        return $this->filterContainer->hasFilters();
+    }
+
+    public function getFilters()
+    {
+        return $this->filterContainer->getFilters();
+    }
+
+    public function updateFilterValues(Request $request)
+    {
+        return $this->filterContainer->bindRequest($request);
+    }
+
+    /**
+     * Dopisuje filtr do datatable
+     * @param string $type typ filtru, domyslny: default 
+     * @param string $name label przy filtrze
+     * @param \Closure $callback
+     * @return DataTableBuilder 
+     */
+    public function addFilter($type = 'default', $name, \Closure $callback, array $options = array())
+    {
+        $this->filterContainer->addFilter($type, $name, $callback, $options);
+        return $this;
+    }
+
     public function setBulkActionId($field)
     {
         $this->bulkActionsColumn->setGetter($field);
@@ -413,4 +447,14 @@ class DataTableBuilder
         return $this->setBulkActionId($field);
     }
 
+    public function setFilterTemplate($template)
+    {
+        $this->filterContainer->setTemplate($template);
+    }
+    
+    public function getFilterTemplate()
+    {
+        return $this->filterContainer->getTemplate();
+    }
+    
 }

@@ -28,5 +28,6 @@
         </service>
 
         <service id="nt_datatable.helper" alias="nt_datatable.templating.helper" />
+        <service id="nt_datatable_filter.helper" alias="nt_datatable.twig.filter_extension" />
     </services>
 </container>

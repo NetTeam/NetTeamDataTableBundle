@@ -37,6 +37,8 @@ class DataTableController
     {
         $builder = $this->factory->create($name, $this->request->query->all());
 
+        $builder->updateFilterValues($this->request);
+
         $offset = $this->request->get('iDisplayStart');
         $limit = $this->request->get('iDisplayLength');
         $echo = $this->request->get('sEcho');
@@ -67,7 +69,6 @@ class DataTableController
         $count = $builder->countRows();
 
         $export = $builder->getExport($this->request->get('export'));
-
 
         $content = $this->templating->render('NetTeamDataTableBundle:Export:export.csv.twig', array(
             'echo' => $echo,

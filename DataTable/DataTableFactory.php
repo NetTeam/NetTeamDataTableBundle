@@ -31,6 +31,8 @@ class DataTableFactory
         $builder = new DataTableBuilder('nt_datatable', $this->prepareSource($source), array('name' => $name));
         $builder->setRouteParameters($options);
 
+        $builder->setFilterContainer($this->container->get('nt_datatable.filter_container'));
+
         $datatable->build($builder);
         $builder->buildExports();
 

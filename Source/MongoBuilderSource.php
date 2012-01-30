@@ -52,4 +52,9 @@ class MongoBuilderSource implements SourceInterface
     {
         return $this->builder->getQuery()->count(true);
     }
+    
+    public function getBuilder()
+    {
+        return $this->builder;
+    }
 }

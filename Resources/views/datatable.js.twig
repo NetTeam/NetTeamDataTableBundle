@@ -1,0 +1,137 @@
+{% macro bVisible(loop) %}
+{# nie działa razem z bStateSave: true #}
+{% spaceless %}"bVisible": {{ column.isVisible ? 'true' : 'false' }}{% endspaceless %}
+{% endmacro %}
+
+{% macro bSortable(column) %}
+{% spaceless %}"bSortable": {{ column.isSortable ? 'true' : 'false' }}{% endspaceless %}
+{% endmacro %}
+
+{% macro sClass(column) %}
+{% spaceless %}"sClass": "{{ column.getClass }}"{% endspaceless %}
+{% endmacro %}
+
+{% macro sWidth(column) %}
+{% spaceless %}"sWidth": "{{ column.hasWidth ? column.getWidth : '' }}"{% endspaceless %}
+{% endmacro %}
+
+$(document).ready(function() {
+       var dTable = $('#datatables_table_{{ alias }}').dataTable( {
+            "aoColumns": [
+                {% if datatable.bulkActions %}
+                    { "bSortable": false, {{ _self.sClass(datatable.bulkActionsColumn) }}, {{ _self.sWidth(datatable.bulkActionsColumn) }} },
+                {% endif %}
+                {% for key, column in datatable.columns %}
+                    { {{ _self.bSortable(column) }}, {{ _self.sClass(column) }}, {{ _self.sWidth(column) }} } {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            ],
+            "aaSorting": [
+                {% for key, column in datatable.getColumnsSortedByDefault() %}
+                    [ {{ key }}, '{{ column.getDefaultSorting() }}' ]{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            ],
+            "iDisplayLength": 25,
+            "aLengthMenu": [[25, 50, 100, 200, 500], [25, 50,100,200,500]],
+            "bJQueryUI" : {{ datatable.hasJQueryUI() ? 'true' : 'false' }},
+            "bAutoWidth" : false,
+            "bStateSave" : true,
+            "sPaginationType": "full_numbers",
+            "sDom": '<"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
+            "bServerSide": true,
+            "sAjaxSource": "{{ path(datatable.route, datatable.routeParameters) }}",
+            "oLanguage": {% include "NetTeamDataTableBundle::lang.txt.twig" %},
+            "bProcessing": true,
+            "fnServerParams": function (data) {
+                var fields = $('#datatables_div_{{ alias }} form.filters').serializeArray();
+                $(fields).each(function (i, field) {
+                    data.push({'name': field.name, 'value': field.value});
+                });
+            }
+       });
+
+      (function(alias, dataTable){
+          var SELECTORS = {
+                  FILTERS_FORM : '#datatables_div_' + alias + ' form.filters',
+                  FILTER_BUTTON : '#form-filter-'+alias+' button.filter-apply-button',
+                  APPLY_BUTTON : '#bulk-apply-button-' + alias,
+                  ACTION_SELECT : '#bulk-action-select-' + alias,
+                  ALL_ITEMS_CHECKBOX : '#bulk-all-checkbox-' + alias,
+                  ITEMS : ':checkbox[id^="bulk-row-' + alias + '"]',
+                  CHECKED : ':checked'
+              },
+              URL_SEPARATOR = ',',
+              URL_REPLACE_VALUE = '$values',
+              TEXTS = {
+                  NO_RECORD_SELECTED : '{{ 'no_record_selected'|trans({}, 'datatable') }}',
+                  NO_ACTION_SELECTED : '{{ 'no_action_selected'|trans({}, 'datatable') }}',
+              }
+
+          var table = dTable;
+
+          function init() {
+              $(SELECTORS.FILTERS_FORM).submit(function () {
+                  refresh();
+                  return false;
+              });
+              $(SELECTORS.FILTER_BUTTON).click(refresh);
+              $(SELECTORS.APPLY_BUTTON).click(goToAction);
+              $(SELECTORS.ALL_ITEMS_CHECKBOX).change(switchAll);
+          }
+
+          function goToAction(event) {
+              var selected = [],
+                  urlParams = {},
+                  checked = $(SELECTORS.ITEMS + SELECTORS.CHECKED),
+                  action = $(SELECTORS.ACTION_SELECT).val(),
+                  url;
+
+              if (!action) {
+                  alert(TEXTS.NO_ACTION_SELECTED);
+                  return;
+              }
+
+              if (0 === checked.length) {
+                  alert(TEXTS.NO_RECORD_SELECTED);
+                  return;
+              }
+
+              checked.each(function(index, value) {
+                  selected.push($(value).val());
+              });
+              urlParams[URL_REPLACE_VALUE] = selected.join(URL_SEPARATOR);
+              url = Utils.Url.populateVars(
+                  action,
+                  urlParams
+              );
+
+              if (typeof dataTable == 'undefined') {
+                  if (typeof tab_open === 'function') {
+                      tab_open(url);
+                      return;
+                  }
+                  window.location = url;
+              }
+              $.getJSON(url, updated);
+          }
+
+          function updated(data) {
+              dataTable.fnDraw();
+          }
+
+          function switchAll(event) {
+              var items = $(SELECTORS.ITEMS);
+
+              if ($(this).is(SELECTORS.CHECKED)) {
+                  items.attr('checked', 'checked');
+                  return;
+              }
+              items.removeAttr('checked');
+          }
+
+          function refresh() {
+              table.fnDraw();
+          }
+
+          init();
+      })('{{ alias }}', dTable);
+} );
