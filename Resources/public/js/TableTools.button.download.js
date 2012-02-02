@@ -14,7 +14,11 @@ TableTools.BUTTONS.download = {
     "fnMouseover": null,
     "fnMouseout": null,
     "fnClick": function( nButton, oConfig ) {
+        var alias = $(this.dom.table).data('alias');
         var oParams = this.s.dt.oApi._fnAjaxParameters( this.s.dt );
+        var filterParams = NtFilters.getFiltersParams(alias);
+        $.merge(oParams, filterParams);
+
         var iframe = document.createElement('iframe');
         iframe.style.height = "0px";
         iframe.style.width = "0px";

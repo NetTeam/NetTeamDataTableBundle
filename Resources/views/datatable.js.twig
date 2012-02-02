@@ -53,10 +53,13 @@ $(document).ready(function() {
             "bInfo": {{ datatable.hasPagination() ? 'true' : 'false' }},
             "bFilter": {{ datatable.hasPagination() ? 'true' : 'false' }},
             "fnServerParams": function (data) {
-                var fields = $('#datatables_div_{{ alias }} form.filters').serializeArray();
-                $(fields).each(function (i, field) {
-                    data.push({'name': field.name, 'value': field.value});
-                });
+                if (typeof NtFilters == "undefined" || typeof NtFilters.getFiltersParams != "function") {
+                    alert('NtFilters.js required');
+                    return data;
+                }
+                filterParams = NtFilters.getFiltersParams('{{ alias }}');
+                $.merge(data, filterParams);
+                return data;
             }
         });
 

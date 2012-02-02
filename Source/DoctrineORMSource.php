@@ -130,5 +130,10 @@ class DoctrineORMSource implements SourceInterface
 
         return $cloneQuery;
     }
+    
+    public function getBuilder()
+    {
+        return $this->queryBuilder;
+    }
 
 }

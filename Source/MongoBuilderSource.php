@@ -30,7 +30,7 @@ class MongoBuilderSource implements SourceInterface
 
         return $cursor->toArray();
     }
-    
+
     public function getDataAll()
     {
         throw new  RuntimeException('Not yet implemented');
@@ -52,7 +52,7 @@ class MongoBuilderSource implements SourceInterface
     {
         return $this->builder->getQuery()->count(true);
     }
-    
+
     public function getBuilder()
     {
         return $this->builder;

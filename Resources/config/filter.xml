@@ -9,6 +9,7 @@
         <parameter key="nt_datatable.filter_container.class">NetTeam\System\DataTableBundle\Filter\FilterContainer</parameter>
 
         <parameter key="nt_datatable.filter.type.default.class">NetTeam\System\DataTableBundle\Filter\Type\DefaultFilter</parameter>
+        <parameter key="nt_datatable.filter.type.date_range.class">NetTeam\System\DataTableBundle\Filter\Type\DateRangeFilter</parameter>
         <parameter key="nt_datatable.filter.type.checkbox.class">NetTeam\System\DataTableBundle\Filter\Type\CheckboxFilter</parameter>
     </parameters>
 
@@ -26,9 +27,16 @@
         <service id="nt_datatable.filter.type.default" class="%nt_datatable.filter.type.default.class%">
             <tag name="nt_datatable.filter" alias="default" />
         </service>
+        
+        <service id="nt_datatable.filter.type.date_range" class="%nt_datatable.filter.type.date_range.class%">
+            <tag name="nt_datatable.filter" alias="date_range" />
+        </service>
 
         <service id="nt_datatable.filter.type.checkbox" class="%nt_datatable.filter.type.checkbox.class%">
             <tag name="nt_datatable.filter" alias="checkbox" />
         </service>
+        
+        
+        
     </services>
 </container>
