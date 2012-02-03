@@ -49,6 +49,7 @@ class DataTableBuilder
         'csv' => 'NetTeam\System\DataTableBundle\Export\CsvExport'
     );
     private $filterContainer;
+    private $additionalJSTemplate;
 
     /**
      * Konstruktor
@@ -456,5 +457,19 @@ class DataTableBuilder
     {
         return $this->filterContainer->getTemplate();
     }
-    
+
+    public function setAdditionalJSTemplate($template)
+    {
+        $this->additionalJSTemplate = $template;
+    }
+
+    public function getAdditionalJSTemplate()
+    {
+        return $this->additionalJSTemplate;
+    }
+
+    public function hasAdditionalJSTemplate()
+    {
+        return null !== $this->additionalJSTemplate;
+    }
 }

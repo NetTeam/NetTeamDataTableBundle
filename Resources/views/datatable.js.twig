@@ -63,7 +63,7 @@ $(document).ready(function() {
             }
         });
 
-      (function(alias, dataTable){
+      var bulk = (function(alias, dataTable) {
           var SELECTORS = {
                   FILTERS_FORM : '#datatables_div_' + alias + ' form.filters',
                   FILTER_BUTTON : '#form-filter-'+alias+' button.filter-apply-button',
@@ -78,9 +78,33 @@ $(document).ready(function() {
               TEXTS = {
                   NO_RECORD_SELECTED : '{{ 'no_record_selected'|trans({}, 'datatable') }}',
                   NO_ACTION_SELECTED : '{{ 'no_action_selected'|trans({}, 'datatable') }}',
-              }
-
-          var table = dTable;
+              },
+              Bulk = {
+                  selected: [],
+                  action: "",
+                  refresh: function () {
+                      refresh();
+                  },
+                  switchAll: function () {
+                      switchAll();
+                  },
+                  check: function(selected) {
+                      $(SELECTORS.ITEMS).each(function() {
+                          checkbox = $(this);
+                          if (-1 < $.inArray(checkbox.val(), selected)) {
+                              checkbox.attr('checked', 'checked');
+                          }
+                      });
+                  },
+                  uncheck: function (selected) {
+                      $(SELECTORS.ITEMS + SELECTORS.CHECKED).each(function() {
+                          checkbox = $(this);
+                          if (-1 < $.inArray(checkbox.val(), selected)) {
+                              checkbox.removeAttr('checked');
+                          }
+                      });
+                  }
+              };
 
           function init() {
               $(SELECTORS.FILTERS_FORM).submit(function () {
@@ -97,7 +121,8 @@ $(document).ready(function() {
                   urlParams = {},
                   checked = $(SELECTORS.ITEMS + SELECTORS.CHECKED),
                   action = $(SELECTORS.ACTION_SELECT).val(),
-                  url;
+                  url,
+                  beforeSend = $.Event('beforeSend.bulk');
 
               if (!action) {
                   alert(TEXTS.NO_ACTION_SELECTED);
@@ -118,21 +143,24 @@ $(document).ready(function() {
                   urlParams
               );
 
-              if (typeof dataTable == 'undefined') {
+              if (typeof dataTable !== 'undefined') {
+                  Bulk.selected = selected;
+                  Bulk.action = action;
+                  
+                  dataTable.trigger(beforeSend, Bulk);
+              } else {
                   if (typeof tab_open === 'function') {
                       tab_open(url);
                       return;
                   }
                   window.location = url;
               }
-              $.getJSON(url, updated);
+              if (!beforeSend.isDefaultPrevented()) {
+                  $.getJSON(url, refresh);
+              }
           }
 
-          function updated(data) {
-              dataTable.fnDraw();
-          }
-
-          function switchAll(event) {
+          function switchAll() {
               var items = $(SELECTORS.ITEMS);
 
               if ($(this).is(SELECTORS.CHECKED)) {
@@ -143,9 +171,16 @@ $(document).ready(function() {
           }
 
           function refresh() {
-              table.fnDraw();
+              dataTable.fnDraw();
           }
 
           init();
+
+          return Bulk;
+
       })('{{ alias }}', dTable);
+
+      {% if datatable.hasAdditionalJSTemplate() %}
+          {% include datatable.getAdditionalJSTemplate()  %}
+      {% endif %}
 } );
