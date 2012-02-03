@@ -19,16 +19,23 @@ class DateRangeFilter extends FilterType
 
     public function buildForm(FormBuilder $builder)
     {
+        $label = $this->getOption('label');
+        if (!isset($label['from'], $label['to'])) {
+            throw new \Exception("DateRangeFilter label must be an array with keys 'from' and 'to'.");
+        }
+
         $builder->add('from', 'datepicker', array(
             'attr' => array('size' => 5),
             'required' => $this->getOption('required'),
-            'label' => $this->getOption('label'),
+            'max_length' => '10',
+            'label' => $label['from'],
         ));
 
         $builder->add('to', 'datepicker', array(
             'attr' => array('size' => 5),
             'required' => $this->getOption('required'),
-            'label' => $this->getOption('label'),
+            'max_length' => '10',
+            'label' => $label['to'],
         ));
     }
 
