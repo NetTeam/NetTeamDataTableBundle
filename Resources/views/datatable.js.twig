@@ -107,7 +107,9 @@ $(document).ready(function() {
               };
 
           function init() {
-              $(SELECTORS.FILTERS_FORM).submit(function () {
+              $(SELECTORS.FILTERS_FORM).submit(function (event) {
+                  event.preventDefault();
+                  event.stopImmediatePropagation();
                   refresh();
                   return false;
               });

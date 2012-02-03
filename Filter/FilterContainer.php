@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FilterContainer
 {
     const DEFAULT_TEMPLATE = 'NetTeamDataTableBundle:Filter:filter.html.twig';
-    
+
     private $filters = array();
 
     private $factory;
@@ -34,7 +34,7 @@ class FilterContainer
             $filter->apply();
         }
     }
-    
+
     public function getFilters()
     {
         return $this->filters;
@@ -48,20 +48,22 @@ class FilterContainer
     public function addFilter($type, $name, \Closure $callback, $options = array())
     {
         $options['label'] = $name;
-        $options['required'] = false;
+        if (!isset($options['required'])) {
+            $options['required'] = false;
+        }
         $key = count($this->filters);
         $type = $this->factory->create($type);
         $type->setOptions($options);
-        $builder = $this->formFactory->createNamedBuilder('form', 'filter-'.$key);
+        $builder = $this->formFactory->createNamedBuilder('form', 'filter-' . $key);
 
         $this->filters[$key] = new Filter($type, $builder, $callback);
     }
-    
+
     public function setTemplate($tempalte)
     {
         $this->template = $tempalte;
     }
-    
+
     public function getTemplate()
     {
         return $this->template;

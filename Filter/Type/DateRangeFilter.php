@@ -9,7 +9,7 @@ use NetTeam\System\DataTableBundle\Filter\Type\FilterType;
 /**
  * DateRange type -- input field
  *
- * @author Krzysztof Menżyk <krzysztof.menzyk@netteam.pl>
+ * @author Wojciech Kulikowski <wojciech.kulikowski@netteam.pl>
  */
 class DateRangeFilter extends FilterType
 {
@@ -41,12 +41,21 @@ class DateRangeFilter extends FilterType
 
     public function getData()
     {
-        return new FilterValue();
+        $default = $this->getOption('default');
+        if (!isset($default['from'], $default['to'])) {
+            throw new \Exception("DateRangeFilter default must be an array with keys 'from' and 'to'");
+        }
+
+        if (!($default['from'] instanceof \DateTime) || !($default['to'] instanceof \DateTime)) {
+            throw new \Exception("DateRangeFilter default values must be an instances of \DateTime");
+        }
+
+        return new FilterValue($default);
     }
 
     public function apply(\Closure $callback, $data)
     {
-        if ($data['from'] && $data['to']) {
+        if ($data['from'] || $data['to']) {
             $callback($data['from'], $data['to']);
         }
     }
