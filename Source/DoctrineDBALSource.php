@@ -31,23 +31,24 @@ use Doctrine\DBAL\Statement;
  */
 class DoctrineDBALSource implements SourceInterface
 {
+
     private $connection;
     private $query;
     private $countQuery;
-
     private $searchKeys = array();
     private $searchString;
-
     private $sortingColumn;
     private $sortingOrder;
-
     private $bindedValues = array();
+    private $countQueryParams;
+    protected $rowCallback;
+    protected $dataCallback;
 
-    public function __construct(Connection $connection, $query = null, $countQuery = null)
+    public function __construct(Connection $connection, $query = null, $countQuery = null, array $countQueryParams = array())
     {
         $this->connection = $connection;
         $this->query = $query;
-        $this->countQuery = $countQuery;
+        $this->setCountQuery($countQuery, $countQueryParams);
     }
 
     public function getData($offset, $limit)
@@ -74,7 +75,17 @@ class DoctrineDBALSource implements SourceInterface
         $this->bindStatementValue('offset', $offset, $statement);
 
         $statement->execute();
-        return $statement->fetchAll();
+        $results = $statement->fetchAll();
+
+        if (null !== $callback = $this->dataCallback) {
+            $results = $callback($results);
+        }
+
+        if ($this->rowCallback !== null) {
+            $results = array_map($this->rowCallback, $results);
+        }
+
+        return $results;
     }
     
     public function getDataAll()
@@ -97,7 +108,7 @@ class DoctrineDBALSource implements SourceInterface
 
     public function count()
     {
-        return $this->connection->fetchColumn($this->countQuery, array(), 0);
+        return $this->connection->fetchColumn($this->countQuery, $this->countQueryParams, 0);
     }
 
     public function setQuery($query)
@@ -105,14 +116,25 @@ class DoctrineDBALSource implements SourceInterface
         $this->query = $query;
     }
 
-    public function setCountQuery($countQuery)
+    public function setCountQuery($countQuery, array $params = array())
     {
         $this->countQuery = $countQuery;
+        $this->countQueryParams = $params;
     }
 
     public function bindValue($name, $value)
     {
         $this->bindedValues[$name] = $value;
+    }
+
+    public function setRowCallback(\Closure $callback)
+    {
+        $this->rowCallback = $callback;
+    }
+
+    public function setDataCallback(\Closure $callback)
+    {
+        $this->dataCallback = $callback;
     }
 
     /**
@@ -130,7 +152,7 @@ class DoctrineDBALSource implements SourceInterface
 
     private function bindStatementValue($name, $value, Statement $statement)
     {
-        if (strpos($statement->getWrappedStatement()->queryString, ':'.$name) !== false) {
+        if (strpos($statement->getWrappedStatement()->queryString, ':' . $name) !== false) {
             $statement->bindValue($name, $value);
         }
     }
@@ -138,10 +160,10 @@ class DoctrineDBALSource implements SourceInterface
     private function prepareSearchStatement()
     {
         $searchStatement = implode(' OR ', array_map(function ($key) {
-            return sprintf("UPPER(%s) LIKE '%%' || UPPER(:search) || '%%'", $key);
-        }, $this->searchKeys));
+                            return sprintf("UPPER(%s) LIKE '%%' || UPPER(:search) || '%%'", $key);
+                        }, $this->searchKeys));
 
-        return $searchStatement ?: '1 = 1';
+        return $searchStatement ? : '1 = 1';
     }
 
     /**
@@ -159,4 +181,5 @@ class DoctrineDBALSource implements SourceInterface
 
         return $query;
     }
+
 }
