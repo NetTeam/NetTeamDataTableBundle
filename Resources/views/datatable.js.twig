@@ -48,7 +48,7 @@ $(document).ready(function() {
             {% if datatable.hasPagination %}
                 "sPaginationType": "full_numbers",
             {% endif %}
-            {% include "NetTeamDataTableBundle:TableTools:config.js.twig" %},                        
+            {% include "NetTeamDataTableBundle:TableTools:config.js.twig" %},
             "bPaginate": {{ datatable.hasPagination() ? 'true' : 'false' }},
             "bInfo": {{ datatable.hasPagination() ? 'true' : 'false' }},
             "bFilter": {{ datatable.hasPagination() ? 'true' : 'false' }},
@@ -80,14 +80,14 @@ $(document).ready(function() {
                   NO_ACTION_SELECTED : '{{ 'no_action_selected'|trans({}, 'datatable') }}',
               },
               Bulk = {
-                  selected: [],
+                  URL_SEPARATOR: URL_SEPARATOR,
+                  URL_REPLACE_VALUE: URL_REPLACE_VALUE,
                   action: "",
-                  refresh: function () {
-                      refresh();
-                  },
-                  switchAll: function () {
-                      switchAll();
-                  },
+                  getSelected: getSelected,
+                  isValid: isValid,
+                  refresh: refresh,
+                  generateUrl: generateUrl,
+                  switchAll: switchAll,
                   check: function(selected) {
                       $(SELECTORS.ITEMS).each(function() {
                           checkbox = $(this);
@@ -105,7 +105,7 @@ $(document).ready(function() {
                       });
                   }
               };
-
+             
           function init() {
               $(SELECTORS.FILTERS_FORM).submit(function (event) {
                   event.preventDefault();
@@ -117,40 +117,55 @@ $(document).ready(function() {
               $(SELECTORS.APPLY_BUTTON).click(goToAction);
               $(SELECTORS.ALL_ITEMS_CHECKBOX).change(switchAll);
           }
-
-          function goToAction(event) {
-              var selected = [],
-                  urlParams = {},
-                  checked = $(SELECTORS.ITEMS + SELECTORS.CHECKED),
-                  action = $(SELECTORS.ACTION_SELECT).val(),
-                  url,
-                  beforeSend = $.Event('beforeSend.bulk');
-
-              if (!action) {
-                  alert(TEXTS.NO_ACTION_SELECTED);
-                  return;
-              }
-
-              if (0 === checked.length) {
-                  alert(TEXTS.NO_RECORD_SELECTED);
-                  return;
-              }
-
-              checked.each(function(index, value) {
+          
+          function getSelected() {
+              var selected = [];
+              $(SELECTORS.ITEMS + SELECTORS.CHECKED).each(function(index, value) {
                   selected.push($(value).val());
               });
+              return selected;
+          }
+          
+          function generateUrl(action, selected){
+              var urlParams = {};
               urlParams[URL_REPLACE_VALUE] = selected.join(URL_SEPARATOR);
               url = Utils.Url.populateVars(
                   action,
                   urlParams
               );
+              return url;
+          }
+          
+          function isValid(action, selected) {
+              if (!action) {
+                  alert(TEXTS.NO_ACTION_SELECTED);
+                  return false;
+              }
+          
+              if (0 === selected.length) {
+                  alert(TEXTS.NO_RECORD_SELECTED);
+                  return false;
+              }      
+              return true;
+          }
+
+          function goToAction(event) {
+              var url,
+                  selected,
+                  beforeSend = $.Event('beforeSend.bulk');
+
+              Bulk.action = $(SELECTORS.ACTION_SELECT).val()
 
               if (typeof dataTable !== 'undefined') {
-                  Bulk.selected = selected;
-                  Bulk.action = action;
-                  
                   dataTable.trigger(beforeSend, Bulk);
-              } else {
+              } 
+              selected = getSelected();
+              if(!isValid(Bulk.action, selected)){
+                 return false;
+              }
+              url = generateUrl(Bulk.action, selected);
+
+              if (typeof dataTable === 'undefined') {
                   if (typeof tab_open === 'function') {
                       tab_open(url);
                       return;
