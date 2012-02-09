@@ -8,3 +8,12 @@
     {{ datatable_filter_button({ 'class' : 'datatable_filter_button' }) }}
     {{ datatable_filter_reset_button({ 'class' : 'datatable_filter_reset_button' }) }}
 </form>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.filter-reset-button').click(function() {
+            this.form.reset();
+            $('.filter-apply-button').click();
+        });
+    });
+</script>
