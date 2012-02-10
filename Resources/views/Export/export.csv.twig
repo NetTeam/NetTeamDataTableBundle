@@ -1,6 +1,6 @@
 {% spaceless %}
 {% for column in columns %}{{ export.getBoundary|raw }}{{ column.caption|trans }}{{ export.getBoundary|raw }}{{ (loop.last ? '\n' : export.getSeparator|raw) }}{% endfor %}
 {% for rowKey, row in data %}
-{% for key, value in row.columns %}{{ export.getBoundary|raw }}{% filter striptags %}{% include columns[key].getTemplate with { 'record': value, 'translate' : columns[key].getTranslate } %}{% endfilter %}{{ export.getBoundary|raw }}{{ (loop.last ? '\n' : export.getSeparator|raw) }}{% endfor %}
+{% for key, value in row.columns %}{{ export.getBoundary|raw }}{% filter striptags|replace({ '\n' : '',  '\r' : '' }) %}{% include columns[key].getTemplate with { 'record': value, 'translate' : columns[key].getTranslate } %}{% endfilter %}{{ export.getBoundary|raw }}{{ (loop.last ? '\n' : export.getSeparator|raw) }}{% endfor %}
 {% endfor %}
 {% endspaceless %} 

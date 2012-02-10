@@ -1,8 +1,8 @@
 {% if record.route %}
-    <a class="{{ record.routeClasses|default('')|join(' ') }}" href="{{ path(record.route, record.routeParams) }}" title="{{ record.value|default('')|join(' ')|trans }}">
+<a class="{{ record.routeClasses|default('')|join(' ') }}" href="{{ path(record.route, record.routeParams) }}" title="{{ record.value|default('')|join(' ')|trans }}">
 {% endif %}
 {% block columnValue %}
 {% endblock %}
 {% if record.route %}
-    </a>
+</a>
 {% endif %}
