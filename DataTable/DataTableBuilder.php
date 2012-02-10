@@ -20,12 +20,14 @@ use NetTeam\System\DataTableBundle\Column\ColumnFactory;
  */
 class DataTableBuilder
 {
+
     /**
      * Url zwracający dane
      */
     private $route;
     private $requiredRouteParameters = array();
     private $routeParameters = array();
+
     /**
      * Źródło danych
      * @var NetTeam\System\DataTableBundle\Source\SourceInterface
@@ -33,6 +35,7 @@ class DataTableBuilder
     private $source;
     private $isSimple = false;
     private $pagination = true;
+
     /**
      * Definicje kolumn
      */
@@ -229,7 +232,8 @@ class DataTableBuilder
             foreach ($keys as $key) {
                 $this->addSearchableKey($key);
             }
-        } else if (is_string($keys)) {
+        }
+        else if (is_string($keys)) {
             $this->addSearchableKey($keys);
         }
 
@@ -260,14 +264,15 @@ class DataTableBuilder
 
     public function hasGlobalSearch()
     {
-        return!empty($this->searchableKeys);
+        return !empty($this->searchableKeys);
     }
 
     private function sorting()
     {
         if ($this->sortingColumn !== null) {
             $this->columnSorting($this->columns[$this->sortingColumn], $this->sortingOrder);
-        } else {
+        }
+        else {
             $this->defaultSorting();
         }
     }
@@ -452,7 +457,7 @@ class DataTableBuilder
     {
         $this->filterContainer->setTemplate($template);
     }
-    
+
     public function getFilterTemplate()
     {
         return $this->filterContainer->getTemplate();
@@ -472,4 +477,5 @@ class DataTableBuilder
     {
         return null !== $this->additionalJSTemplate;
     }
+
 }

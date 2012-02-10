@@ -11,33 +11,44 @@ use NetTeam\System\DataTableBundle\Filter\Type\FilterType;
  *
  * @author Krzysztof Menżyk <krzysztof.menzyk@netteam.pl>
  */
-class DefaultFilter extends FilterType
+class TextFilter extends FilterType
 {
+
     protected $options = array();
 
     public function buildForm(FormBuilder $builder)
     {
         $builder->add('value', 'text', array(
-            'attr' => array('size' => 5),
-            'required' => $this->getOption('required'),
+            'attr' => $this->getOption('attr'),
             'label' => $this->getOption('label'),
         ));
+    }
+
+    public function getDefaultOptions()
+    {
+        return array(
+            'required' => false,
+            'attr' => array(
+                'size' => 7,
+            ),
+        );
     }
 
     public function getData()
     {
         return new FilterValue();
     }
-    
+
     public function apply(\Closure $callback, $data)
     {
         if ($data['value']) {
             $callback($data['value']);
         }
     }
-    
+
     public function getTemplate()
     {
         return 'NetTeamDataTableBundle:Filter:default.html.twig';
     }
+
 }

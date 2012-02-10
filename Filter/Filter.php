@@ -8,54 +8,44 @@ use NetTeam\System\DataTableBundle\Filter\Type\FilterTypeInterface;
 
 class Filter
 {
+
+    protected $key;
+    protected $container;
     protected $type;
-    protected $builder;
-    protected $callback;
-    protected $model;
-    
-    public function __construct(FilterTypeInterface $type, FormBuilder $builder, $callback)
+
+    public function __construct($key, FilterContainer $container, FilterTypeInterface $type, $callback)
     {
+        $this->key = $key;
+        $this->container = $container;
         $this->type = $type;
         $this->callback = $callback;
-        $this->model = $type->getData();
-        
-        $this->type->buildForm($builder);
-        $this->builder = $builder;
-        $this->builder->setData($this->model);
+
+        $this->type->buildForm($container->getBuilder($this->key));
     }
-    
+
     public function getType()
     {
         return $this->type;
     }
-    
+
     public function getCallback()
     {
         return $this->callback;
     }
-    
-    public function getBuilder()
-    {
-        return $this->builder;
-    }
-    
+
     public function getForm()
     {
-        return $this->builder->getForm()->createView();
+        return $this->container->getFormView($this->key);
     }
-    
+
     public function getTemplate()
     {
         return $this->type->getTemplate();
     }
-    
+
     public function apply()
     {
-        $this->type->apply($this->callback, $this->model);
+        $this->type->apply($this->callback, $this->container->getModel($this->key));
     }
-    
-    public function bindRequest(Request $request)
-    {
-        $this->builder->getForm()->bindRequest($request);
-    }
+
 }

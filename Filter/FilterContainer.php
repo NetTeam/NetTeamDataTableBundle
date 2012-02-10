@@ -4,6 +4,7 @@ namespace NetTeam\System\DataTableBundle\Filter;
 
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use NetTeam\System\DataTableBundle\Filter\Value\FilterValue;
 
 /**
  * Container for all filter types
@@ -12,13 +13,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilterContainer
 {
+
     const DEFAULT_TEMPLATE = 'NetTeamDataTableBundle:Filter:filter.html.twig';
 
+    private $name;
     private $filters = array();
-
     private $factory;
     private $formFactory;
-
+    private $builder;
+    private $model;
     private $template = self::DEFAULT_TEMPLATE;
 
     public function __construct(FilterFactory $factory, FormFactoryInterface $formFactory)
@@ -27,10 +30,17 @@ class FilterContainer
         $this->formFactory = $formFactory;
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
     public function bindRequest(Request $request)
     {
-        foreach ($this->filters as $key => $filter) {
-            $filter->bindRequest($request);
+        $this->loadBuilder();
+
+        $this->builder->getForm()->bindRequest($request);
+        foreach ($this->filters as $filter) {
             $filter->apply();
         }
     }
@@ -47,16 +57,18 @@ class FilterContainer
 
     public function addFilter($type, $name, \Closure $callback, $options = array())
     {
+        $this->loadBuilder();
+
         $options['label'] = $name;
-        if (!isset($options['required'])) {
-            $options['required'] = false;
-        }
-        $key = count($this->filters);
         $type = $this->factory->create($type);
         $type->setOptions($options);
-        $builder = $this->formFactory->createNamedBuilder('form', 'filter-' . $key);
 
-        $this->filters[$key] = new Filter($type, $builder, $callback);
+        $key = 'type-' . count($this->filters);
+        $typeBuilder = $this->formFactory->createNamedBuilder(new FilterType(), $key);
+        $this->builder->add($typeBuilder);
+        $this->model->add($key, $type->getData());
+
+        $this->filters[$key] = new Filter($key, $this, $type, $callback);
     }
 
     public function setTemplate($tempalte)
@@ -68,4 +80,33 @@ class FilterContainer
     {
         return $this->template;
     }
+
+    public function getFormView($key)
+    {
+        $this->loadBuilder();
+        return $this->builder->getForm()->createView()->getChild($key);
+    }
+
+    public function getBuilder($key)
+    {
+        $this->loadBuilder();
+        return $this->builder->get($key);
+    }
+
+    public function getModel($key)
+    {
+        $this->loadBuilder();
+        return $this->model->get($key);
+    }
+
+    private function loadBuilder()
+    {
+        if (null !== $this->builder) {
+            return;
+        }
+
+        $this->model = new FilterValue();
+        $this->builder = $this->formFactory->createNamedBuilder('form', 'filter-' . $this->name, $this->model);
+    }
+
 }

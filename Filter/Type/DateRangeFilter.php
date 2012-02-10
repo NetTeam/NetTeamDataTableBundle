@@ -14,7 +14,6 @@ use NetTeam\System\DataTableBundle\Filter\Type\FilterType;
 class DateRangeFilter extends FilterType
 {
 
-
     protected $options = array();
 
     public function buildForm(FormBuilder $builder)
@@ -37,6 +36,17 @@ class DateRangeFilter extends FilterType
             'max_length' => '10',
             'label' => $label['to'],
         ));
+    }
+
+    public function getDefaultOptions()
+    {
+        return array_merge($defaultOptions, array(
+                    'required' => true,
+                    'label' => array(
+                        'from' => 'date_from',
+                        'to' => 'date_to',
+                    )
+                ));
     }
 
     public function getData()

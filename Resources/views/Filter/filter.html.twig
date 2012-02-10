@@ -1,9 +1,6 @@
 <form id="form-filter-{{ alias }}" class="filters">
     {% for filter in filters %}
-        <div class="filter-element">
-            {{ datatable_filter(filter) }}
-        </div>
-        <div class="float-remover"></div>
+        {{ datatable_filter(filter) }}
     {% endfor %}
     {{ datatable_filter_button({ 'class' : 'datatable_filter_button' }) }}
     {{ datatable_filter_reset_button({ 'class' : 'datatable_filter_reset_button' }) }}
@@ -11,8 +8,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.filter-reset-button').click(function() {
+        $('.filter-reset-button').click(function(e) {
             this.form.reset();
+            e.preventDefault();
             $('.filter-apply-button').click();
         });
     });

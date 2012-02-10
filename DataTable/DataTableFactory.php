@@ -10,6 +10,7 @@ use NetTeam\System\DataTableBundle\Source\SimpleSourceAdapter;
 
 class DataTableFactory
 {
+
     private $container;
     private $datatables = array();
 
@@ -31,7 +32,9 @@ class DataTableFactory
         $builder = new DataTableBuilder('nt_datatable', $this->prepareSource($source), array('name' => $name));
         $builder->setRouteParameters($options);
 
-        $builder->setFilterContainer($this->container->get('nt_datatable.filter_container'));
+        $filterContainer = $this->container->get('nt_datatable.filter_container');
+        $filterContainer->setName($name);
+        $builder->setFilterContainer($filterContainer);
 
         $datatable->build($builder);
         $builder->buildExports();
@@ -91,4 +94,5 @@ class DataTableFactory
             throw new \InvalidArgumentException(sprintf('Method "getSource()" in the DateTable "%s" must return SimpleSourceInterface implementation.', $name));
         }
     }
+
 }

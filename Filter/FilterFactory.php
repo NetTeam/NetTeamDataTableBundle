@@ -1,11 +1,13 @@
 <?php
 
 namespace NetTeam\System\DataTableBundle\Filter;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use NetTeam\System\DataTableBundle\Filter\Type\FilterTypeInterface;
 
 class FilterFactory
 {
+
     private $container;
     private $types = array();
 
@@ -41,4 +43,5 @@ class FilterFactory
     {
         return isset($this->types[$name]);
     }
+
 }
