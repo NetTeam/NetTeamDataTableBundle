@@ -1,1 +1,10 @@
 <button type="reset" class="filter-reset-button {{ options.class }}">{{ 'reset'|trans({}, 'datatable') }}</button>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.filter-reset-button').click(function(e) {
+            this.form.reset();
+            e.preventDefault();
+            $('.filter-apply-button').click();
+        });
+    });
+</script>
