@@ -2,7 +2,5 @@
     {% if datatable.hasFilters() %}
         {% include datatable.getFilterTemplate() with { 'filters' : datatable.getFilters() } %}
     {% endif %}
-    <div class="dataTables_wrapper">
     {% include 'NetTeamDataTableBundle::header.html.twig' with { 'datatable' : datatable} %}
-    </div>
 </div>

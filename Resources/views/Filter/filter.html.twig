@@ -1,9 +1,7 @@
 <form id="form-filter-{{ alias }}" class="filters">
-<h6>{{'datatable.filters'|trans}}</h6>
     {% for filter in filters %}
-        <div class="filter-element">{{ datatable_filter(filter) }}</div>
+        {{ datatable_filter(filter) }}
     {% endfor %}
-    <div class="float-remover"></div>
     {{ datatable_filter_button({ 'class' : 'datatable_filter_button' }) }}
     {{ datatable_filter_reset_button({ 'class' : 'datatable_filter_reset_button' }) }}
 </form>
