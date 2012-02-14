@@ -47,7 +47,6 @@ class DataTableController
         $this->updateSorting($builder);
 
         $data = $builder->getDataArray($offset, $limit);
-        $columns = $builder->getColumns();
         $count = $builder->countRows();
         
         return $this->jsonBuilder->build($data, $builder, $name, $count, $echo);
