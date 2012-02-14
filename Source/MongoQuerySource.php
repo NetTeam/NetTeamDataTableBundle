@@ -37,7 +37,7 @@ class MongoQuerySource implements SourceInterface
 
         return $cursor->toArray();
     }
-    
+
     public function getDataAll()
     {
         throw new  RuntimeException('Not yet implemented');
@@ -76,6 +76,18 @@ class MongoQuerySource implements SourceInterface
 
     public function count()
     {
-        return $this->query->count(true);
+        $query = clone $this->query;
+
+        $reflectionClass = new \ReflectionClass('Doctrine\MongoDB\Query\Query');
+        $reflectionProperty = $reflectionClass->getProperty('query');
+        $reflectionProperty->setAccessible(true);
+
+        $queryOptions = $reflectionProperty->getValue($query);
+        $queryOptions['limit'] = null;
+        $queryOptions['skip'] = null;
+
+        $reflectionProperty->setValue($query, $queryOptions);
+
+        return $query->count(true);
     }
 }

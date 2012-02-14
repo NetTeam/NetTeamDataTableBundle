@@ -50,7 +50,10 @@ class MongoBuilderSource implements SourceInterface
 
     public function count()
     {
-        return $this->builder->getQuery()->count(true);
+        $builder = clone $this->builder;
+        $builder->skip(null)->limit(null);
+
+        return $builder->getQuery()->count(true);
     }
 
     public function getBuilder()
