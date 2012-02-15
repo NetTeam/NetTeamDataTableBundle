@@ -21,14 +21,25 @@ class ChoiceFilter extends FilterType
 
         $type = $this->getOption('type');
 
-        $builder->add('choice', $type, array(
-            'required' => $this->getOption('required'),
-            'label' => $this->getOption('label'),
-            'attr' => $this->getOption('attr'),
-            'choices' => $this->getOption('choices'),
-            'class' => $this->getOption('class'),
-            'query_builder' => $this->getOption('query_builder'),
-        ));
+        if ($type == 'choice') {
+            $options = array(
+                'required' => $this->getOption('required'),
+                'label' => $this->getOption('label'),
+                'attr' => $this->getOption('attr'),
+                'choices' => $this->getOption('choices'),
+            );
+        } else {
+            $options = array(
+                'required' => $this->getOption('required'),
+                'label' => $this->getOption('label'),
+                'attr' => $this->getOption('attr'),
+                'choices' => $this->getOption('choices'),
+                'class' => $this->getOption('class'),
+                'query_builder' => $this->getOption('query_builder'),
+            );
+        }
+
+        $builder->add('choice', $type, $options);
     }
 
     public function getDefaultOptions()

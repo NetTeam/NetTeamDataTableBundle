@@ -21,6 +21,7 @@ class TextFilter extends FilterType
         $builder->add('value', 'text', array(
             'attr' => $this->getOption('attr'),
             'label' => $this->getOption('label'),
+            'required' => $this->getOption('required'),
         ));
     }
 
