@@ -40,13 +40,13 @@ class DateRangeFilter extends FilterType
 
     public function getDefaultOptions()
     {
-        return array_merge($defaultOptions, array(
-                    'required' => true,
-                    'label' => array(
-                        'from' => 'date_from',
-                        'to' => 'date_to',
-                    )
-                ));
+        return array(
+            'required' => true,
+            'label' => array(
+                'from' => 'date_from',
+                'to' => 'date_to',
+            )
+        );
     }
 
     public function getData()
