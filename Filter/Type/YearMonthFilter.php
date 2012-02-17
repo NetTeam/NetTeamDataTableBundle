@@ -19,13 +19,9 @@ class YearMonthFilter extends FilterType
 
     public function buildForm(FormBuilder $builder)
     {
-
         $builder->add('date', 'date', array(
-
             'required' => $this->getOption('required'),
             'label' => $this->getOption('label'),
-            'format' => 'yyyy-MM',
-            //'pattern' => '{{year}} - {{month}} - {{day}}'
         ));
     }
 
@@ -46,12 +42,10 @@ class YearMonthFilter extends FilterType
 
     public function apply(\Closure $callback, $data)
     {
-        //echo $data['date']->format('Y-m-d');
-        //die();
         if ($data['date'] instanceof \DateTime) {
             $from = new \DateTime($data['date']->format('Y-m-01'));
             $to = new \DateTime($data['date']->format('Y-m-t'));
-            
+
             $callback($from, $to);
         }
     }
