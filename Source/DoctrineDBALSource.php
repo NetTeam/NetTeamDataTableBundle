@@ -40,14 +40,16 @@ class DoctrineDBALSource implements SourceInterface
     private $sortingColumn;
     private $sortingOrder;
     private $bindedValues = array();
+    private $queryParams;
     private $countQueryParams;
     protected $rowCallback;
     protected $dataCallback;
 
-    public function __construct(Connection $connection, $query = null, $countQuery = null, array $countQueryParams = array())
+    public function __construct(Connection $connection, $query = null, $countQuery = null, array $queryParams = array(), array $countQueryParams = array())
     {
         $this->connection = $connection;
         $this->query = $query;
+        $this->queryParams = $queryParams;
         $this->setCountQuery($countQuery, $countQueryParams);
     }
 
@@ -73,6 +75,9 @@ class DoctrineDBALSource implements SourceInterface
         $this->bindStatementValue('search', $this->searchString, $statement);
         $this->bindStatementValue('limit', $limit, $statement);
         $this->bindStatementValue('offset', $offset, $statement);
+        foreach ($this->queryParams as $key => $param) {
+            $this->bindStatementValue($key, $param, $statement);
+        }
 
         $statement->execute();
         $results = $statement->fetchAll();
