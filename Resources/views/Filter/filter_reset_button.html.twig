@@ -1,4 +1,4 @@
-<button type="reset" class="filter-reset-button {{ options.class }}">{{ 'reset'|trans({}, 'datatable') }}</button>
+<input type="reset" class="filter-reset-button button {{ options.class }}" value="{{ 'reset'|trans({}, 'datatable') }}"/>
 <script type="text/javascript">
     $(document).ready(function() {
         $('.filter-reset-button').click(function(e) {
