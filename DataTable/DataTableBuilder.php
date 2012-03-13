@@ -416,7 +416,10 @@ class DataTableBuilder
 
     public function hasFilters()
     {
-        return $this->filterContainer->hasFilters();
+        if ($this->filterContainer) {
+            return $this->filterContainer->hasFilters();
+        }
+        return false;
     }
 
     public function getFilters()
@@ -431,10 +434,10 @@ class DataTableBuilder
 
     /**
      * Dopisuje filtr do datatable
-     * @param string $type typ filtru, domyslny: default 
+     * @param string $type typ filtru, domyslny: default
      * @param string $name label przy filtrze
      * @param \Closure $callback
-     * @return DataTableBuilder 
+     * @return DataTableBuilder
      */
     public function addFilter($type = 'default', $name, \Closure $callback, array $options = array())
     {
