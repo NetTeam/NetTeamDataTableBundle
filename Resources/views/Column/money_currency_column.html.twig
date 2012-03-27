@@ -1,4 +1,4 @@
 {% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
 {% block columnValue %}
-    {% if record.value[0] is not sameas(null) %}{{ record.value[0]|money_format }} {{ record.value[1] }} {% endif %}
+    {% if record.value[0] is not sameas(null) %}{{ record.value[0]|number_format(2, ',', ' ') }}{% if record.value[1] is not sameas(null) %} {{ record.value[1].key }}{% endif %}{% endif %}
 {% endblock %}
