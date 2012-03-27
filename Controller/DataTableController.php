@@ -1,13 +1,13 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Controller;
+namespace NetTeam\Bundle\DataTableBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
-use NetTeam\System\DataTableBundle\DataTable\DataTableFactory;
-use NetTeam\System\DataTableBundle\Util\JsonResponseBuilder;
-use NetTeam\System\DataTableBundle\DataTable\DataTableBuilder;
+use NetTeam\Bundle\DataTableBundle\DataTable\DataTableFactory;
+use NetTeam\Bundle\DataTableBundle\Util\JsonResponseBuilder;
+use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
 
 class DataTableController
 {

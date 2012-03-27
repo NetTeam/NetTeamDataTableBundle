@@ -1,9 +1,9 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Controller;
+namespace NetTeam\Bundle\DataTableBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use NetTeam\System\DataTableBundle\SimpleSource\SimpleSourceInterface;
+use NetTeam\Bundle\DataTableBundle\SimpleSource\SimpleSourceInterface;
 
 /**
  * Obsługuje prostą tabelę

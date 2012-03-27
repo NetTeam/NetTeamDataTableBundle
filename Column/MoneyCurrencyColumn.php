@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Column;
+namespace NetTeam\Bundle\DataTableBundle\Column;
 
 /**
  * MoneyCurrencyColumn - kwota i waluta (liczba i napis)

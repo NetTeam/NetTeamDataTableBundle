@@ -1,10 +1,10 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Filter;
+namespace NetTeam\Bundle\DataTableBundle\Filter;
 
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use NetTeam\System\DataTableBundle\Filter\Value\FilterValue;
+use NetTeam\Bundle\DataTableBundle\Filter\Value\FilterValue;
 
 /**
  * Container for all filter types

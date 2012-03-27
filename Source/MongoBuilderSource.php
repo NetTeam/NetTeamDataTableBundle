@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Source;
+namespace NetTeam\Bundle\DataTableBundle\Source;
 
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\Query\Query;

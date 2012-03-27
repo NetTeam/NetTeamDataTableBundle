@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\DataTable;
+namespace NetTeam\Bundle\DataTableBundle\DataTable;
 
 interface DataTableInterface
 {

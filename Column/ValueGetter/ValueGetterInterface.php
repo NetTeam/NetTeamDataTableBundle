@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Column\ValueGetter;
+namespace NetTeam\Bundle\DataTableBundle\Column\ValueGetter;
 
 /**
  * Interfejs dla klas pobierających wartości dla kolumny

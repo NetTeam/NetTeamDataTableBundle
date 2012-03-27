@@ -1,5 +1,5 @@
 <?php
-namespace NetTeam\System\DataTableBundle\SimpleSource;
+namespace NetTeam\Bundle\DataTableBundle\SimpleSource;
 
 interface SimpleSourceInterface
 {

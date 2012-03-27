@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Column\Value;
+namespace NetTeam\Bundle\DataTableBundle\Column\Value;
 
 /**
  *

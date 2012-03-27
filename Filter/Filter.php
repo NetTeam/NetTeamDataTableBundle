@@ -1,10 +1,10 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Filter;
+namespace NetTeam\Bundle\DataTableBundle\Filter;
 
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Request;
-use NetTeam\System\DataTableBundle\Filter\Type\FilterTypeInterface;
+use NetTeam\Bundle\DataTableBundle\Filter\Type\FilterTypeInterface;
 
 class Filter
 {

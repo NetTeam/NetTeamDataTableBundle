@@ -1,5 +1,5 @@
 <?php
-namespace NetTeam\System\DataTableBundle\Source;
+namespace NetTeam\Bundle\DataTableBundle\Source;
 
 interface SourceInterface extends \Countable
 {

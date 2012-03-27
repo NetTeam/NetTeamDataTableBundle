@@ -1,9 +1,9 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Filter;
+namespace NetTeam\Bundle\DataTableBundle\Filter;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use NetTeam\System\DataTableBundle\Filter\Type\FilterTypeInterface;
+use NetTeam\Bundle\DataTableBundle\Filter\Type\FilterTypeInterface;
 
 class FilterFactory
 {

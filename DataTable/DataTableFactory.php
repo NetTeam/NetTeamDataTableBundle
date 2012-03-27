@@ -1,12 +1,12 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\DataTable;
+namespace NetTeam\Bundle\DataTableBundle\DataTable;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use NetTeam\System\DataTableBundle\SimpleSource\SimpleSourceInterface;
-use NetTeam\System\DataTableBundle\Source\SourceInterface;
-use NetTeam\System\DataTableBundle\Source\SimpleSourceAdapter;
+use NetTeam\Bundle\DataTableBundle\SimpleSource\SimpleSourceInterface;
+use NetTeam\Bundle\DataTableBundle\Source\SourceInterface;
+use NetTeam\Bundle\DataTableBundle\Source\SimpleSourceAdapter;
 
 class DataTableFactory
 {

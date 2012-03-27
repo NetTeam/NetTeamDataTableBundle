@@ -1,17 +1,17 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\DataTable;
+namespace NetTeam\Bundle\DataTableBundle\DataTable;
 
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use NetTeam\System\DataTableBundle\Source\SourceInterface;
-use NetTeam\System\DataTableBundle\Column\ColumnInterface;
-use NetTeam\System\DataTableBundle\BulkAction\BulkAction;
-use NetTeam\System\DataTableBundle\BulkAction\Column as BulkActionColumn;
-use NetTeam\System\DataTableBundle\Filter\FilterContainer;
-use NetTeam\System\DataTableBundle\Export\CsvExport;
-use NetTeam\System\DataTableBundle\Export\ExportInterface;
-use NetTeam\System\DataTableBundle\Column\ColumnFactory;
+use NetTeam\Bundle\DataTableBundle\Source\SourceInterface;
+use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
+use NetTeam\Bundle\DataTableBundle\BulkAction\BulkAction;
+use NetTeam\Bundle\DataTableBundle\BulkAction\Column as BulkActionColumn;
+use NetTeam\Bundle\DataTableBundle\Filter\FilterContainer;
+use NetTeam\Bundle\DataTableBundle\Export\CsvExport;
+use NetTeam\Bundle\DataTableBundle\Export\ExportInterface;
+use NetTeam\Bundle\DataTableBundle\Column\ColumnFactory;
 
 /**
  * Description of DataTableBuilder
@@ -30,7 +30,7 @@ class DataTableBuilder
 
     /**
      * Źródło danych
-     * @var NetTeam\System\DataTableBundle\Source\SourceInterface
+     * @var NetTeam\Bundle\DataTableBundle\Source\SourceInterface
      */
     private $source;
     private $isSimple = false;
@@ -49,7 +49,7 @@ class DataTableBuilder
     private $sortingOrder;
     private $jQueryUI = false;
     private static $exportTypes = array(
-        'csv' => 'NetTeam\System\DataTableBundle\Export\CsvExport'
+        'csv' => 'NetTeam\Bundle\DataTableBundle\Export\CsvExport'
     );
     private $filterContainer;
     private $additionalJSTemplate;

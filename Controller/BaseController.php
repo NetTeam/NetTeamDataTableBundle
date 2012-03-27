@@ -1,9 +1,9 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Controller;
+namespace NetTeam\Bundle\DataTableBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use NetTeam\System\DataTableBundle\DataTable\DataTableBuilder;
+use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
 
 /**
  * Obsługuje tabelę z paginacją i sortowaniem po stronie serwera
@@ -23,7 +23,7 @@ abstract class BaseController extends Controller
 
     /**
      * Builder tabeli
-     * @var NetTeam\System\DataTableBundle\DataTableBuilder
+     * @var NetTeam\Bundle\DataTableBundle\DataTableBuilder
      */
     protected $dtb;
 

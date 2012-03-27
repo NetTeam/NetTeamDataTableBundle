@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Column\ValueGetter;
+namespace NetTeam\Bundle\DataTableBundle\Column\ValueGetter;
 
 /**
  * Pobieranie wartości z pomocą domknięcia

@@ -1,12 +1,11 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Column;
+namespace NetTeam\Bundle\DataTableBundle\Column;
 
-use NetTeam\System\CoreBundle\Exception\NetTeamException;
-use NetTeam\System\DataTableBundle\Column\ValueGetter\PropertyValueGetter;
-use NetTeam\System\DataTableBundle\Column\ValueGetter\ClosureValueGetter;
-use NetTeam\System\DataTableBundle\Column\ValueGetter\AsIsValueGetter;
-use NetTeam\System\DataTableBundle\Column\Value\ColumnValue;
+use NetTeam\Bundle\DataTableBundle\Column\ValueGetter\PropertyValueGetter;
+use NetTeam\Bundle\DataTableBundle\Column\ValueGetter\ClosureValueGetter;
+use NetTeam\Bundle\DataTableBundle\Column\ValueGetter\AsIsValueGetter;
+use NetTeam\Bundle\DataTableBundle\Column\Value\ColumnValue;
 
 /**
  * Column

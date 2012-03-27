@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Filter\Type;
+namespace NetTeam\Bundle\DataTableBundle\Filter\Type;
 
 use Symfony\Component\Form\FormBuilder;
 

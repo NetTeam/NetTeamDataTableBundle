@@ -1,8 +1,8 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Source;
+namespace NetTeam\Bundle\DataTableBundle\Source;
 
-use NetTeam\System\DataTableBundle\SimpleSource\SimpleSourceInterface;
+use NetTeam\Bundle\DataTableBundle\SimpleSource\SimpleSourceInterface;
 
 /**
  * Adapter dla SimpleSourceInterface

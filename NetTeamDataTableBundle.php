@@ -1,12 +1,12 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle;
+namespace NetTeam\Bundle\DataTableBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use NetTeam\System\DataTableBundle\DependencyInjection\DataTableExtension;
-use NetTeam\System\DataTableBundle\DependencyInjection\Compiler\DataTablePass;
-use NetTeam\System\DataTableBundle\DependencyInjection\Compiler\FilterPass;
+use NetTeam\Bundle\DataTableBundle\DependencyInjection\DataTableExtension;
+use NetTeam\Bundle\DataTableBundle\DependencyInjection\Compiler\DataTablePass;
+use NetTeam\Bundle\DataTableBundle\DependencyInjection\Compiler\FilterPass;
 
 class NetTeamDataTableBundle extends Bundle
 {

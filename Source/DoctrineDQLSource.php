@@ -1,13 +1,9 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Source;
+namespace NetTeam\Bundle\DataTableBundle\Source;
 
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\Expr;
 use DoctrineExtensions\Paginate\Paginate;
-use Doctrine\ORM\Query\Lexer;
-use NetTeam\System\CoreBundle\Util\String;
 
 /**
  * Źródło danych dla DataTable - Query Doctrine ORM

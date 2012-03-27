@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Column\ValueGetter;
+namespace NetTeam\Bundle\DataTableBundle\Column\ValueGetter;
 
 /**
  * Nie pobiera wartości z obiektu tylko zwraca tę przekazaną w konstruktorze

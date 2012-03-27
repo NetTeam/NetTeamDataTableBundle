@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace NetTeam\System\DataTableBundle\Util;
+namespace NetTeam\Bundle\DataTableBundle\Util\Doctrine;
 
 use Doctrine\ORM\Query\TreeWalkerAdapter,
     Doctrine\ORM\Query\AST\SelectStatement,

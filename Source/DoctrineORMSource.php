@@ -1,14 +1,12 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Source;
+namespace NetTeam\Bundle\DataTableBundle\Source;
 
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\Expr;
-use NetTeam\System\CoreBundle\DQL\Cast;
-use NetTeam\System\DataTableBundle\Util\CountWalker;
-use Doctrine\ORM\Query\Lexer;
-use NetTeam\System\CoreBundle\Util\String;
+use NetTeam\Bundle\DataTableBundle\Util\Doctrine\Cast;
+use NetTeam\Bundle\DataTableBundle\Util\Doctrine\CountWalker;
+use NetTeam\Bundle\DataTableBundle\Util\String;
 
 /**
  * Źródło danych dla DataTable - QueryBuilder Doctrine ORM
@@ -96,13 +94,13 @@ class DoctrineORMSource implements SourceInterface
         $query = $this->queryBuilder->getQuery();
         $countQuery = $this->cloneQuery($query);
 
-        $countQuery->setHint(Query::HINT_CUSTOM_TREE_WALKERS, array('NetTeam\System\DataTableBundle\Util\CountWalker'));
+        $countQuery->setHint(Query::HINT_CUSTOM_TREE_WALKERS, array('NetTeam\Bundle\DataTableBundle\Util\Doctrine\CountWalker'));
         $countQuery->setFirstResult(null)->setMaxResults(null);
 
         try {
             $data = $countQuery->getScalarResult();
             $data = array_map('current', $data);
-            
+
             if (count($this->queryBuilder->getDQLPart('groupBy'))) {
                 return count($data);
             }
@@ -131,7 +129,7 @@ class DoctrineORMSource implements SourceInterface
 
         return $cloneQuery;
     }
-    
+
     public function getBuilder()
     {
         return $this->queryBuilder;

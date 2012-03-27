@@ -1,15 +1,10 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Source;
+namespace NetTeam\Bundle\DataTableBundle\Source;
 
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\Expr;
-use DoctrineExtensions\Paginate\Paginate;
-use Doctrine\ORM\Query\Lexer;
-use NetTeam\System\CoreBundle\Util\String;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\NativeQuery;
+use Doctrine\ORM\Query\ResultSetMapping;
+
 /**
  * Źródło danych dla DataTable - NativeQuery Doctrine ORM
  *
@@ -26,7 +21,6 @@ class DoctrineSQLSource implements SourceInterface
     public function __construct(NativeQuery $query)
     {
         $this->query = $query;
-        //$this->count = Paginate::getTotalQueryResults($this->query);
         $this->query->getSQL();
         $em  = $this->query->getEntityManager();
         

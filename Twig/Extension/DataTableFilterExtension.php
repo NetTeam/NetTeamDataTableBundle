@@ -1,10 +1,10 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Twig\Extension;
+namespace NetTeam\Bundle\DataTableBundle\Twig\Extension;
 
 use Twig_Function_Method;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use NetTeam\System\DataTableBundle\Filter\Filter;
+use NetTeam\Bundle\DataTableBundle\Filter\Filter;
 
 class DataTableFilterExtension extends \Twig_Extension
 {

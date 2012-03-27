@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\DependencyInjection;
+namespace NetTeam\Bundle\DataTableBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

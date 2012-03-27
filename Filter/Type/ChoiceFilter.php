@@ -1,11 +1,11 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Filter\Type;
+namespace NetTeam\Bundle\DataTableBundle\Filter\Type;
 
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use NetTeam\System\DataTableBundle\Filter\Value\FilterValue;
-use NetTeam\System\DataTableBundle\Filter\Type\FilterType;
+use NetTeam\Bundle\DataTableBundle\Filter\Value\FilterValue;
+use NetTeam\Bundle\DataTableBundle\Filter\Type\FilterType;
 
 /**
  * ChoiceFilter

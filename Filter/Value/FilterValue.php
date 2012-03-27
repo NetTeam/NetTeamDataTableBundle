@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Filter\Value;
+namespace NetTeam\Bundle\DataTableBundle\Filter\Value;
 
 /**
  *

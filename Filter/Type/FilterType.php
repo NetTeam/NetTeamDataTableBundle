@@ -1,9 +1,9 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Filter\Type;
+namespace NetTeam\Bundle\DataTableBundle\Filter\Type;
 
 use Symfony\Component\Form\FormBuilder;
-use NetTeam\System\DataTableBundle\Filter\Type\FilterTypeInterface;
+use NetTeam\Bundle\DataTableBundle\Filter\Type\FilterTypeInterface;
 
 abstract class FilterType implements FilterTypeInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\DependencyInjection\Compiler;
+namespace NetTeam\Bundle\DataTableBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

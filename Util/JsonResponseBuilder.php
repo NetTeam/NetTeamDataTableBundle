@@ -1,10 +1,10 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Util;
+namespace NetTeam\Bundle\DataTableBundle\Util;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use NetTeam\System\DataTableBundle\DataTable\DataTableBuilder;
+use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
 
 /**
  * Description of JsonResponseBuilder

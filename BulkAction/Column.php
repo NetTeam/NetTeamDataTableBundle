@@ -1,9 +1,9 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\BulkAction;
+namespace NetTeam\Bundle\DataTableBundle\BulkAction;
 
-use NetTeam\System\DataTableBundle\Column\ValueGetter\ClosureValueGetter;
-use NetTeam\System\DataTableBundle\Column\ValueGetter\PropertyValueGetter;
+use NetTeam\Bundle\DataTableBundle\Column\ValueGetter\ClosureValueGetter;
+use NetTeam\Bundle\DataTableBundle\Column\ValueGetter\PropertyValueGetter;
 
 class Column
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Export;
+namespace NetTeam\Bundle\DataTableBundle\Export;
 
 /**
  *

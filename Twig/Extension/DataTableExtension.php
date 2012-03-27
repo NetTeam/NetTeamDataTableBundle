@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Twig\Extension;
+namespace NetTeam\Bundle\DataTableBundle\Twig\Extension;
 
 use Twig_Function_Method;
 use Symfony\Component\DependencyInjection\ContainerInterface;

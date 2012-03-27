@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Column;
+namespace NetTeam\Bundle\DataTableBundle\Column;
 
 /**
  * Description of ColumnFactory
@@ -9,13 +9,13 @@ namespace NetTeam\System\DataTableBundle\Column;
 class ColumnFactory
 {
     private $columns = array(
-        'text' => 'NetTeam\System\DataTableBundle\Column\TextColumn',
-        'array' => 'NetTeam\System\DataTableBundle\Column\ArrayColumn',
-        'date' => 'NetTeam\System\DataTableBundle\Column\DateColumn',
-        'bool' => 'NetTeam\System\DataTableBundle\Column\BoolColumn',
-        'money' => 'NetTeam\System\DataTableBundle\Column\MoneyColumn',
-        'money_currency' => 'NetTeam\System\DataTableBundle\Column\MoneyCurrencyColumn',
-        'plain_text' => 'NetTeam\System\DataTableBundle\Column\PlainTextColumn',
+        'text' => 'NetTeam\Bundle\DataTableBundle\Column\TextColumn',
+        'array' => 'NetTeam\Bundle\DataTableBundle\Column\ArrayColumn',
+        'date' => 'NetTeam\Bundle\DataTableBundle\Column\DateColumn',
+        'bool' => 'NetTeam\Bundle\DataTableBundle\Column\BoolColumn',
+        'money' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyColumn',
+        'money_currency' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyCurrencyColumn',
+        'plain_text' => 'NetTeam\Bundle\DataTableBundle\Column\PlainTextColumn',
     );
 
     public function create($type, $name, $getter, array $parameters = array())

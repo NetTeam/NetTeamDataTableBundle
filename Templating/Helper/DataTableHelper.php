@@ -1,12 +1,12 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Templating\Helper;
+namespace NetTeam\Bundle\DataTableBundle\Templating\Helper;
 
 use Symfony\Component\Templating\Helper\Helper;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use NetTeam\System\DataTableBundle\DataTable\DataTableFactory;
-use NetTeam\System\DataTableBundle\Filter\Filter;
+use NetTeam\Bundle\DataTableBundle\DataTable\DataTableFactory;
+use NetTeam\Bundle\DataTableBundle\Filter\Filter;
 
 class DataTableHelper extends Helper
 {

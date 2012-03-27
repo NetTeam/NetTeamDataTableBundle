@@ -1,8 +1,8 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Column;
+namespace NetTeam\Bundle\DataTableBundle\Column;
 
-use NetTeam\System\DataTableBundle\Column\ValueGetter\AsIsValueGetter;
+use NetTeam\Bundle\DataTableBundle\Column\ValueGetter\AsIsValueGetter;
 
 /**
  * Kolumna z tekstem wpisanym na sztywno

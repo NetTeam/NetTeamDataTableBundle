@@ -1,17 +1,15 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Tests\DataTable;
+namespace NetTeam\Bundle\DataTableBundle\Tests\DataTable;
 
-use NetTeam\System\DataTableBundle\DataTable\DataTableBuilder;
-use NetTeam\System\DataTableBundle\Column\TextColumn;
-use NetTeam\System\CoreBundle\Tests\TestCase;
+use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
+use NetTeam\Bundle\DataTableBundle\Column\TextColumn;
 
 /**
  * Description of CoreBundleTest
  *
  * @author wku
  */
-//class DataTableBuilderTest extends TestCase
 class DataTableBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -35,7 +33,7 @@ class DataTableBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testBuild()
     {
-        $source = $this->getMock('NetTeam\System\DataTableBundle\Source\SourceInterface');
+        $source = $this->getMock('NetTeam\Bundle\DataTableBundle\Source\SourceInterface');
         $dtb = new DataTableBuilder('test_list', $source);
 
         $col = new TextColumn('Kol2', '1');

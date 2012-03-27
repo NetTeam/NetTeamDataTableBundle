@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\BulkAction;
+namespace NetTeam\Bundle\DataTableBundle\BulkAction;
 
 class BulkAction
 {
