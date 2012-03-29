@@ -37,7 +37,11 @@ $(document).ready(function() {
             "bAutoWidth" : false,
             "bStateSave" : true,
             "sPaginationType": "full_numbers",
-            "sDom": 'T<"clear"><"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
+            {% if datatable.hasJQueryUI() %}
+              "sDom": 'T<"clear"><"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
+            {% else %}
+              "sDom": 'T<"clear">l{{ datatable.hasGlobalSearch ? 'f' : '' }}rtip',
+            {% endif %}
             "bServerSide": true,
             "sAjaxSource": "{{ path(datatable.route, datatable.routeParameters) }}",
             "oLanguage": {% include "NetTeamDataTableBundle::lang.txt.twig" %},
