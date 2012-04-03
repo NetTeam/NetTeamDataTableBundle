@@ -1,0 +1,19 @@
+{
+    "name": "netteam/datatable-bundle",
+    "type": "symfony-bundle",
+    "description": "NetTeam DataTable Bundle",
+    "authors": [
+        {
+            "name": "NetTeam Solutions",
+            "homepage": "http://netteam.pl"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/symfony": "2.0.*"
+    },
+    "autoload": {
+        "psr-0": { "NetTeam\\Bundle\\DataTableBundle": "" }
+    },
+    "target-dir": "NetTeam/Bundle/DataTableBundle"
+}
