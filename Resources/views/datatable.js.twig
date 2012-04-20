@@ -12,7 +12,7 @@
 {% endmacro %}
 
 {% macro sWidth(column) %}
-{% spaceless %}"sWidth": "{{ column.hasWidth ? column.getWidth : '' }}"{% endspaceless %}
+{% spaceless %}"sWidth": {% if column.hasWidth %}"{{ column.getWidth }}"{% else %}null{% endif %}{% endspaceless %}
 {% endmacro %}
 
 $(document).ready(function() {
