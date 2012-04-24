@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\Bundle\DataTableBundle\Column\Value;
+namespace NetTeam\System\DataTableBundle\Column\Value;
 
 /**
  *
@@ -53,6 +53,11 @@ class ColumnValue implements ColumnValueInterface, \ArrayAccess
     public function get($name)
     {
         return isset($this->options[$name]) ? $this->options[$name] : null;
+    }
+
+    public function all()
+    {
+        return $this->options;
     }
 
     public function offsetGet($name)
