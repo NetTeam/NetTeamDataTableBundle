@@ -1,8 +1,8 @@
 <?php
 
-namespace NetTeam\System\DataTableBundle\Column;
+namespace NetTeam\Bundle\DataTableBundle\Column;
 
-use NetTeam\System\DataTableBundle\Column\Value\ColumnValue;
+use NetTeam\Bundle\DataTableBundle\Column\Value\ColumnValue;
 
 /**
  * TextColumn
