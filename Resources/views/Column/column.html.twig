@@ -1,3 +1,4 @@
+{% spaceless %}
 {% if record.route %}
 <a class="{{ record.routeClasses|default('')|join(' ') }}" href="{{ path(record.route, record.routeParams) }}" title="{{ record.value|default('')|join(' ')|trans }}">
 {% endif %}
@@ -6,3 +7,4 @@
 {% if record.route %}
 </a>
 {% endif %}
+{% endspaceless %}

@@ -14,12 +14,12 @@ use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
 final class JsonResponseBuilder
 {
     protected $templating;
-    
+
     public function __construct(EngineInterface $templating)
     {
         $this->templating = $templating;
     }
-    
+
     public function build(array $data, DataTableBuilder $builder, $alias, $count, $echo)
     {
         return new Response(json_encode(array(
@@ -29,11 +29,11 @@ final class JsonResponseBuilder
             'aaData'=> $this->buildData($data, $builder, $alias),
         )));
     }
-    
+
     private function buildData(array $data, DataTableBuilder $builder, $alias)
     {
         $built = array();
-        
+
         $columns = $builder->getColumns();
         $bulkTemplate = $builder->getBulkActionsColumn()->getTemplate();
         $bulkColumn = $builder->getBulkActionsColumn();
@@ -47,7 +47,7 @@ final class JsonResponseBuilder
                     'alias'  => $alias
                 ));
             }
-                
+
             foreach ($row['columns'] as $key => $value) {
                 $built[$rowKey][] = $this->templating->render($columns[$key]->getTemplate(), array(
                     'record'     => $value,

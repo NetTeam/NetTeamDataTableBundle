@@ -42,7 +42,6 @@ $(document).ready(function() {
             {% else %}
               "sDom": 'T<"clear">l{{ datatable.hasGlobalSearch ? 'f' : '' }}rtip',
             {% endif %}
-            "bServerSide": true,
             "sAjaxSource": "{{ path(datatable.route, datatable.routeParameters)|raw }}",
             "oLanguage": {% include "NetTeamDataTableBundle::lang.txt.twig" %},
             "bProcessing": true,
