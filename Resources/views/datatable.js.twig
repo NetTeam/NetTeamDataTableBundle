@@ -36,6 +36,13 @@ $(document).ready(function() {
             "bJQueryUI" : {{ datatable.hasJQueryUI() ? 'true' : 'false' }},
             "bAutoWidth" : false,
             "bStateSave" : true,
+            "fnStateSave": function (oSettings, oData) {
+                localStorage.setItem( 'datatables_{{ alias }}', JSON.stringify(oData) );
+            },
+            "fnStateLoad": function (oSettings) {
+                var data = localStorage.getItem('datatables_{{ alias }}');
+                return JSON.parse(data);
+            },
             "sPaginationType": "full_numbers",
             {% if datatable.hasJQueryUI() %}
               "sDom": 'T<"clear"><"H"l{{ datatable.hasGlobalSearch ? 'f' : '' }}r>t<"F"ip>',
