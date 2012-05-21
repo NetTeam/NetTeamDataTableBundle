@@ -60,8 +60,8 @@ interface ColumnInterface
     /**
      * Określa po których kolumnach ma być sortowana tabela
      *
-     * @param mixed $columns klucze sortowanych kolumn w kolejności sortowania
-     * @param string $order kierunek sortowania
+     * @param mixed  $columns klucze sortowanych kolumn w kolejności sortowania
+     * @param string $order   kierunek sortowania
      */
     public function setSortable($columns);
     public function sortable($keys);

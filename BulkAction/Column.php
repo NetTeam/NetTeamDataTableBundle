@@ -23,11 +23,13 @@ class Column
     {
         if (is_string($getter)) {
             $this->getter = new PropertyValueGetter($getter);
+
             return $this;
         }
 
         if ($getter instanceof \Closure) {
             $this->getter = new ClosureValueGetter($getter);
+
             return $this;
         }
 
@@ -37,6 +39,7 @@ class Column
     public function setWidth($width)
     {
         $this->width = $width;
+
         return $this;
     }
 
@@ -55,6 +58,7 @@ class Column
         if (!in_array($class, $this->class)) {
             $this->class[] = $class;
         }
+
         return $this;
     }
 
@@ -68,6 +72,7 @@ class Column
         if (!in_array($class, $this->headerClass)) {
             $this->headerClass[] = $class;
         }
+
         return $this;
     }
 
@@ -84,6 +89,7 @@ class Column
     public function setHeaderTemplate($headerTemplate)
     {
         $this->headerTemplate = $headerTemplate;
+
         return $this;
     }
 
@@ -95,6 +101,7 @@ class Column
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 

@@ -17,6 +17,7 @@ class String
             'ü'=>'u',
             'Ü'=>'U'
         );
+
         return strtr($text, $tr);
     }
 

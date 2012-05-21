@@ -115,7 +115,7 @@ $(document).ready(function() {
                       });
                   }
               };
-             
+
           function init() {
               $(SELECTORS.FILTERS_FORM).submit(function (event) {
                   event.preventDefault();
@@ -127,7 +127,7 @@ $(document).ready(function() {
               $(SELECTORS.APPLY_BUTTON).click(goToAction);
               $(SELECTORS.ALL_ITEMS_CHECKBOX).change(switchAll);
           }
-          
+
           function getSelected() {
               var selected = [];
               $(SELECTORS.ITEMS + SELECTORS.CHECKED).each(function(index, value) {
@@ -135,7 +135,7 @@ $(document).ready(function() {
               });
               return selected;
           }
-          
+
           function generateUrl(action, selected){
               var urlParams = {};
               urlParams[URL_REPLACE_VALUE] = selected.join(URL_SEPARATOR);
@@ -145,17 +145,17 @@ $(document).ready(function() {
               );
               return url;
           }
-          
+
           function isValid(action, selected) {
               if (!action) {
                   alert(TEXTS.NO_ACTION_SELECTED);
                   return false;
               }
-          
+
               if (0 === selected.length) {
                   alert(TEXTS.NO_RECORD_SELECTED);
                   return false;
-              }      
+              }
               return true;
           }
 
@@ -168,7 +168,7 @@ $(document).ready(function() {
 
               if (typeof dataTable !== 'undefined') {
                   dataTable.trigger(beforeSend, Bulk);
-              } 
+              }
               selected = getSelected();
               if(!isValid(Bulk.action, selected)){
                  return false;

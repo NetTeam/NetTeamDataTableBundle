@@ -2,8 +2,6 @@
 
 namespace NetTeam\Bundle\DataTableBundle\Filter;
 
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\HttpFoundation\Request;
 use NetTeam\Bundle\DataTableBundle\Filter\Type\FilterTypeInterface;
 
 class Filter

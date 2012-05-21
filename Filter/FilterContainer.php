@@ -84,18 +84,21 @@ class FilterContainer
     public function getFormView($key)
     {
         $this->loadBuilder();
+
         return $this->builder->getForm()->createView()->getChild($key);
     }
 
     public function getBuilder($key)
     {
         $this->loadBuilder();
+
         return $this->builder->get($key);
     }
 
     public function getModel($key)
     {
         $this->loadBuilder();
+
         return $this->model->get($key);
     }
 

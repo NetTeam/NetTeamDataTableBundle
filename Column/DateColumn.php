@@ -17,7 +17,7 @@ class DateColumn extends Column
 
         return $column;
     }
-    
+
     public function getValue($objectOrArray)
     {
         $value = parent::getValue($objectOrArray);
@@ -25,7 +25,7 @@ class DateColumn extends Column
 
         return $value;
     }
-    
+
     public function getFormat()
     {
         return $this->format;

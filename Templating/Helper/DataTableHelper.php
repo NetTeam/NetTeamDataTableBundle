@@ -22,6 +22,7 @@ class DataTableHelper extends Helper
     public function render($name, array $options = array())
     {
         $datatable = $this->factory->create($name, $options);
+
         return $this->templating->render('NetTeamDataTableBundle::main.html.twig', array(
                     'datatable' => $datatable,
                     'alias' => $name
@@ -44,7 +45,7 @@ class DataTableHelper extends Helper
             'options' => $options,
         ));
     }
-    
+
     public function renderFilterResetButton(array $options = array())
     {
         return $this->templating->render('NetTeamDataTableBundle:Filter:filter_reset_button.html.twig', array(

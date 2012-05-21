@@ -28,12 +28,12 @@ class DataTableFilterExtension extends \Twig_Extension
     {
         return $this->container->get('nt_datatable.templating.helper')->renderFilter($filter);
     }
-    
+
     public function datatableFilterButton(array $options = array())
     {
         return $this->container->get('nt_datatable.templating.helper')->renderFilterButton($options);
     }
-    
+
     public function datatableFilterResetButton(array $options = array())
     {
         return $this->container->get('nt_datatable.templating.helper')->renderFilterResetButton($options);

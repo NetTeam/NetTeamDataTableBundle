@@ -20,12 +20,12 @@ abstract class ColumnDecorator implements ColumnInterface
     {
         $this->column = $column;
     }
-    
+
     public function getValue($objectOrArray)
     {
         return $this->column->getValue($objectOrArray);
     }
-    
+
     public function getTemplate()
     {
         return $this->column->getTemplate();
@@ -34,6 +34,7 @@ abstract class ColumnDecorator implements ColumnInterface
     public function addGetter($key)
     {
         $this->column->addGetter($key);
+
         return $this;
     }
 
@@ -45,6 +46,7 @@ abstract class ColumnDecorator implements ColumnInterface
     public function setPriority($priority)
     {
         $this->column->setPriority($priority);
+
         return $this;
     }
 
@@ -61,6 +63,7 @@ abstract class ColumnDecorator implements ColumnInterface
     public function addClass($class)
     {
         $this->column->addClass($class);
+
         return $this;
     }
 
@@ -77,6 +80,7 @@ abstract class ColumnDecorator implements ColumnInterface
     public function setWidth($width)
     {
         $this->column->setWidth($width);
+
         return $this;
     }
 
@@ -98,18 +102,21 @@ abstract class ColumnDecorator implements ColumnInterface
     public function setSortable($columns)
     {
         $this->column->setSortable($columns);
+
         return $this;
     }
 
     public function sortable($keys, $order = null)
     {
         $this->column->sortable($keys, $order);
+
         return $this;
     }
 
     public function addSortable($key)
     {
         $this->column->addSortable($key);
+
         return $this;
     }
 
@@ -151,6 +158,7 @@ abstract class ColumnDecorator implements ColumnInterface
     public function setTranslate($translate)
     {
         $this->column->setTranslate($translate);
+
         return $this;
     }
 

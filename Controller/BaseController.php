@@ -13,7 +13,7 @@ use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
 abstract class BaseController extends Controller
 {
     const DEFAULT_NAME = 'datatable';
-    
+
     protected $echo;
     protected $offset;
     protected $limit;
@@ -37,6 +37,7 @@ abstract class BaseController extends Controller
 
         if ($request->isXmlHttpRequest() && $request->query->has('sEcho')) {
             $request->setRequestFormat('json');
+
             return $this->dataAction();
         }
 
@@ -46,6 +47,7 @@ abstract class BaseController extends Controller
     private function showAction()
     {
         $this->dtb = $this->dataTable();
+
         return $this->render($this->datatableTemplate, array(
             'datatable' => $this->dtb,
             'alias'     => $this->dtb->getRoute()

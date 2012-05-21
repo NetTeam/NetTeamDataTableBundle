@@ -27,7 +27,7 @@ class ColumnFactory
             throw new \InvalidArgumentException('Wrong column type, "'.$type.'" given');
         }
         $columnClass = $this->columns[$type];
-        
+
         return $columnClass::create($name, $getter, $parameters);
     }
 

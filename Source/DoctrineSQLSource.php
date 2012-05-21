@@ -38,7 +38,7 @@ class DoctrineSQLSource implements SourceInterface
 
     public function replaceFields($find, $replace)
     {
-        
+
     }
 
     public function getData($offset, $limit)
@@ -59,10 +59,11 @@ class DoctrineSQLSource implements SourceInterface
 
         return $results;
     }
-    
+
     public function getDataAll()
     {
         $results = $this->query->getResult();
+
         return $results;
     }
 

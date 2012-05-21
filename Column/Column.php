@@ -160,7 +160,7 @@ abstract class Column implements ColumnInterface
             foreach ($keys as $key) {
                 $this->addSortable($key);
             }
-        } else if (is_string($keys)) {
+        } elseif (is_string($keys)) {
             $this->addSortable($keys);
         }
 
@@ -197,6 +197,7 @@ abstract class Column implements ColumnInterface
     public function sortByDefault($order = 'ASC')
     {
         $this->defaultSorting = $order;
+
         return $this;
     }
 
@@ -228,6 +229,7 @@ abstract class Column implements ColumnInterface
     public function setTranslate($translate)
     {
         $this->translate = $translate;
+
         return $this;
     }
 

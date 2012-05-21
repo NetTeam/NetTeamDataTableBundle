@@ -4,7 +4,7 @@ namespace NetTeam\Bundle\DataTableBundle\Source;
 interface SourceInterface extends \Countable
 {
     public function getData($offset, $limit);
-    
+
     public function getDataAll();
 
     public function addSorting($column, $order);
@@ -12,7 +12,7 @@ interface SourceInterface extends \Countable
     /**
      * Wyszukuje po zadanych kolumnach
      *
-     * @param array $keys
+     * @param array        $keys
      * @param unknown_type $search
      */
     public function globalSearch(array $keys, $search);

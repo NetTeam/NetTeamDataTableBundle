@@ -2,7 +2,6 @@
 
 namespace NetTeam\Bundle\DataTableBundle\Filter\Type;
 
-use Symfony\Component\Form\FormBuilder;
 use NetTeam\Bundle\DataTableBundle\Filter\Type\FilterTypeInterface;
 
 abstract class FilterType implements FilterTypeInterface
@@ -12,7 +11,7 @@ abstract class FilterType implements FilterTypeInterface
 
     function getDefaultOptions()
     {
-        
+
     }
 
     function setOptions(array $options)

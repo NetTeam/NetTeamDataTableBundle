@@ -92,12 +92,12 @@ class DoctrineDBALSource implements SourceInterface
 
         return $results;
     }
-    
+
     public function getDataAll()
     {
         throw new  RuntimeException('Not yet implemented');
     }
-    
+
 
     public function globalSearch(array $keys, $search)
     {
@@ -152,6 +152,7 @@ class DoctrineDBALSource implements SourceInterface
     private function replaceTag($name, $replace, $query)
     {
         $pattern = sprintf('/{\s*%s\s*}/', $name);
+
         return preg_replace($pattern, $replace, $query);
     }
 

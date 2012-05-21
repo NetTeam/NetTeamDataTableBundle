@@ -7,7 +7,7 @@
             "sButtonText": "{{ export.getLabel() }}",
             "sUrl": "{{ path(datatable.route, datatable.routeExportParameters(key))|raw }}"
         }
-        {{ loop.last ? '' : ','}} 
+        {{ loop.last ? '' : ','}}
     {% endfor %}
     ]
 }

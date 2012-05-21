@@ -3,4 +3,4 @@
 {% for rowKey, row in data %}
 {% for key, value in row.columns %}{{ export.getBoundary|raw }}{% filter striptags|replace({ '\n' : '',  '\r' : '' }) %}{% include columns[key].getTemplate with { 'record': value, 'translate' : columns[key].getTranslate } %}{% endfilter %}{{ export.getBoundary|raw }}{{ (loop.last ? '\n' : export.getSeparator|raw) }}{% endfor %}
 {% endfor %}
-{% endspaceless %} 
+{% endspaceless %}

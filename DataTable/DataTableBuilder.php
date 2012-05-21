@@ -2,7 +2,6 @@
 
 namespace NetTeam\Bundle\DataTableBundle\DataTable;
 
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use NetTeam\Bundle\DataTableBundle\Source\SourceInterface;
 use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
@@ -57,7 +56,7 @@ class DataTableBuilder
     /**
      * Konstruktor
      *
-     * @param string $route Unikatowa nazwa listy, nazwa routingu w routing.yml
+     * @param string $route  Unikatowa nazwa listy, nazwa routingu w routing.yml
      * @param string $source Żródło danych
      */
     public function __construct($route, SourceInterface $source, array $requiredRouteParameters = array())
@@ -102,6 +101,7 @@ class DataTableBuilder
     public function simple()
     {
         $this->isSimple = true;
+
         return $this;
     }
 
@@ -113,6 +113,7 @@ class DataTableBuilder
     public function noPagination()
     {
         $this->pagination = false;
+
         return $this;
     }
 
@@ -232,8 +233,7 @@ class DataTableBuilder
             foreach ($keys as $key) {
                 $this->addSearchableKey($key);
             }
-        }
-        else if (is_string($keys)) {
+        } elseif (is_string($keys)) {
             $this->addSearchableKey($keys);
         }
 
@@ -271,8 +271,7 @@ class DataTableBuilder
     {
         if ($this->sortingColumn !== null) {
             $this->columnSorting($this->columns[$this->sortingColumn], $this->sortingOrder);
-        }
-        else {
+        } else {
             $this->defaultSorting();
         }
     }
@@ -304,7 +303,7 @@ class DataTableBuilder
 
     /**
      * Ustawia wybrane sortowanie
-     * @param int $sortingColumn identyfikator sortowanej kolumny
+     * @param int    $sortingColumn    identyfikator sortowanej kolumny
      * @param string $sortingDirection porządek sortowania
      */
     public function setSorting($sortingColumn, $sortingOrder)
@@ -329,12 +328,14 @@ class DataTableBuilder
     public function getData($offset, $limit)
     {
         $this->prepareData();
+
         return $this->source->getData($offset, $limit);
     }
 
     public function getDataAll()
     {
         $this->prepareData();
+
         return $this->source->getDataAll();
     }
 
@@ -344,18 +345,21 @@ class DataTableBuilder
         foreach ($data as $row) {
             $dataArray[] = $this->parseRow($row);
         }
+
         return $dataArray;
     }
 
     public function getDataArray($offset, $limit)
     {
         $data = $this->getData($offset, $limit);
+
         return $this->dataToArray($data);
     }
 
     public function getDataAllArray()
     {
         $data = $this->getDataAll();
+
         return $this->dataToArray($data);
     }
 
@@ -376,6 +380,7 @@ class DataTableBuilder
     public function setJQueryUI()
     {
         $this->jQueryUI = true;
+
         return $this;
     }
 
@@ -388,6 +393,7 @@ class DataTableBuilder
     {
         $bulkAction = new BulkAction($caption, $route, $params);
         $this->bulkActions[] = $bulkAction;
+
         return $bulkAction;
     }
 
@@ -401,6 +407,7 @@ class DataTableBuilder
     public function setBulkActionsColumn(BulkActionColumn $column)
     {
         $this->bulkActionsColumn = $column;
+
         return $this;
     }
 
@@ -419,6 +426,7 @@ class DataTableBuilder
         if ($this->filterContainer) {
             return $this->filterContainer->hasFilters();
         }
+
         return false;
     }
 
@@ -434,20 +442,22 @@ class DataTableBuilder
 
     /**
      * Dopisuje filtr do datatable
-     * @param string $type typ filtru, domyslny: default
-     * @param string $name label przy filtrze
+     * @param string   $type     typ filtru, domyslny: default
+     * @param string   $name     label przy filtrze
      * @param \Closure $callback
      * @return DataTableBuilder
      */
     public function addFilter($type = 'default', $name, \Closure $callback, array $options = array())
     {
         $this->filterContainer->addFilter($type, $name, $callback, $options);
+
         return $this;
     }
 
     public function setBulkActionId($field)
     {
         $this->bulkActionsColumn->setGetter($field);
+
         return $this;
     }
 

@@ -44,12 +44,14 @@ class DoctrineORMSource implements SourceInterface
     public function getData($offset, $limit)
     {
         $results = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit)->getResult();
+
         return $this->setResultCallbacks($results);
     }
 
     public function getDataAll()
     {
         $results = $this->queryBuilder->getQuery()->getResult();
+
         return $this->setResultCallbacks($results);
     }
 

@@ -22,7 +22,7 @@
             <argument type="service" id="templating" />
             <argument type="service" id="request" />
         </service>
-        
+
         <service id="nt_datatable.util.json_response" class="%nt_datatable.util.json_response.class%" public="false">
             <argument type="service" id="templating" />
         </service>

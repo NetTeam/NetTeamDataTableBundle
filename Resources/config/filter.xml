@@ -29,7 +29,7 @@
         <service id="nt_datatable.filter.type.text" class="%nt_datatable.filter.type.text.class%">
             <tag name="nt_datatable.filter" alias="text" />
         </service>
-        
+
         <service id="nt_datatable.filter.type.date_range" class="%nt_datatable.filter.type.date_range.class%">
             <tag name="nt_datatable.filter" alias="date_range" />
         </service>
@@ -37,14 +37,14 @@
         <service id="nt_datatable.filter.type.year_month" class="%nt_datatable.filter.type.year_month.class%">
             <tag name="nt_datatable.filter" alias="year_month" />
         </service>
-        
+
         <service id="nt_datatable.filter.type.checkbox" class="%nt_datatable.filter.type.checkbox.class%">
             <tag name="nt_datatable.filter" alias="checkbox" />
         </service>
-        
+
         <service id="nt_datatable.filter.type.choice" class="%nt_datatable.filter.type.choice.class%">
             <tag name="nt_datatable.filter" alias="choice" />
         </service>
-        
+
     </services>
 </container>

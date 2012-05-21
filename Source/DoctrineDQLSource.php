@@ -17,7 +17,7 @@ class DoctrineDQLSource implements SourceInterface
      */
     private $query;
     private $count;
-    
+
     public function __construct(Query $query)
     {
         $this->query = $query;
@@ -30,10 +30,11 @@ class DoctrineDQLSource implements SourceInterface
 
         return $results;
     }
-    
+
     public function getDataAll()
     {
         $results = $this->query->getArrayResult();
+
         return $results;
     }
 

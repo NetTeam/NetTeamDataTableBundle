@@ -48,14 +48,14 @@ class DataTableController
 
         $data = $builder->getDataArray($offset, $limit);
         $count = $builder->countRows();
-        
+
         return $this->jsonBuilder->build($data, $builder, $name, $count, $echo);
     }
 
     public function export($name)
     {
         $builder = $this->factory->create($name, $this->request->query->all());
-        
+
         $builder->updateFilterValues($this->request);
         $echo = $this->request->get('sEcho');
 
@@ -67,7 +67,7 @@ class DataTableController
         $count = $builder->countRows();
 
         $export = $builder->getExport($this->request->get('export'));
-        
+
         $content = $this->templating->render('NetTeamDataTableBundle:Export:export.csv.twig', array(
             'echo' => $echo,
             'data' => $data,
@@ -82,6 +82,7 @@ class DataTableController
         foreach ($export->getHeaders() as $key => $val) {
             $response->headers->set($key, $val);
         }
+
         return $response;
     }
 
