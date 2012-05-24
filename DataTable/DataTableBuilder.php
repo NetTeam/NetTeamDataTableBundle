@@ -442,9 +442,9 @@ class DataTableBuilder
 
     /**
      * Dopisuje filtr do datatable
-     * @param string   $type     typ filtru, domyslny: default
-     * @param string   $name     label przy filtrze
-     * @param \Closure $callback
+     * @param  string           $type     typ filtru, domyslny: default
+     * @param  string           $name     label przy filtrze
+     * @param  \Closure         $callback
      * @return DataTableBuilder
      */
     public function addFilter($type = 'default', $name, \Closure $callback, array $options = array())

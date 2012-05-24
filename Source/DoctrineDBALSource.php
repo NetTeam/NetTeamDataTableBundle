@@ -98,7 +98,6 @@ class DoctrineDBALSource implements SourceInterface
         throw new  RuntimeException('Not yet implemented');
     }
 
-
     public function globalSearch(array $keys, $search)
     {
         $this->searchString = $search;

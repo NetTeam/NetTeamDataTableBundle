@@ -29,7 +29,7 @@ abstract class BaseController extends Controller
 
     protected $datatableTemplate = "NetTeamDataTableBundle::main.html.twig";
 
-    protected abstract function createDataTable();
+    abstract protected function createDataTable();
 
     public function listAction()
     {

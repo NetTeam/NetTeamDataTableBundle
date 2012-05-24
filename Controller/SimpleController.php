@@ -16,7 +16,7 @@ abstract class SimpleController extends Controller
 
     protected $source;
 
-    protected abstract function getSource();
+    abstract protected function getSource();
 
     public function __construct()
     {

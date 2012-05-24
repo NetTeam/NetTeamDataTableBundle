@@ -5,11 +5,11 @@ namespace NetTeam\Bundle\DataTableBundle\DataTable;
 interface DataTableInterface
 {
 
-    function build(DataTableBuilder $builder);
+    public function build(DataTableBuilder $builder);
 
-    function getSource();
+    public function getSource();
 
-    function getRequiredOptions();
+    public function getRequiredOptions();
 
-    function setOptions(array $options);
+    public function setOptions(array $options);
 }

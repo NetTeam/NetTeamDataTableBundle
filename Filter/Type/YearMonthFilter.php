@@ -14,7 +14,6 @@ use NetTeam\Bundle\DataTableBundle\Filter\Type\FilterType;
 class YearMonthFilter extends FilterType
 {
 
-
     protected $options = array();
 
     public function buildForm(FormBuilder $builder)

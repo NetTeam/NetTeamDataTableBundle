@@ -7,17 +7,17 @@ use Symfony\Component\Form\FormBuilder;
 interface FilterTypeInterface
 {
 
-    function buildForm(FormBuilder $builder);
+    public function buildForm(FormBuilder $builder);
 
-    function getData();
+    public function getData();
 
-    function getDefaultOptions();
+    public function getDefaultOptions();
 
-    function setOptions(array $options);
+    public function setOptions(array $options);
 
-    function getOption($optionKey);
+    public function getOption($optionKey);
 
-    function apply(\Closure $callback, $data);
+    public function apply(\Closure $callback, $data);
 
-    function getTemplate();
+    public function getTemplate();
 }

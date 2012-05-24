@@ -9,7 +9,6 @@ namespace NetTeam\Bundle\DataTableBundle\Export;
 class CsvExport implements ExportInterface
 {
 
-
     private $template;
     private $headers;
     private $options;

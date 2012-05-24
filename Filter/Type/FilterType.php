@@ -9,17 +9,17 @@ abstract class FilterType implements FilterTypeInterface
 
     protected $options = array();
 
-    function getDefaultOptions()
+    public function getDefaultOptions()
     {
 
     }
 
-    function setOptions(array $options)
+    public function setOptions(array $options)
     {
         $this->options = array_merge($this->getDefaultOptions(), $options);
     }
 
-    function getOption($optionKey)
+    public function getOption($optionKey)
     {
         return isset($this->options[$optionKey]) ? $this->options[$optionKey] : null;
     }
