@@ -80,4 +80,3 @@ class ColumnValue implements ColumnValueInterface, \ArrayAccess
         unset($this->options[$name]);
     }
 }
-?>

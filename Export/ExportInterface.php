@@ -17,4 +17,3 @@ interface ExportInterface
     public function getLabel();
     public function getTemplate();
 }
-?>

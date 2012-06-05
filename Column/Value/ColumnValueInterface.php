@@ -17,4 +17,3 @@ interface ColumnValueInterface
     public function add($name, $value);
     public function get($name);
 }
-?>

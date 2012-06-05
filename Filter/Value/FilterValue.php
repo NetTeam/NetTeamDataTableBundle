@@ -68,4 +68,3 @@ class FilterValue implements \ArrayAccess, \IteratorAggregate, \Countable
 
 }
 
-?>
