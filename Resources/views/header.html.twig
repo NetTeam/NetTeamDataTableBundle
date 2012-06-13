@@ -30,6 +30,8 @@
 {% if datatable.bulkActions %}
 </form>
 {% endif %}
+{% if options.with_js is not defined or options.with_js %}
 <script type="text/javascript" charset="utf-8">
 {% include "NetTeamDataTableBundle::datatable.js.twig" %}
 </script>
+{% endif %}
