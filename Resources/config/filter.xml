@@ -9,6 +9,7 @@
         <parameter key="nt_datatable.filter_container.class">NetTeam\Bundle\DataTableBundle\Filter\FilterContainer</parameter>
 
         <parameter key="nt_datatable.filter.type.text.class">NetTeam\Bundle\DataTableBundle\Filter\Type\TextFilter</parameter>
+        <parameter key="nt_datatable.filter.type.date.class">NetTeam\Bundle\DataTableBundle\Filter\Type\DateFilter</parameter>
         <parameter key="nt_datatable.filter.type.date_range.class">NetTeam\Bundle\DataTableBundle\Filter\Type\DateRangeFilter</parameter>
         <parameter key="nt_datatable.filter.type.year_month.class">NetTeam\Bundle\DataTableBundle\Filter\Type\YearMonthFilter</parameter>
         <parameter key="nt_datatable.filter.type.checkbox.class">NetTeam\Bundle\DataTableBundle\Filter\Type\CheckboxFilter</parameter>
@@ -28,6 +29,10 @@
 
         <service id="nt_datatable.filter.type.text" class="%nt_datatable.filter.type.text.class%">
             <tag name="nt_datatable.filter" alias="text" />
+        </service>
+
+        <service id="nt_datatable.filter.type.date" class="%nt_datatable.filter.type.date.class%">
+            <tag name="nt_datatable.filter" alias="date" />
         </service>
 
         <service id="nt_datatable.filter.type.date_range" class="%nt_datatable.filter.type.date_range.class%">
