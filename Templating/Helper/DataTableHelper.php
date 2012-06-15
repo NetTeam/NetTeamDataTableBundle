@@ -52,7 +52,7 @@ class DataTableHelper extends Helper
             return;
         }
 
-        return sprintf('<script type="text/javascript" charset="utf-8">%s</script>', implode("\n", $this->javascripts));
+        return implode("\n", $this->javascripts);
     }
 
     public function renderResponse($name, array $options = array())
