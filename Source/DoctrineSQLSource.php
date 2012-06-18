@@ -64,6 +64,14 @@ class DoctrineSQLSource implements SourceInterface
     {
         $results = $this->query->getResult();
 
+        if (null !== $callback = $this->dataCallback) {
+            $results = $callback($results);
+        }
+
+        if ($this->rowCallback !== null) {
+            $results = array_map($this->rowCallback, $results);
+        }
+
         return $results;
     }
 
