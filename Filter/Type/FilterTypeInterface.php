@@ -6,7 +6,6 @@ use Symfony\Component\Form\FormBuilder;
 
 interface FilterTypeInterface
 {
-
     public function buildForm(FormBuilder $builder);
 
     public function getData();
@@ -19,5 +18,5 @@ interface FilterTypeInterface
 
     public function apply(\Closure $callback, $data);
 
-    public function getTemplate();
+    public function getAlias();
 }

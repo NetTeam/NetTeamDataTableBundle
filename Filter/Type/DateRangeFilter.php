@@ -70,9 +70,9 @@ class DateRangeFilter extends FilterType
         }
     }
 
-    public function getTemplate()
+    public function getAlias()
     {
-        return 'NetTeamDataTableBundle:Filter:date_range.html.twig';
+        return 'date_range';
     }
 
 }

@@ -40,9 +40,9 @@ class CheckboxFilter extends FilterType
         }
     }
 
-    public function getTemplate()
+    public function getAlias()
     {
-        return 'NetTeamDataTableBundle:Filter:checkbox.html.twig';
+        return 'checkbox';
     }
 
 }

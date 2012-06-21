@@ -1,7 +1,0 @@
-<form id="form-filter-{{ alias }}" class="filters">
-    {% for filter in filters %}
-        {{ datatable_filter(filter) }}
-    {% endfor %}
-    {{ datatable_filter_button({ 'class' : 'datatable_filter_button' }) }}
-    {{ datatable_filter_reset_button({ 'class' : 'datatable_filter_reset_button' }) }}
-</form>

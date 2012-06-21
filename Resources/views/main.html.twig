@@ -1,6 +1,4 @@
 <div id="datatables_div_{{ alias }}" class="nt_datatables_div">
-    {% if datatable.hasFilters() %}
-        {% include datatable.getFilterTemplate() with { 'filters' : datatable.getFilters() } %}
-    {% endif %}
+    {{ datatable_filters(datatable, alias) }}
     {% include 'NetTeamDataTableBundle::header.html.twig' with { 'datatable' : datatable} %}
 </div>

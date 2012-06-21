@@ -14,7 +14,7 @@ use NetTeam\Bundle\DataTableBundle\Filter\Value\FilterValue;
 class FilterContainer
 {
 
-    const DEFAULT_TEMPLATE = 'NetTeamDataTableBundle:Filter:filter.html.twig';
+    const DEFAULT_TEMPLATE = 'NetTeamDataTableBundle::filter.html.twig';
 
     private $name;
     private $filters = array();

@@ -52,9 +52,9 @@ class DateFilter extends FilterType
         }
     }
 
-    public function getTemplate()
+    public function getAlias()
     {
-        return 'NetTeamDataTableBundle:Filter:date.html.twig';
+        return 'date';
     }
 
 }

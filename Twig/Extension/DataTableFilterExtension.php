@@ -3,40 +3,51 @@
 namespace NetTeam\Bundle\DataTableBundle\Twig\Extension;
 
 use Twig_Function_Method;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
 use NetTeam\Bundle\DataTableBundle\Filter\Filter;
 
 class DataTableFilterExtension extends \Twig_Extension
 {
-    private $container;
+    protected $environment;
 
-    public function __construct(ContainerInterface $container)
+    public function initRuntime(\Twig_Environment $environment)
     {
-        $this->container = $container;
+        $this->environment = $environment;
     }
 
     public function getFunctions()
     {
         return array(
+            'datatable_filters' => new Twig_Function_Method($this, 'datatableFilters', array('is_safe' => array('html'))),
             'datatable_filter' => new Twig_Function_Method($this, 'datatableFilter', array('is_safe' => array('html'))),
-            'datatable_filter_button' => new Twig_Function_Method($this, 'datatableFilterButton', array('is_safe' => array('html'))),
-            'datatable_filter_reset_button' => new Twig_Function_Method($this, 'datatableFilterResetButton', array('is_safe' => array('html'))),
         );
     }
 
-    public function datatableFilter(Filter $filter)
+    public function datatableFilters(DataTableBuilder $datatable, $alias)
     {
-        return $this->container->get('nt_datatable.templating.helper')->renderFilter($filter);
+        $template = $this->environment->loadTemplate($datatable->getFilterTemplate());
+
+        return $template->renderBlock('filters', array(
+            'filters' => $datatable->getFilters(),
+            'alias' => $alias,
+            'template' => $template,
+        ));
     }
 
-    public function datatableFilterButton(array $options = array())
+    public function datatableFilter(Filter $filter, $template)
     {
-        return $this->container->get('nt_datatable.templating.helper')->renderFilterButton($options);
-    }
+        if (!$template instanceof \Twig_Template) {
+            $template = $this->environment->loadTemplate($template);
+        }
 
-    public function datatableFilterResetButton(array $options = array())
-    {
-        return $this->container->get('nt_datatable.templating.helper')->renderFilterResetButton($options);
+        $alias = $filter->getType()->getAlias();
+        $block = $alias.'_filter';
+
+        if (!$template->hasBlock($block)) {
+            $block = 'default_filter';
+        }
+
+        return $template->renderBlock($block, array('filter' => $filter->getForm()));
     }
 
     /**

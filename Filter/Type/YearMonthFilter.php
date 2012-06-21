@@ -49,9 +49,9 @@ class YearMonthFilter extends FilterType
         }
     }
 
-    public function getTemplate()
+    public function getAlias()
     {
-        return 'NetTeamDataTableBundle:Filter:year_month.html.twig';
+        return 'year_month';
     }
 
 }

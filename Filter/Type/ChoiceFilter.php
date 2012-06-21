@@ -83,9 +83,9 @@ class ChoiceFilter extends FilterType
         }
     }
 
-    public function getTemplate()
+    public function getAlias()
     {
-        return 'NetTeamDataTableBundle:Filter:choice.html.twig';
+        return 'choice';
     }
 
 }

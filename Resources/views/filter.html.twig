@@ -1,0 +1,31 @@
+{% block filters -%}
+{%- if filters -%}
+<form id="form-filter-{{ alias }}" class="filters">
+    {% for filter in filters %}
+        {{ datatable_filter(filter, template) }}
+    {% endfor %}
+    {{ block('filter_button') }}
+    {{ block('reset_button') }}
+</form>
+{%- endif -%}
+{%- endblock %}
+
+{% block filter_button %}
+<input type="submit" class="nt_datatable-apply-button button" value="{{ 'apply'|trans({}, 'datatable') }}">
+{% endblock %}
+
+{% block reset_button %}
+<input type="reset" class="nt_datatable-reset-button button datatable_filter_reset_button" value="{{ 'reset'|trans({}, 'datatable') }}"/>
+{% endblock %}
+
+{# Domyślny szablon dla filtra #}
+{% block default_filter %}
+    {{ form_widget(filter) }}
+{% endblock %}
+
+{% block year_month_filter %}
+    {{ form_label(filter.date) }}
+    {{ form_widget(filter.date.year) }}
+    {{ form_widget(filter.date.month) }}
+    {{ form_widget(filter.date.day, { 'attr': { 'style': 'display:none;' }}) }}
+{% endblock %}
