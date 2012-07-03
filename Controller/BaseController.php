@@ -31,6 +31,16 @@ abstract class BaseController extends Controller
 
     abstract protected function createDataTable();
 
+    protected function getDataTableBuilder($name, $source)
+    {
+        $dtb = new DataTableBuilder($name, $source);
+        $filterContainer = $this->container->get('nt_datatable.filter_container');
+        $filterContainer->setName($name);
+        $dtb->setFilterContainer($filterContainer);
+
+        return $dtb;
+    }
+
     public function listAction()
     {
         $request = $this->get('request');
