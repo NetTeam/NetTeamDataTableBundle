@@ -17,20 +17,22 @@ class DoctrineSQLSource implements SourceInterface
      * @var NativeQuery
      */
     private $query;
+    private $querySQL;
     private $count;
+    private $sorting = array();
     protected $rowCallback;
     protected $dataCallback;
 
     public function __construct(NativeQuery $query)
     {
         $this->query = $query;
-        $this->query->getSQL();
+        $this->querySQL = $this->query->getSQL();
         $em = $this->query->getEntityManager();
 
         $rsm = new ResultSetMapping;
         $rsm->addScalarResult('count', 'count');
 
-        $sql = "SELECT count(*) as count FROM (" . $this->query->getSQL() . ") as foo";
+        $sql = "SELECT count(*) as count FROM (" . $this->querySQL . ") as foo";
         $query = $em->createNativeQuery($sql, $rsm);
         $query->setParameters($this->query->getParameters());
         $this->count = $query->getSingleScalarResult();
@@ -43,11 +45,7 @@ class DoctrineSQLSource implements SourceInterface
 
     public function getData($offset, $limit)
     {
-        $sql = $this->query->getSQL();
-        $sql .= " LIMIT " . (int) $limit . " OFFSET " . (int) $offset;
-        $this->query->setSQL($sql);
-
-        $results = $this->query->getResult();
+        $results = $this->getResult($offset, $limit);
 
         if (null !== $callback = $this->dataCallback) {
             $results = $callback($results);
@@ -62,7 +60,7 @@ class DoctrineSQLSource implements SourceInterface
 
     public function getDataAll()
     {
-        $results = $this->query->getResult();
+        $results = $this->getResult();
 
         if (null !== $callback = $this->dataCallback) {
             $results = $callback($results);
@@ -82,9 +80,7 @@ class DoctrineSQLSource implements SourceInterface
 
     public function addSorting($column, $order)
     {
-        $sql = $this->query->getSQL();
-        $sql .= sprintf(" ORDER BY %s %s", $column, $order);
-        $this->query->setSQL($sql);
+        $this->sorting[] = sprintf("%s %s", $column, $order);
     }
 
     public function setRowCallback(\Closure $callback)
@@ -100,6 +96,23 @@ class DoctrineSQLSource implements SourceInterface
     public function count()
     {
         return $this->count;
+    }
+
+    protected function getResult($offset = null, $limit = null)
+    {
+        $sql = $this->querySQL;
+        if (count($this->sorting)) {
+            $sql .= " ORDER BY " . implode($this->sorting, ', ');
+        }
+
+        if (null !== $limit && null !== $offset) {
+            $sql .= " LIMIT " . (int) $limit . " OFFSET " . (int) $offset;
+        } elseif (null !== $limit) {
+            $sql .= " LIMIT " . (int) $limit;
+        }
+
+        $this->query->setSQL($sql);
+        return $this->query->getResult();
     }
 
 }
