@@ -42,6 +42,7 @@ class DataTableHelper extends Helper
             'datatable' => $datatable,
             'alias' => $name,
             'options' => $renderOptions,
+            'bulkActionsTemplate' => $datatable->getBulkActionsTemplate(),
         ));
     }
 

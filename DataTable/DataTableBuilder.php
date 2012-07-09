@@ -42,6 +42,9 @@ class DataTableBuilder
     private $globalSearch;
     private $bulkActions;
     private $bulkActionsColumn;
+    private $bulkActionsTemplate =
+        'NetTeamDataTableBundle::bulk_actions.html.twig';
+
     private $exports;
     private $searchableKeys = array();
     private $sortingColumn;
@@ -474,6 +477,16 @@ class DataTableBuilder
     public function getFilterTemplate()
     {
         return $this->filterContainer->getTemplate();
+    }
+
+    public function setBulkActionsTemplate($template)
+    {
+        $this->bulkActionsTemplate = $template;
+    }
+
+    public function getBulkActionsTemplate()
+    {
+        return $this->bulkActionsTemplate;
     }
 
     public function setAdditionalJSTemplate($template)
