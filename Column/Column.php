@@ -56,7 +56,7 @@ abstract class Column implements ColumnInterface
 
         $value = count($values) === 1 ? $values[0] : $values;
 
-        return new ColumnValue($value, $this->route, $this->parseRouteParams($objectOrArray), $this->routeClass);
+        return new ColumnValue($value, $this->getRoute($objectOrArray), $this->parseRouteParams($objectOrArray), $this->routeClass);
     }
 
     public function addGetter($getterKey)
@@ -248,6 +248,16 @@ abstract class Column implements ColumnInterface
     public function route($route, array $params, $routeClass = null)
     {
         return $this->setRoute($route, $params, $routeClass);
+    }
+
+    protected function getRoute($objectOrArray)
+    {
+        $route = $this->route;
+        if ($route instanceof \Closure) {
+            return $route($objectOrArray);
+        } else {
+            return $route;
+        }
     }
 
     protected function parseRouteParams($objectOrArray)
