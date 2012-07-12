@@ -50,9 +50,8 @@ final class JsonResponseBuilder
 
             foreach ($row['columns'] as $key => $value) {
                 $column = $columns[$key];
-
                 $parameters = array_merge(
-                    $column->getParameters(), 
+                    $column->getParameters(),
                     array('record' => $value)
                 );
                 $built[$rowKey][] = $this->templating->render($column->getTemplate(), $parameters);
