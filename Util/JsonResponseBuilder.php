@@ -49,9 +49,13 @@ final class JsonResponseBuilder
             }
 
             foreach ($row['columns'] as $key => $value) {
-                $built[$rowKey][] = $this->templating->render($columns[$key]->getTemplate(), array(
-                    'record'     => $value,
-                ));
+                $column = $columns[$key];
+
+                $parameters = array_merge(
+                    $column->getParameters(), 
+                    array('record' => $value)
+                );
+                $built[$rowKey][] = $this->templating->render($column->getTemplate(), $parameters);
             }
         }
 

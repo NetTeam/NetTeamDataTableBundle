@@ -31,6 +31,11 @@ abstract class ColumnDecorator implements ColumnInterface
         return $this->column->getTemplate();
     }
 
+    public function getParameters()
+    {
+        return $this->column->getParameters();
+    }
+
     public function addGetter($key)
     {
         $this->column->addGetter($key);

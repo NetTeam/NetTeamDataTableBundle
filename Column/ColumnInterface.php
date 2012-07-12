@@ -90,4 +90,9 @@ interface ColumnInterface
     public function getCaption();
 
     public function getTemplate();
+
+    /**
+     * Zwraca dodatkowe parametry dla template
+     */
+    public function getParameters();
 }

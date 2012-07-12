@@ -25,13 +25,15 @@ abstract class Column implements ColumnInterface
     protected $class = array();
     protected $template = 'column';
     protected $translate = true;
+    protected $parameters;
     protected $route;
     protected $routeClass;
     protected $routeParams = array();
 
-    public function __construct($caption, $getters)
+    public function __construct($caption, $getters, $parameters = array())
     {
         $this->caption = $caption;
+        $this->parameters = $parameters;
 
         if (is_array($getters)) {
             foreach ($getters as $getter) {
@@ -44,7 +46,7 @@ abstract class Column implements ColumnInterface
 
     public static function create($caption, $getter, array $parameters)
     {
-        return new static($caption, $getter);
+        return new static($caption, $getter, $parameters);
     }
 
     public function getValue($objectOrArray)
@@ -219,6 +221,11 @@ abstract class Column implements ColumnInterface
     public function getTemplate()
     {
         return sprintf(self::TEMPLATE_PATTERN, $this->template);
+    }
+
+    public function getParameters()
+    {
+        return $this->parameters;
     }
 
     public function getTranslate()
