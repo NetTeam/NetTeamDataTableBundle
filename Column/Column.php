@@ -26,7 +26,6 @@ abstract class Column implements ColumnInterface
     protected $template = 'column';
     protected $parameters = array();
     protected $translate = true;
-    protected $parameters;
     protected $route;
     protected $routeClass;
     protected $routeParams = array();
