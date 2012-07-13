@@ -34,11 +34,17 @@ class ChoiceFilter extends FilterType
                 'required' => $this->getOption('required'),
                 'label' => $this->getOption('label'),
                 'attr' => $this->getOption('attr'),
-                'choices' => $this->getOption('choices'),
                 'class' => $this->getOption('class'),
                 'query_builder' => $this->getOption('query_builder'),
                 'empty_value' => $this->getOption('empty_value'),
             );
+
+            if ($type == 'entity') {
+                $choices = $this->getOption('choices');
+                if (count($choices) > 0) {
+                    $options['choices'] = $choices;
+                }
+            }
         }
 
         $builder->add('choice', $type, $options);
