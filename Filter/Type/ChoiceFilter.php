@@ -39,11 +39,9 @@ class ChoiceFilter extends FilterType
                 'empty_value' => $this->getOption('empty_value'),
             );
 
-            if ($type == 'entity') {
-                $choices = $this->getOption('choices');
-                if (count($choices) > 0) {
-                    $options['choices'] = $choices;
-                }
+            $choices = $this->getOption('choices');
+            if (count($choices) > 0) {
+                $options['choices'] = $choices;
             }
         }
 
