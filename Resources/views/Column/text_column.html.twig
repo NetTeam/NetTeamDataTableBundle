@@ -1,5 +1,5 @@
 {% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
 {% block columnValue %}
 {% set value = record.value|default('')|trans %}
-{{ value|e|replace({ '\n' : '<br />',  '\r' : '' }) }}
+{{ value|replace({ '\n' : '<br />',  '\r' : '' }) }}
 {% endblock %}

@@ -19,4 +19,9 @@ class ArraySource implements SimpleSourceInterface
     {
         return $this->array;
     }
+
+    public function getCount()
+    {
+        return count($this->array);
+    }
 }

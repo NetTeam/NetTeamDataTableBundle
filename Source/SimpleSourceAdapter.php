@@ -38,6 +38,6 @@ class SimpleSourceAdapter implements SourceInterface
 
     public function count()
     {
-        return null;
+        return $this->source->getCount();
     }
 }

@@ -2,6 +2,6 @@
 {% if item is array %}
     {% include "NetTeamDataTableBundle:Column:array_column_recursive.html.twig" with { 'value' : item, 'separator' : separator } %}
 {% else %}
-    {{ item|e|replace({ '\n' : '<br />' }) }}{% if not loop.last %}{{ separator }}{% endif %}
+    {{ item|replace({ '\n' : '<br />' }) }}{% if not loop.last %}{{ separator }}{% endif %}
 {% endif %}
 {% endfor %}

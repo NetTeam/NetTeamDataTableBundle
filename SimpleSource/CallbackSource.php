@@ -42,4 +42,9 @@ class CallbackSource implements SimpleSourceInterface
 
         return $callback($this->options);
     }
+
+    public function getCount()
+    {
+        return null;
+    }
 }
