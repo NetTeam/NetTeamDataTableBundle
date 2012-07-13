@@ -27,6 +27,7 @@ class ChoiceFilter extends FilterType
                 'label' => $this->getOption('label'),
                 'attr' => $this->getOption('attr'),
                 'choices' => $this->getOption('choices'),
+                'empty_value' => $this->getOption('empty_value'),
             );
         } else {
             $options = array(
@@ -36,6 +37,7 @@ class ChoiceFilter extends FilterType
                 'choices' => $this->getOption('choices'),
                 'class' => $this->getOption('class'),
                 'query_builder' => $this->getOption('query_builder'),
+                'empty_value' => $this->getOption('empty_value'),
             );
         }
 
