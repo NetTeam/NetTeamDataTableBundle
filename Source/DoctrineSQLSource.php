@@ -112,6 +112,7 @@ class DoctrineSQLSource implements SourceInterface
         }
 
         $this->query->setSQL($sql);
+
         return $this->query->getResult();
     }
 

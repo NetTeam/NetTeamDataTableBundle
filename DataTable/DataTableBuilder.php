@@ -43,8 +43,7 @@ class DataTableBuilder
     private $bulkActions;
     private $bulkActionsColumn;
     private $bulkActionsTemplate =
-        'NetTeamDataTableBundle::bulk_actions.html.twig';
-
+            'NetTeamDataTableBundle::bulk_actions.html.twig';
     private $exports;
     private $searchableKeys = array();
     private $sortingColumn;
@@ -440,7 +439,9 @@ class DataTableBuilder
 
     public function updateFilterValues(Request $request)
     {
-        return $this->filterContainer->bindRequest($request);
+        if ($this->hasFilters()) {
+            return $this->filterContainer->bindRequest($request);
+        }
     }
 
     /**
