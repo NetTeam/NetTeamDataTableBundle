@@ -440,7 +440,7 @@ class DataTableBuilder
     public function updateFilterValues(Request $request)
     {
         if ($this->hasFilters()) {
-            return $this->filterContainer->bindRequest($request);
+            $this->filterContainer->bindRequest($request);
         }
     }
 
