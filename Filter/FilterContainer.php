@@ -64,7 +64,7 @@ class FilterContainer
         $type->setOptions($options);
 
         $key = 'type-' . count($this->filters);
-        $typeBuilder = $this->formFactory->createNamedBuilder(new FilterType(), $key);
+        $typeBuilder = $this->formFactory->createNamedBuilder($key, new FilterType());
         $this->builder->add($typeBuilder);
         $this->model->add($key, $type->getData());
 
@@ -109,7 +109,7 @@ class FilterContainer
         }
 
         $this->model = new FilterValue();
-        $this->builder = $this->formFactory->createNamedBuilder('form', 'filter-' . $this->name, $this->model);
+        $this->builder = $this->formFactory->createNamedBuilder('filter-' . $this->name, 'form', $this->model);
     }
 
 }

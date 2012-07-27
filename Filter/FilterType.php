@@ -2,13 +2,13 @@
 
 namespace NetTeam\Bundle\DataTableBundle\Filter;
 
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
 class FilterType extends AbstractType
 {
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
     }
