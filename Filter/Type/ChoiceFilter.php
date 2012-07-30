@@ -19,26 +19,22 @@ class ChoiceFilter extends FilterType
     {
         $this->checkRequiredOptions();
 
+        $options = array(
+            'required' => $this->getOption('required'),
+            'label' => $this->getOption('label'),
+            'attr' => $this->getOption('attr'),
+            'empty_value' => $this->getOption('empty_value'),
+            'class' => $this->getOption('class'),
+            'query_builder' => $this->getOption('query_builder'),
+            'multiple' => $this->getOption('multiple'),
+            'expanded' => $this->getOption('expanded'),
+        );
+
         $type = $this->getOption('type');
 
         if ($type == 'choice') {
-            $options = array(
-                'required' => $this->getOption('required'),
-                'label' => $this->getOption('label'),
-                'attr' => $this->getOption('attr'),
-                'choices' => $this->getOption('choices'),
-                'empty_value' => $this->getOption('empty_value'),
-            );
+            $options['choices'] = $this->getOption('choices');
         } else {
-            $options = array(
-                'required' => $this->getOption('required'),
-                'label' => $this->getOption('label'),
-                'attr' => $this->getOption('attr'),
-                'class' => $this->getOption('class'),
-                'query_builder' => $this->getOption('query_builder'),
-                'empty_value' => $this->getOption('empty_value'),
-            );
-
             $choices = $this->getOption('choices');
             if (count($choices) > 0) {
                 $options['choices'] = $choices;
