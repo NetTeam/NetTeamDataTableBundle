@@ -9,15 +9,19 @@ namespace NetTeam\Bundle\DataTableBundle\Column;
  */
 abstract class ColumnDecorator implements ColumnInterface
 {
+
     protected $column;
 
     public static function create($name, $getters, array $parameters)
     {
-        throw new \BadMethodCallException('You mustn\'t use "create" method on ColumnDecorator');
+        return new static($name, $getters, $parameters);
     }
 
-    public function __construct(ColumnInterface $column)
+    public function __construct($name, $getters, array $parameters)
     {
+        $columnClass = $this->getColumn();
+        $column = $columnClass::create($name, $getters, $parameters);
+
         $this->column = $column;
     }
 
@@ -176,4 +180,10 @@ abstract class ColumnDecorator implements ColumnInterface
     {
         return $this->column->route($route, $params, $routeClass);
     }
+
+    protected function getColumn()
+    {
+        return 'NetTeam\Bundle\DataTableBundle\Column\TextColumn';
+    }
+
 }

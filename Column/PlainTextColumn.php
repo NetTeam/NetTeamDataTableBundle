@@ -11,6 +11,7 @@ use NetTeam\Bundle\DataTableBundle\Column\ValueGetter\AsIsValueGetter;
  */
 class PlainTextColumn extends Column
 {
+
     protected $template = 'plain_text_column';
 
     public function addGetter($getterKey)
@@ -19,4 +20,5 @@ class PlainTextColumn extends Column
 
         return $this;
     }
+
 }

@@ -14,6 +14,7 @@ use NetTeam\Bundle\DataTableBundle\Column\Value\ColumnValue;
  */
 abstract class Column implements ColumnInterface
 {
+
     const TEMPLATE_PATTERN = 'NetTeamDataTableBundle:Column:%s.html.twig';
 
     protected $caption;
@@ -193,7 +194,7 @@ abstract class Column implements ColumnInterface
 
     public function isSortable()
     {
-        return!empty($this->sortableKeys);
+        return !empty($this->sortableKeys);
     }
 
     public function sortByDefault($order = 'ASC')
@@ -276,4 +277,5 @@ abstract class Column implements ColumnInterface
 
         return $params;
     }
+
 }

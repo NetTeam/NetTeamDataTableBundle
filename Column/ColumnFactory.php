@@ -16,6 +16,8 @@ class ColumnFactory
         'money' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyColumn',
         'money_currency' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyCurrencyColumn',
         'plain_text' => 'NetTeam\Bundle\DataTableBundle\Column\PlainTextColumn',
+        'href_text' => 'NetTeam\Bundle\LayoutBundle\DataTable\Column\HrefTextColumn',
+        'href_plain_text' => 'NetTeam\Bundle\LayoutBundle\DataTable\Column\HrefPlainTextColumn',
     );
 
     public function create($type, $name, $getter, array $parameters = array())
