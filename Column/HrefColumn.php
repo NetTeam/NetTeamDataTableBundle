@@ -9,5 +9,10 @@ namespace NetTeam\Bundle\DataTableBundle\Column;
  */
 class HrefColumn extends ColumnDecorator
 {
+    public function __construct(ColumnInterface $column)
+    {
+        parent::__construct($column);
 
+        $this->addClass("to-right no-wrap");
+    }
 }
