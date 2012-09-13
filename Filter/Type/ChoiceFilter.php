@@ -24,9 +24,7 @@ class ChoiceFilter extends FilterType
             'label' => $this->getOption('label'),
             'attr' => $this->getOption('attr'),
             'empty_value' => $this->getOption('empty_value'),
-            'class' => $this->getOption('class'),
-            'query_builder' => $this->getOption('query_builder'),
-            'multiple' => $this->getOption('multiple'),
+                        'multiple' => $this->getOption('multiple'),
             'expanded' => $this->getOption('expanded'),
         );
 
@@ -36,6 +34,9 @@ class ChoiceFilter extends FilterType
             $options['choices'] = $this->getOption('choices');
         } else {
             $choices = $this->getOption('choices');
+            $options['class'] = $this->getOption('class');
+            $options['query_builder'] = $this->getOption('query_builder');
+
             if (count($choices) > 0) {
                 $options['choices'] = $choices;
             }

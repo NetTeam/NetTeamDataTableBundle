@@ -12,6 +12,7 @@ class ColumnFactory
         'text' => 'NetTeam\Bundle\DataTableBundle\Column\TextColumn',
         'array' => 'NetTeam\Bundle\DataTableBundle\Column\ArrayColumn',
         'date' => 'NetTeam\Bundle\DataTableBundle\Column\DateColumn',
+        'interval' => 'NetTeam\Bundle\DataTableBundle\Column\IntervalColumn',
         'bool' => 'NetTeam\Bundle\DataTableBundle\Column\BoolColumn',
         'money' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyColumn',
         'money_currency' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyCurrencyColumn',

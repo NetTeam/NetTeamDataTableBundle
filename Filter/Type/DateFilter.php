@@ -38,7 +38,7 @@ class DateFilter extends FilterType
     public function getData()
     {
         $default = $this->getOption('default');
-        if (!($default instanceof \DateTime)) {
+        if (!($default instanceof \DateTime) && null !== $default) {
             throw new \Exception("DateFilter default values must be an instance of \DateTime");
         }
 

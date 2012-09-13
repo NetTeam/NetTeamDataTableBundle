@@ -1,0 +1,8 @@
+{% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
+{% block columnValue %}
+{% block value %}
+    {%- if record.value != null -%}
+        {{- record.value|date(record.format) -}}
+    {%- endif -%}
+{% endblock %}
+{% endblock %}
