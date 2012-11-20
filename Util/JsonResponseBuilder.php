@@ -20,13 +20,14 @@ final class JsonResponseBuilder
         $this->templating = $templating;
     }
 
-    public function build(array $data, DataTableBuilder $builder, $alias, $count, $echo)
+    public function build(array $data, DataTableBuilder $builder, $alias, $count, $echo, $filterSessionHash = null)
     {
         return new Response(json_encode(array(
             'sEcho' => $echo,
             'iTotalRecords' => $count,
             'iTotalDisplayRecords' => $count,
             'aaData'=> $this->buildData($data, $builder, $alias),
+            'filterSessionHash' => $filterSessionHash
         )));
     }
 
