@@ -5,6 +5,7 @@ namespace NetTeam\Bundle\DataTableBundle\Filter;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use NetTeam\Bundle\DataTableBundle\Filter\Value\FilterValue;
+use Symfony\Component\Form\FormConfigBuilder;
 
 /**
  * Container for all filter types
@@ -59,16 +60,24 @@ class FilterContainer
     {
         $this->loadBuilder();
 
-        $options['label'] = $name;
+        if (array_key_exists($name, $this->filters)) {
+            throw new \UnexpectedValueException(sprintf('Duplicated filter name %s.', $name));
+        }
+
+        FormConfigBuilder::validateName($name);
+
+        if (!array_key_exists('label', $options)) {
+            $options['label'] = $name;
+        }
+
         $type = $this->factory->create($type);
         $type->setOptions($options);
 
-        $key = 'type-' . count($this->filters);
-        $typeBuilder = $this->formFactory->createNamedBuilder($key, new FilterType());
+        $typeBuilder = $this->formFactory->createNamedBuilder($name, new FilterType());
         $this->builder->add($typeBuilder);
-        $this->model->add($key, $type->getData());
+        $this->model->add($name, $type->getData());
 
-        $this->filters[$key] = new Filter($key, $this, $type, $callback);
+        $this->filters[$name] = new Filter($name, $this, $type, $callback);
     }
 
     public function setTemplate($tempalte)
