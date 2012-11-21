@@ -42,7 +42,7 @@ class DataTableController
         $offset = $this->request->get('iDisplayStart');
         $limit = $this->request->get('iDisplayLength');
         $echo = $this->request->get('sEcho');
-        $filterSessionHash = $builder->setFiltersSession($this->request);
+        $filterHash = $builder->setFiltersSession($this->request);
 
         $this->updateSearch($builder);
         $this->updateSorting($builder);
@@ -50,7 +50,7 @@ class DataTableController
         $data = $builder->getDataArray($offset, $limit);
         $count = $builder->countRows();
 
-        return $this->jsonBuilder->build($data, $builder, $name, $count, $echo, $filterSessionHash);
+        return $this->jsonBuilder->build($data, $builder, $name, $count, $echo, $filterHash);
     }
 
     public function export($name)

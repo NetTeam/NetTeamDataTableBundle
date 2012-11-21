@@ -448,9 +448,9 @@ class DataTableBuilder
         $session = $request->getSession();
         foreach ($request->query->all() as $key => $params) {
             if (preg_match('/^filter/', $key)) {
-                $filterKey = md5(serialize($params));
-                $session->set('filters', array($filterKey => $params));
-                return $filterKey;
+                $dtFilterHash = md5(serialize($params));
+                $session->set('filters', array($dtFilterHash => $params));
+                return $dtFilterHash;
             }
         }
         return null;
