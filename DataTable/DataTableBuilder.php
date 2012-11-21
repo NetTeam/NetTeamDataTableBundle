@@ -444,6 +444,18 @@ class DataTableBuilder
         }
     }
 
+    public function setFiltersSession(Request $request) {
+        $session = $request->getSession();
+        foreach ($request->query->all() as $key => $params) {
+            if (preg_match('/^filter/', $key)) {
+                $dtFilterHash = md5(serialize($params));
+                $session->set('filters', array($dtFilterHash => $params));
+                return $dtFilterHash;
+            }
+        }
+        return null;
+    }
+
     /**
      * Dopisuje filtr do datatable
      * @param  string           $type     typ filtru, domyslny: default
