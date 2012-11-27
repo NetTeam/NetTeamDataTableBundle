@@ -449,7 +449,7 @@ class DataTableBuilder
         foreach ($request->query->all() as $key => $params) {
             if (preg_match('/^filter/', $key)) {
                 $dtFilterHash = md5(serialize($params));
-                $session->set('filters', array($dtFilterHash => $params));
+                $session->set('dtfilters', array($dtFilterHash => $params));
                 return $dtFilterHash;
             }
         }
