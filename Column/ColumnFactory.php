@@ -9,13 +9,14 @@ namespace NetTeam\Bundle\DataTableBundle\Column;
 class ColumnFactory
 {
     private $columns = array(
-        'text' => 'NetTeam\Bundle\DataTableBundle\Column\TextColumn',
         'array' => 'NetTeam\Bundle\DataTableBundle\Column\ArrayColumn',
-        'date' => 'NetTeam\Bundle\DataTableBundle\Column\DateColumn',
         'bool' => 'NetTeam\Bundle\DataTableBundle\Column\BoolColumn',
+        'date' => 'NetTeam\Bundle\DataTableBundle\Column\DateColumn',
+        'date_time' => 'NetTeam\Bundle\DataTableBundle\Column\DateTimeColumn',
         'money' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyColumn',
         'money_currency' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyCurrencyColumn',
         'plain_text' => 'NetTeam\Bundle\DataTableBundle\Column\PlainTextColumn',
+        'text' => 'NetTeam\Bundle\DataTableBundle\Column\TextColumn',
     );
 
     public function create($type, $name, $getter, array $parameters = array())
