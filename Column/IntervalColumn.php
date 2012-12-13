@@ -5,7 +5,7 @@ namespace NetTeam\Bundle\DataTableBundle\Column;
 class IntervalColumn extends Column
 {
     protected $template = 'interval_column';
-    protected $format = '%d';
+    protected $format = '%a';
 
     public static function create($caption, $getter, array $parameters)
     {
