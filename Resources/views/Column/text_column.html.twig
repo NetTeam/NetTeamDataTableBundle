@@ -1,5 +1,9 @@
 {% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
 {% block columnValue %}
 {% set value = record.value|default('')|trans %}
-{{ value|replace({ '\n' : '<br />',  '\r' : '' }) }}
+{% if record.raw|default(false) %}
+    {{ value|replace({ '\n' : '<br />',  '\r' : '' })|raw }}
+{% else %}
+    {{ value|replace({ '\n' : '<br />',  '\r' : '' }) }}
+{% endif %}
 {% endblock %}

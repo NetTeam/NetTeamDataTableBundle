@@ -12,6 +12,8 @@ use NetTeam\Bundle\DataTableBundle\Column\Value\ColumnValue;
 class TextColumn extends Column
 {
     protected $template = 'text_column';
+    protected $separator = ' ';
+    protected $raw = false;
 
     public function getValue($objectOrArray)
     {
@@ -19,9 +21,37 @@ class TextColumn extends Column
 
         $value = $columnValue->getValue();
         if (is_array($value)) {
-            $value = implode(' ', $value);
+            $value = implode($this->separator, $value);
         }
 
-        return new ColumnValue($value, $columnValue->getRoute(), $columnValue->getRouteParams(), $columnValue->getRouteClasses(), $columnValue->all());
+        $value = new ColumnValue($value, $columnValue->getRoute(), $columnValue->getRouteParams(), $columnValue->getRouteClasses(), $columnValue->all());
+        $value->add('raw', $this->raw);
+
+        return $value;
     }
+
+    public function setSeparator($separator)
+    {
+        $this->separator = $separator;
+
+        return $this;
+    }
+
+    public function separator($separator)
+    {
+        return $this->setSeparator($separator);
+    }
+
+    public function separatorNewLine()
+    {
+        return $this->setSeparator('<br />');
+    }
+
+    public function raw()
+    {
+        $this->raw = true;
+
+        return $this;
+    }
+
 }
