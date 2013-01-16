@@ -17,25 +17,21 @@ class DoctrineSQLSource implements SourceInterface
      * @var NativeQuery
      */
     private $query;
-    private $querySQL;
     private $count;
     private $sorting = array();
+
     protected $rowCallback;
     protected $dataCallback;
 
     public function __construct(NativeQuery $query)
     {
         $this->query = $query;
-        $this->querySQL = $this->query->getSQL();
-        $em = $this->query->getEntityManager();
 
-        $rsm = new ResultSetMapping;
-        $rsm->addScalarResult('count', 'count');
+    }
 
-        $sql = "SELECT count(*) as count FROM (" . $this->querySQL . ") as foo";
-        $query = $em->createNativeQuery($sql, $rsm);
-        $query->setParameters($this->query->getParameters());
-        $this->count = $query->getSingleScalarResult();
+    public function getQuery()
+    {
+        return $this->query;
     }
 
     public function replaceFields($find, $replace)
@@ -95,12 +91,22 @@ class DoctrineSQLSource implements SourceInterface
 
     public function count()
     {
+        $em = $this->query->getEntityManager();
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('count', 'count');
+
+        $sql = "SELECT count(*) as count FROM (" . $this->query->getSQL() . ") as foo";
+        $query = $em->createNativeQuery($sql, $rsm);
+        $query->setParameters($this->query->getParameters());
+        $this->count = $query->getSingleScalarResult();
+
         return $this->count;
     }
 
     protected function getResult($offset = null, $limit = null)
     {
-        $sql = $this->querySQL;
+        $sql = $this->query->getSQL();
         if (count($this->sorting)) {
             $sql .= " ORDER BY " . implode($this->sorting, ', ');
         }
