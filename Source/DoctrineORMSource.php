@@ -5,7 +5,7 @@ namespace NetTeam\Bundle\DataTableBundle\Source;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
 use NetTeam\Bundle\DataTableBundle\Util\Doctrine\Cast;
-use NetTeam\Bundle\DataTableBundle\Util\Doctrine\CountWalker;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use NetTeam\Bundle\DataTableBundle\Util\String;
 
 /**
@@ -15,6 +15,7 @@ use NetTeam\Bundle\DataTableBundle\Util\String;
  */
 class DoctrineORMSource implements SourceInterface
 {
+
     /**
      * @var QueryBuilder
      */
@@ -43,9 +44,9 @@ class DoctrineORMSource implements SourceInterface
 
     public function getData($offset, $limit)
     {
-        $results = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit)->getResult();
+        $query = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit);
 
-        return $this->setResultCallbacks($results);
+        return $this->setResultCallbacks($this->getPaginator($query));
     }
 
     public function getDataAll()
@@ -92,25 +93,7 @@ class DoctrineORMSource implements SourceInterface
 
     public function count()
     {
-        /* @var $countQuery Query */
-        $query = $this->queryBuilder->getQuery();
-        $countQuery = $this->cloneQuery($query);
-
-        $countQuery->setHint(Query::HINT_CUSTOM_TREE_WALKERS, array('NetTeam\Bundle\DataTableBundle\Util\Doctrine\CountWalker'));
-        $countQuery->setFirstResult(null)->setMaxResults(null);
-
-        try {
-            $data = $countQuery->getScalarResult();
-            $data = array_map('current', $data);
-
-            if (count($this->queryBuilder->getDQLPart('groupBy'))) {
-                return count($data);
-            }
-
-            return array_sum($data);
-        } catch (NoResultException $e) {
-            return 0;
-        }
+        return $this->getPaginator($this->queryBuilder)->count();
     }
 
     /**
@@ -135,6 +118,11 @@ class DoctrineORMSource implements SourceInterface
     public function getBuilder()
     {
         return $this->queryBuilder;
+    }
+
+    protected function getPaginator($query)
+    {
+        return new Paginator($query);
     }
 
 }
