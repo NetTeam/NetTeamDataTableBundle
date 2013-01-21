@@ -47,8 +47,8 @@ class DataTableController
         $this->updateSearch($builder);
         $this->updateSorting($builder);
 
-        $data = $builder->getDataArray($offset, $limit);
         $count = $builder->countRows();
+        $data = $builder->getDataArray($offset, $limit);
 
         return $this->jsonBuilder->build($data, $builder, $name, $count, $echo, $filterHash);
     }
