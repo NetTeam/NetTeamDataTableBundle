@@ -8,6 +8,10 @@ namespace NetTeam\Bundle\DataTableBundle\Column;
  */
 class ColumnFactory
 {
+    /**
+     * @todo Wydzielic to scierwo
+     *
+     */
     private $columns = array(
         'array' => 'NetTeam\Bundle\DataTableBundle\Column\ArrayColumn',
         'bool' => 'NetTeam\Bundle\DataTableBundle\Column\BoolColumn',
@@ -17,6 +21,7 @@ class ColumnFactory
         'money_currency' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyCurrencyColumn',
         'plain_text' => 'NetTeam\Bundle\DataTableBundle\Column\PlainTextColumn',
         'text' => 'NetTeam\Bundle\DataTableBundle\Column\TextColumn',
+        'collection' => 'NetTeam\Bundle\DataTableBundle\Column\Collection\CollectionColumn',
     );
 
     public function create($type, $name, $getter, array $parameters = array())
