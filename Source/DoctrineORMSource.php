@@ -7,6 +7,7 @@ use Doctrine\ORM\Query;
 use NetTeam\Bundle\DataTableBundle\Util\Doctrine\Cast;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use NetTeam\Bundle\DataTableBundle\Util\String;
+use Doctrine\ORM\AbstractQuery;
 
 /**
  * Źródło danych dla DataTable - QueryBuilder Doctrine ORM
@@ -23,10 +24,12 @@ class DoctrineORMSource implements SourceInterface
     protected $sortingCallbacks = array();
     protected $rowCallback;
     protected $dataCallback;
+    protected $hydrationMode;
 
-    public function __construct(QueryBuilder $queryBuilder)
+    public function __construct(QueryBuilder $queryBuilder, $hydrationMode = AbstractQuery::HYDRATE_OBJECT)
     {
         $this->queryBuilder = $queryBuilder;
+        $this->hydrationMode = $hydrationMode;
     }
 
     private function setResultCallbacks($results)
@@ -44,14 +47,16 @@ class DoctrineORMSource implements SourceInterface
 
     public function getData($offset, $limit)
     {
-        $query = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit);
+        $query = $this->queryBuilder->getQuery();
+        $query->setHydrationMode($this->hydrationMode);
+        $query->setFirstResult($offset)->setMaxResults($limit);
 
         return $this->setResultCallbacks($this->getPaginator($query));
     }
 
     public function getDataAll()
     {
-        $results = $this->queryBuilder->getQuery()->getResult();
+        $results = $this->queryBuilder->getQuery()->getResult($this->hydrationMode);
 
         return $this->setResultCallbacks($results);
     }
