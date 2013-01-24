@@ -54,7 +54,7 @@ class DataTableBuilder
     );
     private $filterContainer;
     private $additionalJSTemplate;
-    
+
     private $columnFactory;
 
     /**
@@ -211,7 +211,7 @@ class DataTableBuilder
 
             return $column;
         }
-        
+
         $column = $this->columnFactory->create($column, $name, $getter, $parameters);
         $this->columns[] = $column;
 
@@ -505,7 +505,7 @@ class DataTableBuilder
     {
         return null !== $this->additionalJSTemplate;
     }
-    
+
     public function setColumnFactory(ColumnFactory $columnFactory)
     {
         $this->columnFactory = $columnFactory;

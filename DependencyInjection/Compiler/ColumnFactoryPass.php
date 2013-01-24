@@ -2,24 +2,10 @@
 
 namespace NetTeam\Bundle\DataTableBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-
-class ColumnFactoryPass implements ColumnFactoryPassInterface
+class ColumnFactoryPass extends AbstractColumnFactoryPass
 {
-    public function process(ContainerBuilder $container)
+    public function getColumns()
     {
-        if (!$container->hasDefinition('nt_datatable.factory.column')) {
-            return;
-        }
-
-        $columns = $this->getColumns();
-        
-        foreach ($columns as $name => $class) {
-            $container->getDefinition('nt_datatable.factory.column')->addMethodCall('addColumnType', array($name, $class));
-        }
-    }
-    
-    public function getColumns() {
         $columns = array(
             'array' => 'NetTeam\Bundle\DataTableBundle\Column\ArrayColumn',
             'bool' => 'NetTeam\Bundle\DataTableBundle\Column\BoolColumn',
@@ -31,7 +17,7 @@ class ColumnFactoryPass implements ColumnFactoryPassInterface
             'text' => 'NetTeam\Bundle\DataTableBundle\Column\TextColumn',
             'collection' => 'NetTeam\Bundle\DataTableBundle\Column\Collection\CollectionColumn',
         );
-        
+
         return $columns;
     }
 }
