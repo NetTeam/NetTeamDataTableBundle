@@ -27,12 +27,17 @@ interface ColumnInterface
      */
     public function getValue($objectOrArray);
 
+    /**
+     * Dodanie sposobu wyciągającego wartość
+     * 
+     * @param type $getter
+     */
     public function addGetter($getter);
     public function getter($getter);
 
     /**
-     *  Priorytet sortowania (im wyższa liczba tym wyższy priorytet).
-     *  Dopuszczalne są priorytety ujemne
+     * Priorytet sortowania (im wyższa liczba tym wyższy priorytet).
+     * Dopuszczalne są priorytety ujemne
      * @param int $priority
      */
     public function setPriority($priority);
@@ -87,8 +92,14 @@ interface ColumnInterface
     public function route($route, array $params, $routeClass = null);
     public function setRoute($route, array $params, $routeClass = null);
 
+    /**
+     * Pobiera header dla kolumny
+     */
     public function getCaption();
 
+    /**
+     * Pobiera scieżke dla szablonu
+     */
     public function getTemplate();
 
     /**

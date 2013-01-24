@@ -21,6 +21,11 @@ class CollectionColumnDecorator implements ColumnInterface
         $this->collectionColumn = $collectionColumn;
     }
 
+    /**
+     * Pozwala na powrót do CollectionColumn
+     * 
+     * @return CollectionColumn
+     */
     public function next()
     {
         return $this->collectionColumn;
@@ -36,9 +41,12 @@ class CollectionColumnDecorator implements ColumnInterface
         return $this->column->sortByDefault($order);
     }
 
+    /**
+     * @deprecated
+     */
     public function setPriority($priority)
     {
-        return $this->column->setPriority($priority);
+        throw new Exception("Method 'setPriority' is deprecated");
     }
 
     public function sortable($keys)
@@ -86,9 +94,12 @@ class CollectionColumnDecorator implements ColumnInterface
         return $this->column->isSortable();
     }
 
+    /**
+     * @deprecated
+     */
     public function setWidth($width)
     {
-        return $this->column->setWidth($width);
+        throw new Exception("Method 'setWidth' is deprecated");
     }
 
     public function addClass($class)
@@ -96,9 +107,12 @@ class CollectionColumnDecorator implements ColumnInterface
         return $this->column->addClass($class);
     }
 
+    /**
+     * @deprecated
+     */
     public function setRoute($route, array $params, $routeClass = null)
     {
-        return $this->column->setRoute($route, $params, $routeClass);
+        throw new Exception("Method 'setRoute' is deprecated");
     }
 
     public function isSortedByDefault()
@@ -136,9 +150,12 @@ class CollectionColumnDecorator implements ColumnInterface
         return $this->column->getCaption();
     }
 
+    /**
+     * @deprecated
+     */
     public function setSortable($columns)
     {
-        return $this->column->setSortable($columns);
+        throw new Exception("Method 'setSortable' is deprecated");
     }
 
     public static function create($name, $getters, array $parameters)

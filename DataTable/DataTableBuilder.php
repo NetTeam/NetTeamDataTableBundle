@@ -11,13 +11,14 @@ use NetTeam\Bundle\DataTableBundle\Filter\FilterContainer;
 use NetTeam\Bundle\DataTableBundle\Export\CsvExport;
 use NetTeam\Bundle\DataTableBundle\Export\ExportInterface;
 use NetTeam\Bundle\DataTableBundle\Column\ColumnFactory;
+use NetTeam\Bundle\DataTableBundle\Column\ColumnFactoryAwareInterface;
 
 /**
  * Description of DataTableBuilder
  *
  * @author Wojciech Kulikowski <wojciech.kulikowski@carrywater.pl>
  */
-class DataTableBuilder
+class DataTableBuilder implements ColumnFactoryAwareInterface
 {
 
     /**

@@ -5,33 +5,52 @@ namespace NetTeam\Bundle\DataTableBundle\Column\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use NetTeam\Bundle\DataTableBundle\Column\Column;
 use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
+use NetTeam\Bundle\DataTableBundle\Column\ColumnFactory;
+use NetTeam\Bundle\DataTableBundle\Column\ColumnFactoryAwareInterface;
+
 
 /**
  * Kolumna z kolekcją kolumn
  *
  * @author Piotr Walków piotr.walkow@netteam.pl>
  */
-class CollectionColumn extends Column
+class CollectionColumn extends Column implements ColumnFactoryAwareInterface
 {
     protected $template = 'collection_column';
     protected $separator = ' ';
-    protected $columnCollection;
+    protected $columnCollection = array();
+    protected $columnFactory;
 
     public function __construct($caption, $getters = null, $parameters = array())
     {
         $this->caption = $caption;
         $this->parameters = $parameters;
-
-        $this->columnCollection = new ArrayCollection();
     }
-
-    public function add(ColumnInterface $column)
+    
+    public function setColumnFactory(ColumnFactory $columnFactory)
     {
-        $this->columnCollection->add($column);
-
+        $this->columnFactory = $columnFactory;
+    }
+    
+    /**
+     * Dodanie kolumny do kolekcji
+     * 
+     * @param \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface $column Kolumna do dodania
+     * @return \NetTeam\Bundle\DataTableBundle\Column\Collection\CollectionColumnDecorator
+     */
+    public function add($column, $name = null, $getter = null, array $parameters = array())
+    {
+        if (is_object($column) && $column instanceof ColumnInterface) {
+            $this->columnCollection[] = $column;
+        }
+        else {
+            $column = $this->columnFactory->create($column, $name, $getter, $parameters);
+            $this->columnCollection[] = $column;
+        }
+        
         return new CollectionColumnDecorator($column, $this);
     }
-
+    
     public function getValue($objectOrArray)
     {
         $value = parent::getValue($objectOrArray);

@@ -19,10 +19,16 @@ class ColumnFactory
         if (!array_key_exists($type, $this->columnTypes)) {
             throw new \InvalidArgumentException('Wrong column type, "'.$type.'" given');
         }
-
+        
         $columnClass = $this->columnTypes[$type];
-
-        return $columnClass::create($name, $getter, $parameters);
+        
+        $column = $columnClass::create($name, $getter, $parameters);
+        
+        if ($column instanceof ColumnFactoryAwareInterface) {
+            $column->setColumnFactory($this);
+        }
+        
+        return $column;
     }
 
     /**
