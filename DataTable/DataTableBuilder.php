@@ -54,6 +54,8 @@ class DataTableBuilder
     );
     private $filterContainer;
     private $additionalJSTemplate;
+    
+    private $columnFactory;
 
     /**
      * Konstruktor
@@ -209,9 +211,8 @@ class DataTableBuilder
 
             return $column;
         }
-
-        $columnFactory = new ColumnFactory();
-        $column = $columnFactory->create($column, $name, $getter, $parameters);
+        
+        $column = $this->columnFactory->create($column, $name, $getter, $parameters);
         $this->columns[] = $column;
 
         return $column;
@@ -503,6 +504,11 @@ class DataTableBuilder
     public function hasAdditionalJSTemplate()
     {
         return null !== $this->additionalJSTemplate;
+    }
+    
+    public function setColumnFactory(ColumnFactory $columnFactory)
+    {
+        $this->columnFactory = $columnFactory;
     }
 
 }
