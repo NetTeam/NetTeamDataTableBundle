@@ -11,7 +11,7 @@ interface ColumnFactoryAwareInterface
 {
     /**
      * Setter dla ColumnFactory
-     * 
+     *
      * @param \NetTeam\Bundle\DataTableBundle\Column\ColumnFactory $columnFactory
      */
     public function setColumnFactory(ColumnFactory $columnFactory);

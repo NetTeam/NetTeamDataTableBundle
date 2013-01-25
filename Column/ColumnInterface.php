@@ -29,7 +29,7 @@ interface ColumnInterface
 
     /**
      * Dodanie sposobu wyciągającego wartość
-     * 
+     *
      * @param type $getter
      */
     public function addGetter($getter);

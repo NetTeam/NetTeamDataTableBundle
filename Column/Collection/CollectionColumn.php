@@ -2,12 +2,10 @@
 
 namespace NetTeam\Bundle\DataTableBundle\Column\Collection;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use NetTeam\Bundle\DataTableBundle\Column\Column;
 use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
 use NetTeam\Bundle\DataTableBundle\Column\ColumnFactory;
 use NetTeam\Bundle\DataTableBundle\Column\ColumnFactoryAwareInterface;
-
 
 /**
  * Kolumna z kolekcją kolumn
@@ -26,31 +24,25 @@ class CollectionColumn extends Column implements ColumnFactoryAwareInterface
         $this->caption = $caption;
         $this->parameters = $parameters;
     }
-    
+
     public function setColumnFactory(ColumnFactory $columnFactory)
     {
         $this->columnFactory = $columnFactory;
     }
-    
+
     /**
      * Dodanie kolumny do kolekcji
-     * 
-     * @param \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface $column Kolumna do dodania
+     *
+     * @param  \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface                      $column Kolumna do dodania
      * @return \NetTeam\Bundle\DataTableBundle\Column\Collection\CollectionColumnDecorator
      */
     public function add($column, $name = null, $getter = null, array $parameters = array())
     {
-        if (is_object($column) && $column instanceof ColumnInterface) {
-            $this->columnCollection[] = $column;
-        }
-        else {
-            $column = $this->columnFactory->create($column, $name, $getter, $parameters);
-            $this->columnCollection[] = $column;
-        }
-        
+        $column = $this->columnFactory->create($column, $name, $getter, $parameters);
+
         return new CollectionColumnDecorator($column, $this);
     }
-    
+
     public function getValue($objectOrArray)
     {
         $value = parent::getValue($objectOrArray);
@@ -81,12 +73,7 @@ class CollectionColumn extends Column implements ColumnFactoryAwareInterface
         return $this;
     }
 
-    public function separator($separator)
-    {
-        return $this->setSeparator($separator);
-    }
-
-    public function separatorNewLine()
+    public function setSeparatorNewLine()
     {
         return $this->setSeparator('<br />');
     }

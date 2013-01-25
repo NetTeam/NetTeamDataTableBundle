@@ -23,7 +23,7 @@ class CollectionColumnDecorator implements ColumnInterface
 
     /**
      * Pozwala na powrót do CollectionColumn
-     * 
+     *
      * @return CollectionColumn
      */
     public function next()

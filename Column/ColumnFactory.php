@@ -12,6 +12,10 @@ class ColumnFactory
 
     public function create($type, $name, $getter, array $parameters = array())
     {
+        if (is_object($type) && $type instanceof ColumnInterface) {
+            return $type;
+        }
+
         if (!is_string($type)) {
             throw new \InvalidArgumentException('Wrong column type parameter, string expected');
         }
@@ -19,15 +23,15 @@ class ColumnFactory
         if (!array_key_exists($type, $this->columnTypes)) {
             throw new \InvalidArgumentException('Wrong column type, "'.$type.'" given');
         }
-        
+
         $columnClass = $this->columnTypes[$type];
-        
+
         $column = $columnClass::create($name, $getter, $parameters);
-        
+
         if ($column instanceof ColumnFactoryAwareInterface) {
             $column->setColumnFactory($this);
         }
-        
+
         return $column;
     }
 
