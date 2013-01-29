@@ -3,6 +3,7 @@
 {% block columnValue %}
 
 {% for column in record.collection %}
+
     {% include column.template with { record: column.record } %}
     {{ record.separator|raw }}
 {% endfor %}

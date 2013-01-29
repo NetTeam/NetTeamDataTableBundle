@@ -4,8 +4,8 @@ namespace NetTeam\Bundle\DataTableBundle\Column\Collection;
 
 use NetTeam\Bundle\DataTableBundle\Column\Column;
 use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
-use NetTeam\Bundle\DataTableBundle\Column\ColumnFactory;
-use NetTeam\Bundle\DataTableBundle\Column\ColumnFactoryAwareInterface;
+use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory;
+use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactoryAwareInterface;
 
 /**
  * Kolumna z kolekcją kolumn
@@ -39,6 +39,8 @@ class CollectionColumn extends Column implements ColumnFactoryAwareInterface
     public function add($column, $name = null, $getter = null, array $parameters = array())
     {
         $column = $this->columnFactory->create($column, $name, $getter, $parameters);
+
+        $this->columnCollection[] = $column;
 
         return new CollectionColumnDecorator($column, $this);
     }

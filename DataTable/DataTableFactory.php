@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use NetTeam\Bundle\DataTableBundle\SimpleSource\SimpleSourceInterface;
 use NetTeam\Bundle\DataTableBundle\Source\SourceInterface;
 use NetTeam\Bundle\DataTableBundle\Source\SimpleSourceAdapter;
-use NetTeam\Bundle\DataTableBundle\Column\ColumnFactory;
+use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory;
 
 class DataTableFactory
 {
