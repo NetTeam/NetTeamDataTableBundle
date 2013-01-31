@@ -444,15 +444,18 @@ class DataTableBuilder
         }
     }
 
-    public function setFiltersSession(Request $request) {
+    public function setFiltersSession(Request $request)
+    {
         $session = $request->getSession();
         foreach ($request->query->all() as $key => $params) {
             if (preg_match('/^filter/', $key)) {
                 $dtFilterHash = md5(serialize($params));
                 $session->set('dtfilters', array($dtFilterHash => $params));
+
                 return $dtFilterHash;
             }
         }
+
         return null;
     }
 
