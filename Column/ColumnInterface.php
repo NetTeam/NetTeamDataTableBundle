@@ -33,15 +33,28 @@ interface ColumnInterface
      * @param type $getter
      */
     public function addGetter($getter);
+
+    /**
+     * @deprecated type $getter
+     */
     public function getter($getter);
 
     /**
      * Priorytet sortowania (im wyższa liczba tym wyższy priorytet).
      * Dopuszczalne są priorytety ujemne
+     *
      * @param int $priority
      */
     public function setPriority($priority);
+
+    /**
+     * @deprecated
+     */
     public function priority($priority);
+
+    /**
+     * Pobiera priorytet (
+     */
     public function getPriority();
 
     /**
@@ -49,7 +62,15 @@ interface ColumnInterface
      * @param string $class
      */
     public function addClass($class);
+
+    /**
+     * @deprecated
+     */
     public function class_($class);
+
+    /**
+     * Pobiera klasy css dla kolumny
+     */
     public function getClass();
 
     /**
@@ -58,8 +79,20 @@ interface ColumnInterface
      * @param string $width
      */
     public function setWidth($width);
+
+    /**
+     * @deprecated
+     */
     public function width($width);
+
+    /**
+     * Pobiera szerokośc kolumny
+     */
     public function getWidth();
+
+    /**
+     * Sprawdza czy szerokośc kolumny została ustawiona
+     */
     public function hasWidth();
 
     /**
@@ -69,6 +102,10 @@ interface ColumnInterface
      * @param string $order   kierunek sortowania
      */
     public function setSortable($columns);
+
+    /**
+     * @deprecated
+     */
     public function sortable($keys);
     public function addSortable($key);
 
@@ -89,6 +126,9 @@ interface ColumnInterface
      */
     public function getSortableKeys();
 
+    /**
+     * @deprecated
+     */
     public function route($route, array $params, $routeClass = null);
     public function setRoute($route, array $params, $routeClass = null);
 

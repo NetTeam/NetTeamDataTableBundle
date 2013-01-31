@@ -10,16 +10,23 @@ use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
  */
 class ColumnFactory
 {
+    /**
+     * Dostępne kolumny
+     *
+     * @var string[]
+     */
     protected $columnTypes = array();
 
     /**
-     * Metoda do utworzenia kolumny
+     * Utworzenie kolumny
      *
-     * @param  \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface|string $type
-     * @param  string                                                        $name
-     * @param  string|array                                                  $getter
-     * @param  array                                                         $parameters
-     * @return \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface
+     * @param \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface $type
+     * @param string                                                 $name
+     * @param string                                                 $getter
+     * @param array                                                  $parameters
+     *
+     * @return \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface|\NetTeam\Bundle\DataTableBundle\Factory\ColumnFactoryAwareInterface
+     *
      * @throws Exception\WrongColumnTypeException
      * @throws Exception\WrongColumnTypeParameterException
      */
@@ -51,10 +58,11 @@ class ColumnFactory
     /**
      * Metoda pozwalająca dodać nową kolumnę do serwisu
      *
-     * @param  string                             $name  Unikalna nazwa kolumny
-     * @param  class                              $class Scieżka klasy kolumny
+     * @param  string                                $name  Unikalna nazwa kolumny
+     * @param  class                                 $class Scieżka klasy kolumny
      * @throws Exception\WrongColumnTypeException
-     * @throws \InvalidArgumentException
+     * @throws Exception\InvalidColumnClassException
+     * @throws Exception\ColumnExistException
      */
     public function addColumnType($name, $class)
     {

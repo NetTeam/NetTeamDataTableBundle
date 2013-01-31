@@ -14,9 +14,24 @@ use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactoryAwareInterface;
  */
 class CollectionColumn extends Column implements ColumnFactoryAwareInterface
 {
+    /**
+     * @var string Nazwa domyslnego szablonu
+     */
     protected $template = 'collection_column';
+
+    /**
+     * @var separator dla kolumn w kolekcji
+     */
     protected $separator = ' ';
+
+    /**
+     * @var array Kolekcja kolumn
+     */
     protected $columnCollection = array();
+
+    /**
+     * @var ColumnFactory serwis fabryki kolumn
+     */
     protected $columnFactory;
 
     public function __construct($caption, $getters = null, $parameters = array())
@@ -25,6 +40,9 @@ class CollectionColumn extends Column implements ColumnFactoryAwareInterface
         $this->parameters = $parameters;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setColumnFactory(ColumnFactory $columnFactory)
     {
         $this->columnFactory = $columnFactory;
@@ -45,6 +63,12 @@ class CollectionColumn extends Column implements ColumnFactoryAwareInterface
         return new CollectionColumnDecorator($column, $this);
     }
 
+    /**
+     * Pobranie wartości ze wszystkich kolumn
+     *
+     * @param  array|object $objectOrArray
+     * @return object
+     */
     public function getValue($objectOrArray)
     {
         $value = parent::getValue($objectOrArray);
@@ -57,17 +81,29 @@ class CollectionColumn extends Column implements ColumnFactoryAwareInterface
                 'record' => $column->getValue($objectOrArray),
             );
         }
+
         $value->add('collection', $collection);
         $value->add('separator', $this->separator);
 
         return $value;
     }
 
+    /**
+     * Pobiera listę kolumn w tej kolekcji
+     *
+     * @return Column[]
+     */
     public function getColumnCollection()
     {
         return $this->columnCollection;
     }
 
+    /**
+     * Zmiana separatora
+     *
+     * @param  string $separator
+     * @return self
+     */
     public function setSeparator($separator)
     {
         $this->separator = $separator;
@@ -75,6 +111,11 @@ class CollectionColumn extends Column implements ColumnFactoryAwareInterface
         return $this;
     }
 
+    /**
+     * Ustawia separator na nową linię
+     *
+     * @return self
+     */
     public function setSeparatorNewLine()
     {
         return $this->setSeparator('<br />');
