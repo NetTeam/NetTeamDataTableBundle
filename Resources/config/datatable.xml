@@ -6,13 +6,18 @@
 
     <parameters>
         <parameter key="nt_datatable.factory.class">NetTeam\Bundle\DataTableBundle\DataTable\DataTableFactory</parameter>
+        <parameter key="nt_datatable.factory.column.class">NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory</parameter>
         <parameter key="nt_datatable.controller.class">NetTeam\Bundle\DataTableBundle\Controller\DataTableController</parameter>
         <parameter key="nt_datatable.util.json_response.class">NetTeam\Bundle\DataTableBundle\Util\JsonResponseBuilder</parameter>
     </parameters>
 
     <services>
+        <service id="nt_datatable.factory.column" class="%nt_datatable.factory.column.class%">
+        </service>
+
         <service id="nt_datatable.factory" class="%nt_datatable.factory.class%" public="false">
             <argument type="service" id="service_container" />
+            <argument type="service" id="nt_datatable.factory.column" />
             <argument type="collection" />
         </service>
 

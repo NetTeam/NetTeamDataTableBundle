@@ -10,14 +10,15 @@ use NetTeam\Bundle\DataTableBundle\BulkAction\Column as BulkActionColumn;
 use NetTeam\Bundle\DataTableBundle\Filter\FilterContainer;
 use NetTeam\Bundle\DataTableBundle\Export\CsvExport;
 use NetTeam\Bundle\DataTableBundle\Export\ExportInterface;
-use NetTeam\Bundle\DataTableBundle\Column\ColumnFactory;
+use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory;
+use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactoryAwareInterface;
 
 /**
  * Description of DataTableBuilder
  *
  * @author Wojciech Kulikowski <wojciech.kulikowski@carrywater.pl>
  */
-class DataTableBuilder
+class DataTableBuilder implements ColumnFactoryAwareInterface
 {
 
     /**
@@ -54,6 +55,8 @@ class DataTableBuilder
     );
     private $filterContainer;
     private $additionalJSTemplate;
+
+    private $columnFactory;
 
     /**
      * Konstruktor
@@ -210,8 +213,7 @@ class DataTableBuilder
             return $column;
         }
 
-        $columnFactory = new ColumnFactory();
-        $column = $columnFactory->create($column, $name, $getter, $parameters);
+        $column = $this->columnFactory->create($column, $name, $getter, $parameters);
         $this->columns[] = $column;
 
         return $column;
@@ -503,6 +505,11 @@ class DataTableBuilder
     public function hasAdditionalJSTemplate()
     {
         return null !== $this->additionalJSTemplate;
+    }
+
+    public function setColumnFactory(ColumnFactory $columnFactory)
+    {
+        $this->columnFactory = $columnFactory;
     }
 
 }
