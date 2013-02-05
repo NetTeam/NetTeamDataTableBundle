@@ -2,7 +2,8 @@
 
 namespace NetTeam\Bundle\DataTableBundle\Column\ValueGetter;
 
-use Symfony\Component\Form\Util\PropertyPath;
+use Symfony\Component\PropertyAccess\PropertyPath;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * Pobieranie wartości z wykorzystaniem PropertyPath
@@ -11,6 +12,7 @@ use Symfony\Component\Form\Util\PropertyPath;
  */
 class PropertyValueGetter implements ValueGetterInterface
 {
+
     private $propertyPath;
 
     public function __construct($key)
@@ -20,6 +22,9 @@ class PropertyValueGetter implements ValueGetterInterface
 
     public function get($objectOrArray)
     {
-        return $this->propertyPath->getValue($objectOrArray);
+        $propertyAccessor = new PropertyAccessor();
+
+        return $propertyAccessor->getValue($objectOrArray, $this->propertyPath);
     }
+
 }
