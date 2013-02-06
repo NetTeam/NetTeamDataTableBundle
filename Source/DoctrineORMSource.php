@@ -65,11 +65,11 @@ class DoctrineORMSource implements SourceInterface
     {
         $conditions = $this->queryBuilder->expr()->orx();
         foreach ($keys as $key) {
-            $conditions->add($this->queryBuilder->expr()->like($this->queryBuilder->expr()->upper(new Cast($key, 'text')), "?1"));
+            $conditions->add($this->queryBuilder->expr()->like($this->queryBuilder->expr()->upper(new Cast($key, 'text')), ":search"));
         }
         $this->queryBuilder
                 ->andWhere($conditions)
-                ->setParameter(1, String::toUpper("%$search%"));
+                ->setParameter('search', String::toUpper("%$search%"));
     }
 
     public function addSorting($column, $order)

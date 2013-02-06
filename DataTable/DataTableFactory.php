@@ -7,17 +7,20 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use NetTeam\Bundle\DataTableBundle\SimpleSource\SimpleSourceInterface;
 use NetTeam\Bundle\DataTableBundle\Source\SourceInterface;
 use NetTeam\Bundle\DataTableBundle\Source\SimpleSourceAdapter;
+use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory;
 
 class DataTableFactory
 {
 
     private $container;
     private $datatables = array();
+    private $columnFactory;
 
-    public function __construct(ContainerInterface $container, array $datatables = array())
+    public function __construct(ContainerInterface $container, ColumnFactory $columnFactory, array $datatables = array())
     {
         $this->container = $container;
         $this->datatables = $datatables;
+        $this->columnFactory = $columnFactory;
     }
 
     public function create($name, array $options)
@@ -31,6 +34,7 @@ class DataTableFactory
 
         $builder = new DataTableBuilder('nt_datatable', $this->prepareSource($source), array('name' => $name));
         $builder->setRouteParameters($options);
+        $builder->setColumnFactory($this->columnFactory);
 
         $filterContainer = $this->container->get('nt_datatable.filter_container');
         $filterContainer->setName($name);
