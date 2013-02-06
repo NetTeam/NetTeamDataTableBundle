@@ -3,8 +3,9 @@
 namespace NetTeam\Bundle\DataTableBundle\Source;
 
 use Doctrine\ORM\QueryBuilder;
-use DoctrineExtensions\Paginate\Paginate;
+use Doctrine\ORM\Query;
 use NetTeam\Bundle\DataTableBundle\Util\Doctrine\Cast;
+use NetTeam\Bundle\DataTableBundle\Util\Doctrine\CountWalker;
 use NetTeam\Bundle\DataTableBundle\Util\String;
 
 /**
@@ -42,7 +43,7 @@ class DoctrineORMSource implements SourceInterface
 
     public function getData($offset, $limit)
     {
-        $results = Paginate::getPaginateQuery($this->queryBuilder->getQuery(), $offset, $limit)->getResult();
+        $results = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit)->getResult();
 
         return $this->setResultCallbacks($results);
     }
@@ -91,7 +92,44 @@ class DoctrineORMSource implements SourceInterface
 
     public function count()
     {
-        return Paginate::count($this->queryBuilder->getQuery());
+        /* @var $countQuery Query */
+        $query = $this->queryBuilder->getQuery();
+        $countQuery = $this->cloneQuery($query);
+
+        $countQuery->setHint(Query::HINT_CUSTOM_TREE_WALKERS, array('NetTeam\Bundle\DataTableBundle\Util\Doctrine\CountWalker'));
+        $countQuery->setFirstResult(null)->setMaxResults(null);
+
+        try {
+            $data = $countQuery->getScalarResult();
+            $data = array_map('current', $data);
+
+            if (count($this->queryBuilder->getDQLPart('groupBy'))) {
+                return count($data);
+            }
+
+            return array_sum($data);
+        } catch (NoResultException $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Clones a query.
+     *
+     * @param Query $query The query.
+     *
+     * @return Query The cloned query.
+     */
+    private function cloneQuery(Query $query)
+    {
+        /* @var $cloneQuery Query */
+        $cloneQuery = clone $query;
+        $cloneQuery->setParameters($query->getParameters());
+        foreach ($query->getHints() as $name => $value) {
+            $cloneQuery->setHint($name, $value);
+        }
+
+        return $cloneQuery;
     }
 
     public function getBuilder()
