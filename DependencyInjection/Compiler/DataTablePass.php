@@ -22,6 +22,6 @@ class DataTablePass implements CompilerPassInterface
                 $datatables[$attributes['alias']] = $id;
             }
         }
-        $container->getDefinition('nt_datatable.factory')->replaceArgument(1, $datatables);
+        $container->getDefinition('nt_datatable.factory')->replaceArgument(2, $datatables);
     }
 }

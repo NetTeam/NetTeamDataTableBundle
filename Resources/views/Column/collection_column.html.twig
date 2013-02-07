@@ -1,0 +1,14 @@
+{% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
+
+{% block columnValue %}
+
+{# @todo wydzielic do innej kolumny span gdy collectionColumn bedzie do mergowania
+         kolumn innych niż same ikony
+#}
+<span class="no-wrap">
+    {% for column in record.collection %}
+        {% include column.template with { record: column.record } %}
+        {{ record.separator|raw }}
+    {% endfor %}
+</span>
+{% endblock %}

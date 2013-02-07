@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use NetTeam\Bundle\DataTableBundle\DependencyInjection\DataTableExtension;
 use NetTeam\Bundle\DataTableBundle\DependencyInjection\Compiler\DataTablePass;
 use NetTeam\Bundle\DataTableBundle\DependencyInjection\Compiler\FilterPass;
+use NetTeam\Bundle\DataTableBundle\DependencyInjection\Compiler\ColumnFactoryPass;
 
 class NetTeamDataTableBundle extends Bundle
 {
@@ -16,6 +17,7 @@ class NetTeamDataTableBundle extends Bundle
 
         $container->addCompilerPass(new DataTablePass());
         $container->addCompilerPass(new FilterPass());
+        $container->addCompilerPass(new ColumnFactoryPass());
         $container->registerExtension(new DataTableExtension());
     }
 }
