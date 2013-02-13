@@ -22,5 +22,10 @@
         "psr-0": { "NetTeam\\Bundle\\DataTableBundle": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "NetTeam/Bundle/DataTableBundle"
+    "target-dir": "NetTeam/Bundle/DataTableBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1.x-dev"
+        }
+    }
 }
