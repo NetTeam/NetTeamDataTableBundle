@@ -3,7 +3,7 @@
 namespace NetTeam\Bundle\DataTableBundle\Source;
 
 use Doctrine\ORM\Query;
-use DoctrineExtensions\Paginate\Paginate;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * Źródło danych dla DataTable - Query Doctrine ORM
@@ -16,12 +16,10 @@ class DoctrineDQLSource implements SourceInterface
      * @var Query
      */
     private $query;
-    private $count;
 
     public function __construct(Query $query)
     {
         $this->query = $query;
-        $this->count = Paginate::getTotalQueryResults($this->query);
     }
 
     public function getData($offset, $limit)
@@ -50,6 +48,8 @@ class DoctrineDQLSource implements SourceInterface
 
     public function count()
     {
-        return $this->count;
+        $paginator = new Paginator($this->query);
+
+        return $paginator->count();
     }
 }
