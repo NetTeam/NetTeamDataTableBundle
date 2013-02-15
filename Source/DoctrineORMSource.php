@@ -29,7 +29,7 @@ class DoctrineORMSource implements SourceInterface
         $this->queryBuilder = $queryBuilder;
     }
 
-    private function setResultCallbacks($results)
+    private function setResultCallbacks(array $results)
     {
         if (null !== $callback = $this->dataCallback) {
             $results = $callback($results);
@@ -45,8 +45,9 @@ class DoctrineORMSource implements SourceInterface
     public function getData($offset, $limit)
     {
         $query = $this->queryBuilder->getQuery()->setFirstResult($offset)->setMaxResults($limit);
+        $results = iterator_to_array($this->getPaginator($query));
 
-        return $this->setResultCallbacks($this->getPaginator($query));
+        return $this->setResultCallbacks($results);
     }
 
     public function getDataAll()
