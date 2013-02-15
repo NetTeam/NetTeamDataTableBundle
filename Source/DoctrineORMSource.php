@@ -4,8 +4,8 @@ namespace NetTeam\Bundle\DataTableBundle\Source;
 
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
-use NetTeam\Bundle\DataTableBundle\Util\Doctrine\Cast;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use NetTeam\Bundle\DataTableBundle\Util\Doctrine\Cast;
 use NetTeam\Bundle\DataTableBundle\Util\String;
 
 /**
