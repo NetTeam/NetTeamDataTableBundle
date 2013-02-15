@@ -4,10 +4,10 @@ namespace NetTeam\Bundle\DataTableBundle\Source;
 
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
-use NetTeam\Bundle\DataTableBundle\Util\Doctrine\Cast;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use NetTeam\Bundle\DataTableBundle\Util\String;
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use NetTeam\Bundle\DataTableBundle\Util\Doctrine\Cast;
+use NetTeam\Bundle\DataTableBundle\Util\String;
 
 /**
  * Źródło danych dla DataTable - QueryBuilder Doctrine ORM
@@ -32,7 +32,7 @@ class DoctrineORMSource implements SourceInterface
         $this->hydrationMode = $hydrationMode;
     }
 
-    private function setResultCallbacks($results)
+    private function setResultCallbacks(array $results)
     {
         if (null !== $callback = $this->dataCallback) {
             $results = $callback($results);
@@ -51,7 +51,9 @@ class DoctrineORMSource implements SourceInterface
         $query->setHydrationMode($this->hydrationMode);
         $query->setFirstResult($offset)->setMaxResults($limit);
 
-        return $this->setResultCallbacks($this->getPaginator($query));
+        $results = iterator_to_array($this->getPaginator($query));
+
+        return $this->setResultCallbacks($results);
     }
 
     public function getDataAll()
