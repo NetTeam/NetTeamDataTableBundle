@@ -23,6 +23,11 @@
     </div>
 </form>
 {% endif %}
+{% if datatable.actions %}
+    <div class="actions_container table-actions">
+        {% include actionsTemplate %}
+    </div>
+{% endif %}
 {% if options.with_js is not defined or options.with_js %}
 <script type="text/javascript" charset="utf-8">
 {% include "NetTeamDataTableBundle::datatable.js.twig" %}

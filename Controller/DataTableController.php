@@ -76,6 +76,7 @@ class DataTableController
             'columns' => $columns,
             'bulkActions' => $builder->getBulkActions(),
             'bulkColumn' => $builder->getBulkActionsColumn(),
+            'actions' => $builder->getActions(),
             'alias' => $name,
             'export' => $export
                 ));
