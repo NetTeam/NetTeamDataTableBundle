@@ -1,8 +1,8 @@
 ## CHANGELOG ##
 
-#### v1.0.2 (2013-03-12) ####
-
+#### v1.0.2 (2013-XX-XX) ####
 - Dodanie możliwości dodawania akcji
+- Usunięcie wywołań metod typu deprecated z `FilterContainer`
 
 #### v1.0.1 (2013-03-08) ####
 - Aktualizacja do Doctrine 2.2

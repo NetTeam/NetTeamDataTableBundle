@@ -40,7 +40,7 @@ class FilterContainer
     {
         $this->loadBuilder();
 
-        $this->builder->getForm()->bindRequest($request);
+        $this->builder->getForm()->bind($request);
         foreach ($this->filters as $filter) {
             $filter->apply();
         }
@@ -94,7 +94,7 @@ class FilterContainer
     {
         $this->loadBuilder();
 
-        return $this->builder->getForm()->createView()->getChild($key);
+        return $this->builder->getForm()->createView()->children[$key];
     }
 
     public function getBuilder($key)
