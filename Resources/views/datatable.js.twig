@@ -258,7 +258,7 @@ $(document).ready(function() {
               if (typeof dataTable !== 'undefined') {
                   dataTable.trigger(beforeSend, Action);
               }
-              url = generateUrl(Actions.action);
+              url = generateUrl(Action.action);
 
               if (typeof dataTable === 'undefined') {
                   if (typeof tab_open === 'function') {

@@ -2,12 +2,15 @@
 
 namespace NetTeam\Bundle\DataTableBundle\Controller;
 
+use NetTeam\Bundle\DataTableBundle\DataTableEvents;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use NetTeam\Bundle\DataTableBundle\DataTable\DataTableFactory;
 use NetTeam\Bundle\DataTableBundle\Util\JsonResponseBuilder;
 use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
+use NetTeam\Bundle\DataTableBundle\Event\PostBuildEvent;
 
 class DataTableController
 {
@@ -15,13 +18,15 @@ class DataTableController
     private $jsonBuilder;
     private $templating;
     private $request;
+    private $dispatcher;
 
-    public function __construct(DataTableFactory $factory, JsonResponseBuilder $jsonBuilder, EngineInterface $templating, Request $request)
+    public function __construct(DataTableFactory $factory, JsonResponseBuilder $jsonBuilder, EngineInterface $templating, Request $request, EventDispatcher $dispatcher)
     {
         $this->factory     = $factory;
         $this->jsonBuilder = $jsonBuilder;
         $this->templating  = $templating;
         $this->request     = $request;
+        $this->dispatcher  = $dispatcher;
     }
 
     public function process($name)
@@ -46,6 +51,9 @@ class DataTableController
 
         $this->updateSearch($builder);
         $this->updateSorting($builder);
+
+        $event = new PostBuildEvent($builder);
+        $this->dispatcher->dispatch(DataTableEvents::POST_BUILD, $event);
 
         $count = $builder->countRows();
         $data = $builder->getDataArray($offset, $limit);

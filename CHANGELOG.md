@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.0.3 (2013-XX-XX) ####
+- Dodanie eventu postBuildEvent
+
 #### v1.0.2 (2013-XX-XX) ####
 - Dodanie możliwości dodawania akcji
 - Usunięcie wywołań metod typu deprecated z `FilterContainer`
