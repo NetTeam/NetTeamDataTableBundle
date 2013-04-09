@@ -184,6 +184,8 @@ $(document).ready(function() {
               }
               if (!beforeSend.isDefaultPrevented()) {
                   $.getJSON(url, refresh);
+                  event.preventDefault();
+                  event.stopImmediatePropagation();
               }
           }
 
