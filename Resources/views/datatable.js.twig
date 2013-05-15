@@ -70,6 +70,7 @@ $(document).ready(function() {
             {% if datatable.hasPagination %}
                 "sPaginationType": "full_numbers",
             {% endif %}
+
             {% include "NetTeamDataTableBundle:TableTools:config.js.twig" %},
             "bPaginate": {{ datatable.hasPagination() ? 'true' : 'false' }},
             "bInfo": {{ datatable.hasPagination() ? 'true' : 'false' }},
@@ -280,6 +281,107 @@ $(document).ready(function() {
 
           return Action;
         })('{{ alias }}', dTable);
+
+
+    {% if datatable.hasEditInPlaceActions %}
+        var urlEdit = '{{ path(datatable.getEditInPlaceEditAction, {'id' : 'PLACEHODER'}) }}';
+        var urlSave = '{{ path(datatable.getEditInPlaceSaveAction, {'id' : 'PLACEHODER'}) }}';
+        var editinplace = (function(alias, dataTable) {
+
+            function editRow (dTable, nRow, editedElement)
+            {
+                var jqTds = $('>td', nRow);
+                jqTds.find('.editInPlaceEdit.edit').hide();
+                jqTds.find('.editInPlaceEdit.save').show();
+                jqTds.find('.editInPlaceEdit.save').on('click', function (e) {
+                    editedElement = ($(this).attr('editinplace'));
+                    e.preventDefault();
+                    saveRow( dTable, nRow, editedElement );
+                });
+
+                $.ajax({
+                    "type" : "GET",
+                    "url" : urlEdit.replace('PLACEHODER', editedElement),
+                    "success" : function(response) {
+                         var jqTds = $('>td', nRow);
+                         jqTds.each(function(index, td) {
+                            field = $(response).find("[data-column='"+index+"']");
+                            if (field.html() != undefined) {
+                                $(td).html(field);
+                            }
+                         });
+                        token = $(response).find("input[type='hidden']");
+                        jqTds.last().append(token);
+                    }
+                });
+
+            }
+
+            function saveRow (dTable, nRow, editedElement)
+            {
+                var jqInputs = $('input', nRow);
+
+                var jqTds = $('>td', nRow);
+                jqTds.find('.editInPlaceEdit.edit').hide();
+                jqTds.find('.editInPlaceEdit.save').show();
+
+                var data = jqTds.find("input, textarea, select" ).serialize();
+
+                $.ajax({
+                    "type" : "POST",
+                    "url" : urlSave.replace('PLACEHODER', editedElement),
+                    "data" : data,
+                    "success" : function(response) {
+                        var dialog = $(response).find('.dialog');
+                        var errors = $(response).find('.errors');
+
+                        if (errors.text().length != 0) {
+                            var dialog = new DialogBox({
+                                "dialog":{
+                                    "width": 650,
+                                    "position": ['center',50],
+                                    "resizable" : true
+                                },
+                                'content': dialog
+                            });
+                            dialog.open();
+                        }
+                        dTable.fnDraw();
+                    }
+                });
+            }
+
+            function restoreRow (oTable, nRow)
+            {
+                var aData = oTable.fnGetData(nRow);
+                var jqTds = $('>td', nRow);
+
+                for (var i=0, iLen=jqTds.length ; i<iLen ; i++) {
+                    oTable.fnUpdate(aData[i], nRow, i, false);
+                }
+            }
+
+            if ($('td', dTable.fnGetNodes())) {
+                var nEditing = null;
+
+                $('a.editInPlaceEdit.edit').live('click', function (e) {
+                    e.preventDefault();
+
+                    var editedElement = ($(this).attr('editinplace'));
+                    var nRow = $(this).parents('tr')[0];
+
+                    if (nEditing !== null && nEditing != nRow ) {
+                        restoreRow(dTable, nEditing);
+                        editRow(dTable, nRow, editedElement);
+                        nEditing = nRow;
+                    } else {
+                        editRow(dTable, nRow, editedElement);
+                        nEditing = nRow;
+                    }
+                });
+            };
+        })('{{ alias }}', dTable);
+    {% endif %}
 
       {% if datatable.hasAdditionalJSTemplate() %}
           {% include datatable.getAdditionalJSTemplate()  %}

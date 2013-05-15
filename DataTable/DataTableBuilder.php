@@ -62,6 +62,9 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
 
     private $columnFactory;
 
+    private $editInPlaceEditAction;
+    private $editInPlaceSaveAction;
+
     /**
      * Konstruktor
      *
@@ -592,6 +595,31 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     public function setColumnFactory(ColumnFactory $columnFactory)
     {
         $this->columnFactory = $columnFactory;
+    }
+
+    public function setEditInPlaceEditAction($routing)
+    {
+        $this->editInPlaceEditAction = $routing;
+    }
+
+    public function setEditInPlaceSaveAction($routing)
+    {
+        $this->editInPlaceSaveAction = $routing;
+    }
+
+    public function hasEditInPlaceActions()
+    {
+        return $this->editInPlaceSaveAction && $this->editInPlaceSaveAction;
+    }
+
+    public function getEditInPlaceEditAction()
+    {
+        return $this->editInPlaceEditAction;
+    }
+
+    public function getEditInPlaceSaveAction()
+    {
+        return $this->editInPlaceSaveAction;
     }
 
 }

@@ -1,0 +1,6 @@
+{% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
+{% block columnValue %}
+    {% set value = record.value|default('')|trans %}
+    <a class="editInPlaceEdit edit" href="#" editinplace="{{ value }}">{{ 'edit_in_place.edit'|trans({}, 'datatable') }}</a>
+    <a class="editInPlaceEdit save" href="#" style="display: none;" editinplace="{{ value }}">{{ 'edit_in_place.save'|trans({}, 'datatable') }}</a>
+{% endblock %}
