@@ -20,3 +20,4 @@ actions: Akcje
 edit_in_place:
     edit: Edytuj
     save: Zapisz
+    cancel: Anuluj

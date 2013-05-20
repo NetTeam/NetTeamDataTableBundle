@@ -292,6 +292,7 @@ $(document).ready(function() {
                         CHILDREN_TD: '>td',
                         EDIT: '.editInPlaceEdit.edit',
                         SAVE: '.editInPlaceEdit.save',
+                        CANCEL: '.editInPlaceEdit.cancel',
                         INPUT: 'input',
                         INPUT_HIDDEN: 'input:hidden',
                         FORM_ELEMENTS: 'input, textarea, select',
@@ -305,7 +306,8 @@ $(document).ready(function() {
                 function editRow (dataTable, row, editedElement) {
 
                     var tds = $(SELECTORS.CHILDREN_TD, row),
-                        save = tds.find(SELECTORS.SAVE);
+                        save = tds.find(SELECTORS.SAVE),
+                        cancel = tds.find(SELECTORS.CANCEL);
 
                     tds.find(SELECTORS.EDIT).hide();
                     save.show();
@@ -314,6 +316,11 @@ $(document).ready(function() {
                         e.preventDefault();
                         saveRow(dataTable, row, editedElement);
                     });
+                    cancel.show();
+                    cancel.on('click', function(e) {
+                        e.preventDefault();
+                        restoreRow(dataTable, row);
+                    })
 
                     $.ajax({
                         type: 'GET',
@@ -360,8 +367,13 @@ $(document).ready(function() {
                                 },
                                 content: response.find(SELECTORS.DIALOG)
                             })).open();
+                            return;
                         }
                         dataTable.fnDraw();
+
+                        if (messages) {
+                            messages.add(Translator.get('messages:position.updated'));
+                        }
                     }
                 });
             }

@@ -19,3 +19,4 @@ actions: Actions
 edit_in_place:
     edit: Edit
     save: Save
+    cancel: Cancel

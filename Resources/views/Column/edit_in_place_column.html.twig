@@ -3,4 +3,5 @@
     {% set value = record.value|default('')|trans %}
     <a class="editInPlaceEdit edit" href="#" data-edit-in-place="{{ value }}">{{ 'edit_in_place.edit'|trans({}, 'datatable') }}</a>
     <a class="editInPlaceEdit save" href="#" style="display: none;" data-edit-in-place="{{ value }}">{{ 'edit_in_place.save'|trans({}, 'datatable') }}</a>
+    &nbsp;<a class="editInPlaceEdit cancel" href="#" style="display: none;" data-edit-in-place="{{ value }}">{{ 'edit_in_place.cancel'|trans({}, 'datatable') }}</a>
 {% endblock %}
