@@ -19,6 +19,7 @@ class ColumnFactoryPass extends AbstractColumnFactoryPass
             'money_currency' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyCurrencyColumn',
             'plain_text' => 'NetTeam\Bundle\DataTableBundle\Column\PlainTextColumn',
             'text' => 'NetTeam\Bundle\DataTableBundle\Column\TextColumn',
+            'edit_in_place' => 'NetTeam\Bundle\DataTableBundle\Column\EditInPlaceColumn',
             'collection' => 'NetTeam\Bundle\DataTableBundle\Column\Collection\CollectionColumn',
         );
 

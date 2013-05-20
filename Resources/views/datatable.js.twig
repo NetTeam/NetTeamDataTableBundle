@@ -70,6 +70,7 @@ $(document).ready(function() {
             {% if datatable.hasPagination %}
                 "sPaginationType": "full_numbers",
             {% endif %}
+
             {% include "NetTeamDataTableBundle:TableTools:config.js.twig" %},
             "bPaginate": {{ datatable.hasPagination() ? 'true' : 'false' }},
             "bInfo": {{ datatable.hasPagination() ? 'true' : 'false' }},
@@ -226,7 +227,7 @@ $(document).ready(function() {
                   ACTION_SELECT : '#action-select-' + alias,
               },
               Action = {
-                  action: "",
+                  action: '',
                   refresh: refresh,
                   generateUrl: generateUrl,
               };
@@ -280,6 +281,137 @@ $(document).ready(function() {
 
           return Action;
         })('{{ alias }}', dTable);
+
+    {% if datatable.hasEditInPlaceActions %}
+
+        var editInPlace = (function(document, Utils, dataTable, editUrl, saveUrl) {
+
+                var SELECTORS = {
+                        TD: 'td',
+                        TR: 'tr',
+                        CHILDREN_TD: '>td',
+                        EDIT: '.editInPlaceEdit.edit',
+                        SAVE: '.editInPlaceEdit.save',
+                        CANCEL: '.editInPlaceEdit.cancel',
+                        INPUT: 'input',
+                        INPUT_HIDDEN: 'input:hidden',
+                        FORM_ELEMENTS: 'input, textarea, select',
+                        DIALOG: '.dialog',
+                        ERRORS: '.errors',
+                        DATA_COLUMN: '[data-column="%index%"]'
+                    },
+                    EDIT_IN_PLACE = 'edit-in-place',
+                    current;
+
+                function editRow (dataTable, row, editedElement) {
+
+                    var tds = $(SELECTORS.CHILDREN_TD, row),
+                        save = tds.find(SELECTORS.SAVE),
+                        cancel = tds.find(SELECTORS.CANCEL);
+
+                    tds.find(SELECTORS.EDIT).hide();
+                    save.show();
+                    save.on('click', function (e) {
+                        editedElement = $(this).data(EDIT_IN_PLACE);
+                        e.preventDefault();
+                        saveRow(dataTable, row, editedElement);
+                    });
+                    cancel.show();
+                    cancel.on('click', function(e) {
+                        e.preventDefault();
+                        restoreRow(dataTable, row);
+                    })
+
+                    $.ajax({
+                        type: 'GET',
+                        url: Utils.Url.populateVars(editUrl, {'%id%': editedElement}),
+                        success: function(response) {
+                            var field;
+
+                            response = $(response);
+
+                            tds.each(function(index, td) {
+                                field = response.find(SELECTORS.DATA_COLUMN.replace('%index%', index));
+
+                                if (field.html() !== undefined) {
+                                    $(td).html(field);
+                                }
+                            });
+                            tds.last().append(response.find(SELECTORS.INPUT_HIDDEN));
+                        }
+                    });
+                }
+
+            function saveRow (dataTable, row, editedElement) {
+                var inputs = $(SELECTORS.INPUT, row),
+                    tds = $(SELECTORS.CHILDREN_TD, row),
+                    data = tds.find(SELECTORS.FORM_ELEMENTS).serialize();
+
+                tds.find(SELECTORS.EDIT).hide();
+                tds.find(SELECTORS.SAVE).show();
+
+                $.ajax({
+                    type: 'POST',
+                    url: Utils.Url.populateVars(saveUrl, {'%id%': editedElement}),
+                    data: data,
+                    success: function(response) {
+
+                        response = $(response);
+
+                        if (response.find(SELECTORS.ERRORS).text().length) {
+                            (new DialogBox({
+                                dialog: {
+                                    width: 650,
+                                    position: ['center', 50],
+                                    resizable: true
+                                },
+                                content: response.find(SELECTORS.DIALOG)
+                            })).open();
+                            return;
+                        }
+                        dataTable.fnDraw();
+
+                        if (messages) {
+                            messages.add(Translator.get('messages:position.updated'));
+                        }
+                    }
+                });
+            }
+
+            function restoreRow (dataTable, row) {
+
+                var data = dataTable.fnGetData(row),
+                    tds = $(SELECTORS.CHILDREN_TD, row);
+
+                tds.each(function(index) {
+                    dataTable.fnUpdate(data[index], row, index, false);
+                });
+            }
+
+            if ($(SELECTORS.TD, dataTable.fnGetNodes())) {
+
+                $(document).on('click', SELECTORS.EDIT, function (e) {
+                    var self = $(this),
+                        editedElement = self.data(EDIT_IN_PLACE),
+                        row = self.parents(SELECTORS.TR).get(0);
+
+                    e.preventDefault();
+
+                    if (current && current !== row) {
+                        restoreRow(dataTable, current);
+                    }
+                    editRow(dataTable, row, editedElement);
+                    current = row;
+                });
+            };
+        })(
+            document,
+            Utils,
+            dTable,
+            '{{ path(datatable.getEditInPlaceEditAction, {'id' : '%id%'}) }}',
+            '{{ path(datatable.getEditInPlaceSaveAction, {'id' : '%id%'}) }}'
+        );
+    {% endif %}
 
       {% if datatable.hasAdditionalJSTemplate() %}
           {% include datatable.getAdditionalJSTemplate()  %}

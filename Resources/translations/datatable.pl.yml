@@ -17,3 +17,7 @@ no_action_selected: Nie wybrano akcji
 apply: Wybierz
 reset: Resetuj
 actions: Akcje
+edit_in_place:
+    edit: Edytuj
+    save: Zapisz
+    cancel: Anuluj

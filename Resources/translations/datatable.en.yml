@@ -16,3 +16,7 @@ no_record_selected: Record has not been selected
 no_action_selected: Action has not been selected
 apply: Apply
 actions: Actions
+edit_in_place:
+    edit: Edit
+    save: Save
+    cancel: Cancel
