@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.1.1 (2013-06-07) ####
+- Dodanie edit in place
+
 #### v1.0.3 (2013-XX-XX) ####
 - Dodanie eventu postBuildEvent
 
