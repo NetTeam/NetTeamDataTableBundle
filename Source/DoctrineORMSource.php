@@ -15,7 +15,6 @@ use NetTeam\Bundle\DataTableBundle\Util\String;
  */
 class DoctrineORMSource implements SourceInterface
 {
-
     /**
      * @var QueryBuilder
      */
@@ -97,25 +96,6 @@ class DoctrineORMSource implements SourceInterface
         return $this->getPaginator($this->queryBuilder)->count();
     }
 
-    /**
-     * Clones a query.
-     *
-     * @param Query $query The query.
-     *
-     * @return Query The cloned query.
-     */
-    private function cloneQuery(Query $query)
-    {
-        /* @var $cloneQuery Query */
-        $cloneQuery = clone $query;
-        $cloneQuery->setParameters($query->getParameters());
-        foreach ($query->getHints() as $name => $value) {
-            $cloneQuery->setHint($name, $value);
-        }
-
-        return $cloneQuery;
-    }
-
     public function getBuilder()
     {
         return $this->queryBuilder;
@@ -125,5 +105,4 @@ class DoctrineORMSource implements SourceInterface
     {
         return new Paginator($query);
     }
-
 }

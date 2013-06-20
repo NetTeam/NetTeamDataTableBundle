@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.0.3 (yyyy-mm-dd) ####
+- Dodane dodatkowe przyciski w filtrach
+
 #### v1.0.2 (2013-04-22) ####
 - Poprawa błędu w bulk actions
 
