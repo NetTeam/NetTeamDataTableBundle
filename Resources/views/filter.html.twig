@@ -6,6 +6,7 @@
     {% endfor %}
     {{ block('filter_button') }}
     {{ block('reset_button') }}
+    {{ block('additional_buttons') }}
 </form>
 {%- endif -%}
 {%- endblock %}
@@ -16,6 +17,12 @@
 
 {% block reset_button %}
 <input type="reset" class="nt_datatable-reset-button button datatable_filter_reset_button" value="{{ 'reset'|trans({}, 'datatable') }}"/>
+{% endblock %}
+
+{% block additional_buttons %}
+    {% for button in buttons %}
+        <button type="button" id="{{ button.id }}" class="{{ button.class }}">{{ button.name }}</button>
+    {% endfor %}
 {% endblock %}
 
 {# Domyślny szablon dla filtra #}

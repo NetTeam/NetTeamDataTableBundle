@@ -7,6 +7,7 @@ use NetTeam\Bundle\DataTableBundle\Source\SourceInterface;
 use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
 use NetTeam\Bundle\DataTableBundle\BulkAction\BulkAction;
 use NetTeam\Bundle\DataTableBundle\BulkAction\Column as BulkActionColumn;
+use NetTeam\Bundle\DataTableBundle\Filter\Button;
 use NetTeam\Bundle\DataTableBundle\Filter\FilterContainer;
 use NetTeam\Bundle\DataTableBundle\Export\CsvExport;
 use NetTeam\Bundle\DataTableBundle\Export\ExportInterface;
@@ -58,6 +59,8 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
 
     private $columnFactory;
 
+    private $buttons;
+
     /**
      * Konstruktor
      *
@@ -71,6 +74,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         $this->source = $source;
         $this->bulkActionsColumn = new BulkActionColumn();
         $this->exports = array();
+        $this->buttons = array();
     }
 
     public function getRoute()
@@ -512,4 +516,25 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         $this->columnFactory = $columnFactory;
     }
 
+    /**
+     * Dodaje button w sekcji filtrów
+     *
+     * @param string $id
+     * @param string $name
+     * @param string $class
+     */
+    public function addButton($id, $name, $class)
+    {
+        $this->buttons[] = new Button($id, $name, $class);
+
+        return $this;
+    }
+
+    /**
+     * @return Button array
+     */
+    public function getButtons()
+    {
+        return $this->buttons;
+    }
 }
