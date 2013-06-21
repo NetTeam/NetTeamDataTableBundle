@@ -5,11 +5,6 @@ namespace NetTeam\Bundle\DataTableBundle\Tests\DataTable;
 use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
 use NetTeam\Bundle\DataTableBundle\Column\TextColumn;
 
-/**
- * Description of CoreBundleTest
- *
- * @author wku
- */
 class DataTableBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -43,5 +38,31 @@ class DataTableBuilderTest extends \PHPUnit_Framework_TestCase
         $dtb->addColumn($col);
 
         $this->assertEquals(2, $dtb->countColumns());
+
     }
+
+    public function testAddAction()
+    {
+        $source = $this->getMock('NetTeam\Bundle\DataTableBundle\Source\SourceInterface');
+        $dtb = new DataTableBuilder('test_list', $source);
+        $this->assertEquals(0, count($dtb->getActions()));
+
+        $dtb->addAction('test_label', 'test_route');
+        $this->assertEquals(1, count($dtb->getActions()));
+    }
+
+    public function testAddActions()
+    {
+        $source = $this->getMock('NetTeam\Bundle\DataTableBundle\Source\SourceInterface');
+        $dtb = new DataTableBuilder('test_list', $source);
+        $actions = array(
+                array('caption' => 'test_caption1', 'route'=> 'test_route1'),
+                array('caption' => 'test_caption2', 'route'=> 'test_route2', 'params'=> array('par1'=> 'val1')),
+        );
+
+        $this->assertEquals(0, count($dtb->getActions()));
+        $dtb->addActions($actions);
+        $this->assertEquals(2, count($dtb->getActions()));
+    }
+
 }
