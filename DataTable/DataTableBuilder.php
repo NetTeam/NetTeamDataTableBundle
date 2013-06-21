@@ -8,6 +8,7 @@ use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
 use NetTeam\Bundle\DataTableBundle\BulkAction\BulkAction;
 use NetTeam\Bundle\DataTableBundle\BulkAction\Column as BulkActionColumn;
 use NetTeam\Bundle\DataTableBundle\Filter\Button;
+use NetTeam\Bundle\DataTableBundle\Action\Action;
 use NetTeam\Bundle\DataTableBundle\Filter\FilterContainer;
 use NetTeam\Bundle\DataTableBundle\Export\CsvExport;
 use NetTeam\Bundle\DataTableBundle\Export\ExportInterface;
@@ -46,6 +47,9 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     private $bulkActionsColumn;
     private $bulkActionsTemplate =
             'NetTeamDataTableBundle::bulk_actions.html.twig';
+    private $actions;
+    private $actionsTemplate =
+        'NetTeamDataTableBundle::actions.html.twig';
     private $exports;
     private $searchableKeys = array();
     private $sortingColumn;
@@ -144,6 +148,22 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     public function hasBulkActions()
     {
         return 0 !== count($this->bulkActions);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasActions()
+    {
+        return 0 !== count($this->actions);
     }
 
     public function setExportOption($name, $key, $value)
@@ -412,6 +432,37 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         }
     }
 
+    /**
+     * Dodawanie pojedyńczej akcji do DataTable
+     *
+     * @param string $caption
+     * @param string $route
+     * @param array  $params
+     * @return $this
+     */
+    public function addAction($caption, $route, array $params = array())
+    {
+        $action = new Action($caption, $route, $params);
+        $this->actions[] = $action;
+
+        return $this;
+    }
+
+    /**
+     * Dodawanie kolekcji akcji do DataTable
+     *
+     * @param array $actions
+     * @return $this
+     */
+    public function addActions(array $actions)
+    {
+        foreach ($actions as $action) {
+            $this->addAction($action['caption'], $action['route'], isset($action['params']) ? $action['params'] : array());
+        }
+
+        return $this;
+    }
+
     public function setBulkActionsColumn(BulkActionColumn $column)
     {
         $this->bulkActionsColumn = $column;
@@ -475,10 +526,16 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     {
         return $this->setBulkActionId($field);
     }
-
+    /**
+     *
+     * @param  string                                                     $template
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
+     */
     public function setFilterTemplate($template)
     {
         $this->filterContainer->setTemplate($template);
+
+        return $this;
     }
 
     public function getFilterTemplate()
@@ -486,9 +543,16 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         return $this->filterContainer->getTemplate();
     }
 
+    /**
+     *
+     * @param  string                                                     $template
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
+     */
     public function setBulkActionsTemplate($template)
     {
         $this->bulkActionsTemplate = $template;
+
+        return $this;
     }
 
     public function getBulkActionsTemplate()
@@ -496,9 +560,35 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         return $this->bulkActionsTemplate;
     }
 
+    /**
+     *
+     * @param  string                                                     $template
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
+     */
+    public function setActionsTemplate($template)
+    {
+        $this->actionsTemplate = $template;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActionsTemplate()
+    {
+        return $this->actionsTemplate;
+    }
+    /**
+     *
+     * @param  string                                                     $template
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
+     */
     public function setAdditionalJSTemplate($template)
     {
         $this->additionalJSTemplate = $template;
+
+        return $this;
     }
 
     public function getAdditionalJSTemplate()
@@ -510,10 +600,16 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     {
         return null !== $this->additionalJSTemplate;
     }
-
+    /**
+     *
+     * @param  \NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory      $columnFactory
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
+     */
     public function setColumnFactory(ColumnFactory $columnFactory)
     {
         $this->columnFactory = $columnFactory;
+
+        return $this;
     }
 
     /**

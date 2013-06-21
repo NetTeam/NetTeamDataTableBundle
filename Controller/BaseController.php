@@ -62,6 +62,8 @@ abstract class BaseController extends Controller
             'datatable' => $this->dtb,
             'alias'     => $this->dtb->getRoute(),
             'bulkActionsTemplate' => $this->dtb->getBulkActionsTemplate(),
+            'actionsTemplate' => $this->dtb->getActionsTemplate(),
+
         ));
     }
 
@@ -84,6 +86,7 @@ abstract class BaseController extends Controller
         $count = $this->dtb->countRows();
         $bulkActions = $this->dtb->getBulkActions();
         $bulkColumn = $this->dtb->getBulkActionsColumn();
+        $actions = $this->dtb->getActions();
 
         return $this->get('nt_datatable.util.json_response')->build($data, $this->dtb, self::DEFAULT_NAME, $count, $this->echo);
     }

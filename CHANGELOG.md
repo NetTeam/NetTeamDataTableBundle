@@ -2,6 +2,8 @@
 
 #### v1.0.3 (yyyy-mm-dd) ####
 - Dodane dodatkowe przyciski w filtrach
+- Dodanie eventu postBuildEvent
+- Dodanie możliwości dodawania akcji
 
 #### v1.0.2 (2013-04-22) ####
 - Poprawa błędu w bulk actions

@@ -206,8 +206,70 @@ $(document).ready(function() {
           init();
 
           return Bulk;
-
       })('{{ alias }}', dTable);
+
+       var action = (function(alias, dataTable) {
+          var SELECTORS = {
+                  FILTERS_FORM : '#datatables_div_' + alias + ' form.filters',
+                  FILTER_BUTTON : '#form-filter-'+alias+' button.filter-apply-button',
+                  APPLY_BUTTON : '#action-apply-button-' + alias,
+                  ACTION_SELECT : '#action-select-' + alias,
+              },
+              Action = {
+                  action: "",
+                  refresh: refresh,
+                  generateUrl: generateUrl,
+              };
+
+          function init() {
+              $(SELECTORS.FILTERS_FORM).submit(function (event) {
+                  event.preventDefault();
+                  event.stopImmediatePropagation();
+                  refresh();
+                  return false;
+              });
+              $(SELECTORS.FILTER_BUTTON).click(refresh);
+              $(SELECTORS.APPLY_BUTTON).click(goToAction);
+          }
+
+          function generateUrl(action){
+              url = Utils.Url.populateVars(
+                  action
+              );
+              return url;
+          }
+
+          function goToAction(event) {
+              var url,
+                  beforeSend = $.Event('beforeSend.action');
+
+              Action.action = $(SELECTORS.ACTION_SELECT).val()
+
+              if (typeof dataTable !== 'undefined') {
+                  dataTable.trigger(beforeSend, Action);
+              }
+              url = generateUrl(Action.action);
+
+              if (typeof dataTable === 'undefined') {
+                  if (typeof tab_open === 'function') {
+                      tab_open(url);
+                      return;
+                  }
+                  window.location = url;
+              }
+              if (!beforeSend.isDefaultPrevented()) {
+                  $.getJSON(url, refresh);
+              }
+          }
+
+          function refresh() {
+              dataTable.fnDraw();
+          }
+
+          init();
+
+          return Action;
+        })('{{ alias }}', dTable);
 
       {% if datatable.hasAdditionalJSTemplate() %}
           {% include datatable.getAdditionalJSTemplate()  %}
