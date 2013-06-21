@@ -21,7 +21,7 @@
 
 {% block additional_buttons %}
     {% for button in buttons %}
-        <button type="button" id="{{ button.id }}" class="{{ button.class }}">{{ button.name }}</button>
+        <button type="button" id="{{ button.id }}" class="{{ button.class }}">{{ button.name|trans }}</button>
     {% endfor %}
 {% endblock %}
 
