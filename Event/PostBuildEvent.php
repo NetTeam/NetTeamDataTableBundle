@@ -17,11 +17,18 @@ class PostBuildEvent extends Event
     protected $dataTableBuilder;
 
     /**
-     * @param DataTableBuilder $dataTableBuilder
+     * @var array
      */
-    public function __construct(DataTableBuilder $dataTableBuilder)
+    protected $parameters;
+
+    /**
+     * @param DataTableBuilder $dataTableBuilder
+     * @param $parameters
+     */
+    public function __construct(DataTableBuilder $dataTableBuilder, $parameters)
     {
         $this->dataTableBuilder = $dataTableBuilder;
+        $this->parameters = $parameters;
     }
 
     /**
@@ -31,4 +38,14 @@ class PostBuildEvent extends Event
     {
         return $this->dataTableBuilder;
     }
+
+    /**
+     *
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
 }

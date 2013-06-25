@@ -16,6 +16,11 @@ class DataTableFactory
     private $datatables = array();
     private $columnFactory;
 
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory     $columnFactory
+     * @param array                                                     $datatables
+     */
     public function __construct(ContainerInterface $container, ColumnFactory $columnFactory, array $datatables = array())
     {
         $this->container = $container;
@@ -23,6 +28,11 @@ class DataTableFactory
         $this->columnFactory = $columnFactory;
     }
 
+    /**
+     * @param  string                                                     $name
+     * @param  array                                                      $options
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
+     */
     public function create($name, array $options)
     {
         $datatable = $this->getDatatable($name, $options);
@@ -32,7 +42,8 @@ class DataTableFactory
 
         $source = $datatable->getSource();
 
-        $builder = new DataTableBuilder('nt_datatable', $this->prepareSource($source), array('name' => $name));
+        $builder = new DataTableBuilder('nt_datatable', $this->prepareSource($source), $name);
+        $builder->setContext($this->createContext($datatable));
         $builder->setRouteParameters($options);
         $builder->setColumnFactory($this->columnFactory);
 
@@ -48,11 +59,21 @@ class DataTableFactory
         return $builder;
     }
 
+    /**
+     * @param  string  $name
+     * @return boolean
+     */
     public function has($name)
     {
         return isset($this->datatables[$name]);
     }
 
+    /**
+     * @param  string                                                       $name
+     * @param  array                                                        $options
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableInterface
+     * @throws \InvalidArgumentException
+     */
     private function getDatatable($name, array $options)
     {
         if (!is_string($name)) {
@@ -79,6 +100,11 @@ class DataTableFactory
         return $datatable;
     }
 
+    /**
+     *
+     * @param  \NetTeam\Bundle\DataTableBundle\SimpleSource\SimpleSourceInterface                                                        $source
+     * @return \NetTeam\Bundle\DataTableBundle\Source\SourceInterface|\NetTeam\Bundle\DataTableBundle\SimpleSource\SimpleSourceInterface
+     */
     private function prepareSource($source)
     {
         if ($source instanceof SimpleSourceInterface) {
@@ -88,6 +114,12 @@ class DataTableFactory
         return $source;
     }
 
+    /**
+     * @param  string                                                                                                                    $name
+     * @param  \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder                                                                $builder
+     * @param  \NetTeam\Bundle\DataTableBundle\Source\SourceInterface|\NetTeam\Bundle\DataTableBundle\SimpleSource\SimpleSourceInterface $source
+     * @throws \InvalidArgumentException
+     */
     private function checkSource($name, DataTableBuilder $builder, $source)
     {
         if (!$builder->isSimple() && !$source instanceof SourceInterface) {
@@ -97,6 +129,23 @@ class DataTableFactory
         if ($builder->isSimple() && !$source instanceof SimpleSourceInterface) {
             throw new \InvalidArgumentException(sprintf('Method "getSource()" in the DateTable "%s" must return SimpleSourceInterface implementation.', $name));
         }
+    }
+
+    private function createContext(DataTable $dataTable)
+    {
+        $requiredOptions = $dataTable->getRequiredOptions();
+        $options = array();
+        foreach ($requiredOptions as $requiredOption) {
+            $value = $dataTable->getOption($requiredOption);
+
+            if (!settype($value, "string")) {
+                throw new \Exception('DataTable option should have __toString method implemented');
+            }
+
+            $options[$requiredOption] = $value;
+        }
+
+        return $options;
     }
 
 }

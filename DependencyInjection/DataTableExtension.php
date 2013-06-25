@@ -9,6 +9,9 @@ use Symfony\Component\DependencyInjection\Loader;
 
 class DataTableExtension extends Extension
 {
+    /**
+     * {@inheritdoc}
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -17,10 +20,16 @@ class DataTableExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('datatable.xml');
         $loader->load('filter.xml');
+        $loader->load('listeners.xml');
+        $loader->load('state_storage.xml');
+
         $loader->load('templating.xml');
         $loader->load('twig.xml');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getAlias()
     {
         return 'nt_datatable';
