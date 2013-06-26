@@ -1,6 +1,6 @@
 <?php
 
-namespace NetTeam\Bundle\DataTableBundle\Tests\DataTable\Column;
+namespace NetTeam\Bundle\DataTableBundle\Tests\Column;
 
 use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory;
 use NetTeam\Bundle\DataTableBundle\Column\Column;

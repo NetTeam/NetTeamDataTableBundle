@@ -15,9 +15,14 @@ class ColumnFactoryTest extends \PHPUnit_Framework_TestCase
 {
     private $columnFactory;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->columnFactory = new ColumnFactory();
+    }
+
+    protected function tearDown()
+    {
+        $this->columnFactory = null;
     }
 
     public function testAddColumnType()
