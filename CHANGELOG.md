@@ -1,6 +1,7 @@
 ## CHANGELOG ##
 
 #### v1.0.3 (yyyy-mm-dd) ####
+- Dodanie zapisywania stanu fitrów 
 - Dodane dodatkowe przyciski w filtrach
 - Dodanie eventu postBuildEvent
 - Dodanie możliwości dodawania akcji

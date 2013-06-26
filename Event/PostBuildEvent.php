@@ -23,9 +23,9 @@ class PostBuildEvent extends Event
 
     /**
      * @param DataTableBuilder $dataTableBuilder
-     * @param $parameters
+     * @param array            $parameters
      */
-    public function __construct(DataTableBuilder $dataTableBuilder, $parameters)
+    public function __construct(DataTableBuilder $dataTableBuilder, array $parameters)
     {
         $this->dataTableBuilder = $dataTableBuilder;
         $this->parameters = $parameters;

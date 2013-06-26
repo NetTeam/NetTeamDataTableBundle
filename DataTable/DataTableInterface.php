@@ -12,4 +12,9 @@ interface DataTableInterface
     public function getRequiredOptions();
 
     public function setOptions(array $options);
+
+    public function getOption($name);
+
+    public function getOptions();
+
 }

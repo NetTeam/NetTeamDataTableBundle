@@ -130,8 +130,13 @@ class DataTableFactory
             throw new \InvalidArgumentException(sprintf('Method "getSource()" in the DateTable "%s" must return SimpleSourceInterface implementation.', $name));
         }
     }
-
-    private function createContext(DataTable $dataTable)
+    /**
+     *
+     * @param  \NetTeam\Bundle\DataTableBundle\DataTable\DataTableInterface $dataTable
+     * @return array
+     * @throws \Exception
+     */
+    private function createContext(DataTableInterface $dataTable)
     {
         $requiredOptions = $dataTable->getRequiredOptions();
         $options = array();
