@@ -52,7 +52,6 @@ class DataTableFactory
         $builder->setFilterContainer($filterContainer);
 
         $datatable->build($builder);
-        $builder->buildExports();
 
         $this->checkSource($name, $builder, $source);
 

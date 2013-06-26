@@ -7,6 +7,9 @@
         {% for key, action in datatable.Actions %}
             <option value="{{ path(action.route, action.params) }}">{{ action.caption|trans }}</option>
         {% endfor %}
+        {% for key, export in datatable.exports %}
+            <option data="export" value="{{ key }}">{{ export|trans({}, 'datatable') }}</option>
+        {% endfor %}
     </select>
     <button type="button" class="btn" id="action-apply-button-{{ alias }}">{{ 'apply'|trans({}, 'datatable') }}</button>
 </div>

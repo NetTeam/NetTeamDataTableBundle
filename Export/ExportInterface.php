@@ -3,17 +3,26 @@
 namespace NetTeam\Bundle\DataTableBundle\Export;
 
 /**
+ * Interfejs dla serwisów służących do eksportowania danych z DataTable
  *
- * @author Wojciech Kulikowski <wojciech.kulikowski@netteam.pl>
+ * @author Paweł Macyszyn <pawel.macyszyn@netteam.pl>
  */
 interface ExportInterface
 {
-    public function build();
-    public function setOption($key, $value);
-    public function setOptions($options);
-    public function getOptions($value);
-    public function getDefaultOptions();
-    public function getHeaders();
-    public function getLabel();
-    public function getTemplate();
+    /**
+     * Eksportuje dane wejściowe
+     *
+     * @param  string   $title
+     * @param  array    $columns
+     * @param  array    $data
+     * @return Response
+     */
+    public function export($title, array $columns, array $data);
+
+    /**
+     * Nazwa identyfikująca serwis eksportujący
+     *
+     * @return string
+     */
+    public function getName();
 }

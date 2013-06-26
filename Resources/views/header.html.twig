@@ -23,7 +23,7 @@
 {% if datatable.bulkActions %}
 </form>
 {% endif %}
-{% if datatable.actions %}
+{% if datatable.actions or datatable.exports %}
     <div class="actions_container table-actions">
         {% include actionsTemplate %}
     </div>
