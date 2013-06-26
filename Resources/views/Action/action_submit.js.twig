@@ -1,0 +1,5 @@
+dTable.on("beforeSend.action", function(event, bulk) {
+var url = Utils.Url.populateVars(action.action);
+event.preventDefault();
+window.location = url;
+});
