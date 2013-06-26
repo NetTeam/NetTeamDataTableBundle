@@ -9,10 +9,12 @@
     </parameters>
 
     <services>
-        <service id="nt_datatable.templating.helper" class="%nt_datatable.templating.helper.class%">
+        <service id="nt_datatable.templating.helper" class="%nt_datatable.templating.helper.class%" >
             <tag name="templating.helper" alias="datatable" />
             <argument type="service" id="templating" />
             <argument type="service" id="nt_datatable.factory" />
+            <argument type="service" id="request" strict="false"/>
+            <argument type="service" id="nt_datatable.session.state.storage"/>
         </service>
     </services>
 </container>
