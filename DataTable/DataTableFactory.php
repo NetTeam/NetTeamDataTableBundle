@@ -141,13 +141,7 @@ class DataTableFactory
         $requiredOptions = $dataTable->getRequiredOptions();
         $options = array();
         foreach ($requiredOptions as $requiredOption) {
-            $value = $dataTable->getOption($requiredOption);
-
-            if (!settype($value, "string")) {
-                throw new \Exception('DataTable option should have __toString method implemented');
-            }
-
-            $options[$requiredOption] = $value;
+            $options[$requiredOption] = $dataTable->getOption($requiredOption);
         }
 
         return $options;
