@@ -18,12 +18,12 @@ abstract class DataTable extends ContainerAware implements DataTableInterface
         $this->options = $options;
     }
 
-    protected function getOption($name)
+    public function getOption($name)
     {
         return isset($this->options[$name]) ? $this->options[$name] : null;
     }
 
-    protected function getOptions()
+    public function getOptions()
     {
         return $this->options;
     }

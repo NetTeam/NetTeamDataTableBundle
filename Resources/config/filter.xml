@@ -27,6 +27,7 @@
             <argument type="service" id="form.factory" />
         </service>
 
+
         <service id="nt_datatable.filter.type.text" class="%nt_datatable.filter.type.text.class%">
             <tag name="nt_datatable.filter" alias="text" />
         </service>

@@ -47,27 +47,39 @@ class Action
         return $this->params;
     }
 
-    /**
-     * @param string $caption
-     */
+   /**
+    *
+    * @param string $caption
+    * @return \NetTeam\Bundle\DataTableBundle\Action\Action
+    */
     public function setCaption($caption)
     {
         $this->caption = $caption;
+
+        return $this;
     }
 
     /**
-     * @param string $route
+     *
+     * @param  string                                        $route
+     * @return \NetTeam\Bundle\DataTableBundle\Action\Action
      */
     public function setRoute($route)
     {
         $this->route = $route;
+
+        return $this;
     }
 
     /**
-     * @param array $params
+     *
+     * @param  array                                         $params
+     * @return \NetTeam\Bundle\DataTableBundle\Action\Action
      */
     public function setParams($params)
     {
         $this->params = $params;
+
+        return $this;
     }
 }

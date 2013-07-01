@@ -20,6 +20,14 @@ class DataTableController
     private $request;
     private $dispatcher;
 
+    /**
+     * @param \NetTeam\Bundle\DataTableBundle\DataTable\DataTableFactory $factory
+     * @param \NetTeam\Bundle\DataTableBundle\Util\JsonResponseBuilder   $jsonBuilder
+     * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface $templating
+     * @param \Symfony\Component\HttpFoundation\Request                  $request
+     * @param \Symfony\Component\EventDispatcher\EventDispatcher         $dispatcher
+     */
+
     public function __construct(DataTableFactory $factory, JsonResponseBuilder $jsonBuilder, EngineInterface $templating, Request $request, EventDispatcher $dispatcher)
     {
         $this->factory     = $factory;
@@ -29,6 +37,10 @@ class DataTableController
         $this->dispatcher  = $dispatcher;
     }
 
+    /**
+     * @param  string                                     $name
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function process($name)
     {
         if ($this->request->query->has('export')) {
@@ -38,6 +50,10 @@ class DataTableController
         }
     }
 
+    /**
+     * @param  string                                     $name
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function data($name)
     {
         $builder = $this->factory->create($name, $this->request->query->all());
@@ -52,8 +68,8 @@ class DataTableController
         $this->updateSearch($builder);
         $this->updateSorting($builder);
 
-        $event = new PostBuildEvent($builder);
-        $this->dispatcher->dispatch(DataTableEvents::POST_BUILD, $event);
+        $postEvent = new PostBuildEvent($builder, $this->request->query->all());
+        $this->dispatcher->dispatch(DataTableEvents::POST_BUILD, $postEvent);
 
         $count = $builder->countRows();
         $data = $builder->getDataArray($offset, $limit);
@@ -61,6 +77,10 @@ class DataTableController
         return $this->jsonBuilder->build($data, $builder, $name, $count, $echo, $filterHash);
     }
 
+    /**
+     * @param  string                                     $name
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function export($name)
     {
         $builder = $this->factory->create($name, $this->request->query->all());
@@ -96,6 +116,9 @@ class DataTableController
         return $response;
     }
 
+    /**
+     * @param \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder $builder
+     */
     private function updateSearch(DataTableBuilder $builder)
     {
         if ($this->request->get('sSearch') !== null) {
@@ -104,6 +127,9 @@ class DataTableController
         }
     }
 
+    /**
+     * @param \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder $builder
+     */
     private function updateSorting(DataTableBuilder $builder)
     {
         if ($this->request->get('iSortCol_0') !== null) {

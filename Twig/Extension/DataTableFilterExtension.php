@@ -29,6 +29,7 @@ class DataTableFilterExtension extends \Twig_Extension
 
         return $template->renderBlock('filters', array(
             'filters' => $datatable->getFilters(),
+            'buttons' => $datatable->getButtons(),
             'alias' => $alias,
             'template' => $template,
         ));

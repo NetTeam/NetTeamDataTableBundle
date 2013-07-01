@@ -197,6 +197,8 @@ $(document).ready(function() {
               }
               if (!beforeSend.isDefaultPrevented()) {
                   $.getJSON(url, refresh);
+                  event.preventDefault();
+                  event.stopImmediatePropagation();
               }
           }
 
@@ -281,6 +283,7 @@ $(document).ready(function() {
 
           return Action;
         })('{{ alias }}', dTable);
+
 
     {% if datatable.hasEditInPlaceActions %}
 
