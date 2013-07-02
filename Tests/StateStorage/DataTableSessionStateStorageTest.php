@@ -90,6 +90,9 @@ class DataTableSessionStateStorageTest extends \PHPUnit_Framework_TestCase
 
     public function testSetShouldNormalizeContext()
     {
+        $locale = setlocale(LC_NUMERIC, 0);
+        setlocale(LC_ALL, 'pl_PL.UTF-8');
+
         $context = array(
             'integer' => 1,
             'float' => 1.567,
@@ -104,12 +107,12 @@ class DataTableSessionStateStorageTest extends \PHPUnit_Framework_TestCase
 
         $normalizedContext = array(
             'integer' => '1',
-            'float' => '1.567',
+            'float' => '1,567',
             'boolean' => '1',
             'array' => array(
                 'integer' => '25',
                 'array' => array(
-                    'float' => '12.889',
+                    'float' => '12,889',
                 ),
             ),
         );
@@ -131,6 +134,7 @@ class DataTableSessionStateStorageTest extends \PHPUnit_Framework_TestCase
         $stateStorage->set($dataTableBuilder1, array('test'));
 
         $this->assertTrue($stateStorage->has($dataTableBuilder2));
+        setlocale(LC_ALL, $locale);
     }
 
     protected function tearDown()
