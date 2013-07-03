@@ -15,6 +15,9 @@
 #### v1.0.4 (2013-06-27) ####
 - Hotfix zapisywania stanu filtrów
 
+#### (2013-MM-DD) ####
+- Dodanie EnumFiltra
+
 #### v1.0.3 (2013-06-26) ####
 - Dodanie zapisywania stanu fitrów
 - Dodane dodatkowe przyciski w filtrach
