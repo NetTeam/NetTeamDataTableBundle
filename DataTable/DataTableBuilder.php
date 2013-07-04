@@ -810,10 +810,8 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-
      * @param  string                                                     $template
      * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
-
      */
     public function setActionsTemplate($template)
     {
