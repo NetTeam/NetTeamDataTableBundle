@@ -1,4 +1,7 @@
 ## CHANGELOG ##
+#### v.1.1.3 (2013-07-04)
+- Hotfix BulkAction po merge 1.0
+
 #### v.1.1.2 (2013-07-01)
 - Merge z branchem 1.0 (do tagu v1.0.3)
 

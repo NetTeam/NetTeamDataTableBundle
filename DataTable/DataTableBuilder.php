@@ -12,6 +12,7 @@ use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
 use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory;
 use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactoryAwareInterface;
 use NetTeam\Bundle\DataTableBundle\Source\SourceInterface;
+use NetTeam\Bundle\DataTableBundle\BulkAction\BulkAction;
 
 /**
  * Description of DataTableBuilder
