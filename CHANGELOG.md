@@ -1,5 +1,6 @@
 ## CHANGELOG ##
-#### (YYYY-MM-DD) ####
+
+#### v1.0.5 (2013-07-04) ####
 - Dodanie setlocale w testach StateStorage
 - Dodanie domyslnej wartosci do choice
 
