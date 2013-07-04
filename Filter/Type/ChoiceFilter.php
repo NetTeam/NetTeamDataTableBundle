@@ -79,7 +79,7 @@ class ChoiceFilter extends FilterType
 
     public function getData()
     {
-        return new FilterValue();
+        return new FilterValue(array('choice' => $this->getOption('default')));
     }
 
     public function apply(\Closure $callback, $data)

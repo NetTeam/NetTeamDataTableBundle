@@ -1,6 +1,7 @@
 ## CHANGELOG ##
 #### (YYYY-MM-DD) ####
 - Dodanie setlocale w testach StateStorage
+- Dodanie domyslnej wartosci do choice
 
 #### v1.0.4 (2013-06-27) ####
 - Hotfix zapisywania stanu filtrów
