@@ -71,7 +71,6 @@ class DataTableController
         $postEvent = new PostBuildEvent($builder, $this->request->query->all());
         $this->dispatcher->dispatch(DataTableEvents::POST_BUILD, $postEvent);
 
-
         $count = $builder->countRows();
         $data = $builder->getDataArray($offset, $limit);
 
