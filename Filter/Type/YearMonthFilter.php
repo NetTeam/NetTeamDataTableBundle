@@ -15,15 +15,20 @@ class YearMonthFilter extends FilterType
 {
 
     protected $options = array();
-
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilder $builder)
     {
         $builder->add('date', 'date', array(
             'required' => $this->getOption('required'),
             'label' => $this->getOption('label'),
+            'attr' => array('data-filter-default' => $this->getOption('default')),
         ));
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultOptions()
     {
         return array(
@@ -31,14 +36,18 @@ class YearMonthFilter extends FilterType
             'label' => 'year_month'
         );
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getData()
     {
         $default = $this->getOption('default');
 
         return new FilterValue($default);
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function apply(\Closure $callback, $data)
     {
         if ($data['date'] instanceof \DateTime) {
@@ -48,7 +57,9 @@ class YearMonthFilter extends FilterType
             $callback($from, $to);
         }
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getAlias()
     {
         return 'year_month';

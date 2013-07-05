@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="nt_datatable.form_extension.date.class">NetTeam\Bundle\DataTableBundle\Form\Extension\DateTypeExtension</parameter>
+        <parameter key="nt_datatable.form_extension.choice.class">NetTeam\Bundle\DataTableBundle\Form\Extension\ChoiceTypeExtension</parameter>
+
+    </parameters>
+
+    <services>
+        <service id="nt_datatable.form_extension.date" class="%nt_datatable.form_extension.date.class%">
+            <tag name="form.type_extension" alias="datepicker" />
+            <tag name="form.type_extension" alias="date" />
+        </service>
+        <service id="nt_datatable.form_extension.choice" class="%nt_datatable.form_extension.choice.class%">
+            <tag name="form.type_extension" alias="choice" />
+        </service>
+    </services>
+</container>
