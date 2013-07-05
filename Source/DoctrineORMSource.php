@@ -6,7 +6,6 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use NetTeam\Bundle\DataTableBundle\Util\Doctrine\Cast;
 use NetTeam\Bundle\DataTableBundle\Util\String;
 
 /**
@@ -66,7 +65,7 @@ class DoctrineORMSource implements SourceInterface
     {
         $conditions = $this->queryBuilder->expr()->orx();
         foreach ($keys as $key) {
-            $conditions->add($this->queryBuilder->expr()->like($this->queryBuilder->expr()->upper(new Cast($key, 'text')), ":search"));
+            $conditions->add($this->queryBuilder->expr()->like($this->queryBuilder->expr()->upper((string) $key), ":search"));
         }
         $this->queryBuilder
                 ->andWhere($conditions)
