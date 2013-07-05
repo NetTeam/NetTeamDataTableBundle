@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.0.6 (YYYY-MM-DD) ####
+- Zmiana rzutowania klucza wyszukiwania w globalSearch na string w php, a nie w SQL
+
 #### v1.0.5 (2013-07-04) ####
 - Dodanie setlocale w testach StateStorage
 - Dodanie domyslnej wartosci do choice
