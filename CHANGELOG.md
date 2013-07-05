@@ -15,6 +15,9 @@
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
 
+#### v1.0.7 (2013-07-05) ####
+- Helper dla testów funkcjonalnych `DatatableTest`
+
 #### v1.0.6 (2013-07-05) ####
 - Zmiana rzutowania klucza wyszukiwania w globalSearch na string w php, a nie w SQL
 
