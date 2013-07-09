@@ -127,7 +127,10 @@ class DataTableSessionStateStorageTest extends \PHPUnit_Framework_TestCase
             'getContext' => $normalizedContext,
         ));
 
-        $session = new Session();
+        $session = M::mock('Symfony\Component\HttpFoundation\Session\Session');
+        $session->shouldReceive('get')->andReturn(array('text36950e449a96f464cd5b7a3685ce6a77'=>'test'));
+        $session->shouldReceive('set');
+
         $stateStorage = new DataTableSessionStateStorage($session);
         $stateStorage->set($dataTableBuilder1, array('test'));
 
