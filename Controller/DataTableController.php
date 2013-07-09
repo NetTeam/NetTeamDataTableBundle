@@ -114,12 +114,17 @@ class DataTableController
         $this->updateSearch($builder);
         $this->updateSorting($builder);
 
-        $data = $builder->getDataAllArray();
-        $columns = $builder->getColumns();
+        $exportType = $this->request->query->get('export');
+        $exports = $builder->getExports($exportType);
 
-        $exporter = $this->exportContainer->get($this->request->query->get('export'));
+        if (!array_key_exists($exportType, $exports)) {
+            throw new \InvalidArgumentException(sprintf('DataTable "%s" does not support "%s" export', $name, $exportType));
+        }
 
-        return $exporter->export('export', $columns, $data);
+        $exportConfig = $exports[$exportType];
+        $exporter = $this->exportContainer->get($exportType);
+
+        return $exporter->export($exportConfig['filename'], $builder->getColumns(), $builder->getDataAllArray(), $exportConfig['options']);
     }
 
     /**

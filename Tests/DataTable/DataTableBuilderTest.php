@@ -72,9 +72,9 @@ class DataTableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, count($dtb->getExports()));
 
-        $dtb->addExport('asdf')
-            ->addExport('qwer')
-            ->addExport('zxvv');
+        $dtb->addExport('alias1', 'filename1')
+            ->addExport('alias2', 'filename1')
+            ->addExport('alias3', 'filename1');
 
         $this->assertEquals(3, count($dtb->getExports()));
     }

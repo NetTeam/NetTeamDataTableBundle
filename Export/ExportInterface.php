@@ -12,12 +12,13 @@ interface ExportInterface
     /**
      * Eksportuje dane wejściowe
      *
-     * @param  string   $title
+     * @param  string   $filename
      * @param  array    $columns
      * @param  array    $data
+     * @param  array    $options
      * @return Response
      */
-    public function export($title, array $columns, array $data);
+    public function export($filename, array $columns, array $data, array $options = array());
 
     /**
      * Nazwa identyfikująca serwis eksportujący

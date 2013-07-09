@@ -39,14 +39,14 @@ class XlsExport implements ExportInterface
     /**
      * {@inheritdoc}
      */
-    public function export($title, array $columns, array $data)
+    public function export($filename, array $columns, array $data, array $options = array())
     {
-        $sheet = $this->getSheet($title);
+        $sheet = $this->getSheet($filename);
 
         $this->setColumns($columns, $sheet);
         $this->setRows($data, $sheet);
 
-        return $this->getResponse($title);
+        return $this->getResponse($filename);
     }
 
     /**
@@ -60,10 +60,10 @@ class XlsExport implements ExportInterface
     /**
      * Ustawia i zwraca arkusz dokumentu xls
      *
-     * @param  string             $title
+     * @param  string             $filename
      * @return PHPExcel_Worksheet
      */
-    protected function getSheet($title)
+    protected function getSheet($filename)
     {
         $sheet = $this->excel->excelObj->setActiveSheetIndex(0);
 
@@ -74,7 +74,7 @@ class XlsExport implements ExportInterface
         $sheet->getPageSetup()->setFitToWidth(1);
         $sheet->getPageSetup()->setFitToHeight(0);
 
-        $sheet->setTitle($title);
+        $sheet->setTitle($filename);
         $sheet->getDefaultStyle()->getFont()->setSize(8);
         $sheet->getDefaultStyle()->getAlignment()->setWrapText(true);
         $sheet->getPageSetup()->setPaperSize(\PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
@@ -134,14 +134,14 @@ class XlsExport implements ExportInterface
     }
 
     /**
-     * @param  string   $title
+     * @param  string   $filename
      * @return Response
      */
-    protected function getResponse($title)
+    protected function getResponse($filename)
     {
         $response = $this->excel->getResponse();
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
-        $response->headers->set('Content-Disposition', 'attachment;filename='.str_replace(' ', '_', $title).'.xls');
+        $response->headers->set('Content-Disposition', 'attachment;filename='.str_replace(' ', '_', $filename).'.xls');
         $response->headers->set('Pragma', 'public');
         $response->headers->set('Cache-Control', 'maxage=1');
 

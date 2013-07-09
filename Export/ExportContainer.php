@@ -2,6 +2,10 @@
 
 namespace NetTeam\Bundle\DataTableBundle\Export;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use NetTeam\Bundle\DataTableBundle\Export\Exception\ExportContainerInvalidResultException;
+use NetTeam\Bundle\DataTableBundle\Export\Exception\ExportNotFoundException;
+
 /**
  * Kontener na eksportery
  *
@@ -10,45 +14,47 @@ namespace NetTeam\Bundle\DataTableBundle\Export;
 class ExportContainer
 {
     /**
-     * Dostępne rozszerzenia
-     *
-     * @var array
+     * @var ContainerInterface
      */
-    protected $exporters = array();
+    private $container;
 
     /**
-     * Eksportuje dane wejściowe do wybranego formatu
-     *
-     * @param  string                    $exporter
-     * @return ExporterInterface
-     * @throws \InvalidArgumentException
+     * @var array
      */
-    public function get($exporter)
-    {
-        if (!array_key_exists($exporter, $this->exporters)) {
-            throw new \InvalidArgumentException(sprintf('Exporter not found "%s"', $exporter));
-        }
+    private $types = array();
 
-        return $this->exporters[$exporter];
+    /**
+     * @param ContainerInterface $container
+     * @param array              $types
+     */
+    public function __construct(ContainerInterface $container, array $types = array())
+    {
+        $this->container = $container;
+        $this->types = $types;
     }
 
     /**
-     * Dodaje rozszerzenie
+     * Pobiera typ eksportu o zadanej nazwie
      *
-     * @param ExportInterface
+     * @param  string                    $name
+     * @return ExporterInterface
      * @throws \InvalidArgumentException
      */
-    public function add(ExportInterface $exporter)
+    public function get($name)
     {
-        $name = $exporter->getName();
-
-        if (empty($name) || !is_string($name)) {
-            throw new \InvalidArgumentException(sprintf('Exporter name must be non empty string'));
+        if (!is_string($name)) {
+            throw new \InvalidArgumentException(sprintf('Expected argument of type "string", "%s" given', is_object($name) ? get_class($name) : gettype($name)));
         }
-        if (array_key_exists($name, $this->exporters)) {
-            throw new \InvalidArgumentException(sprintf('Exporter already exists "%s"', $name));
+        if (!isset($this->types[$name])) {
+            throw new ExportNotFoundException(sprintf('The DataTable export "%s" is not defined.', $name));
         }
 
-        $this->exporters[$name] = $exporter;
+        $type = $this->container->get($this->types[$name]);
+
+        if (!$type instanceof ExportInterface) {
+            throw new ExportContainerInvalidResultException(sprintf('The service "%s" must implement ExportInterface.', $name));
+        }
+
+        return $type;
     }
 }

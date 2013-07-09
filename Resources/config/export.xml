@@ -13,17 +13,17 @@
     </parameters>
 
     <services>
-        <!-- Serwis do eksportowania -->
+        <!-- Kontener na eksportery, definicja nadpisywana w Compiler Pass -->
         <service id="nt_datatable.export.container" class="%nt_datatable.export.container.class%">
-            <call method="add">
-                <argument type="service" id="nt_datatable.xls.export" />
-            </call>
+            <argument type="service" id="service_container" />
+            <argument type="collection" /> <!-- Nadpisywany parametr -->
         </service>
 
         <!-- Eksportery -->
-        <service id="nt_datatable.xls.export" class="%nt_datatable.xls.export.class%" public="false">
+        <service id="nt_datatable.xls.export" class="%nt_datatable.xls.export.class%" public="true">
             <argument type="service" id="xls.service_xls5" />
             <argument type="service" id="translator" />
+            <tag name="nt_datatable.export" alias="xls" />
         </service>
     </services>
 </container>

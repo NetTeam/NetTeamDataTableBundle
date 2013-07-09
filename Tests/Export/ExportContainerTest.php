@@ -4,80 +4,62 @@ namespace NetTeam\Bundle\DataTableBundle\Tests\Export;
 
 use NetTeam\Bundle\DataTableBundle\Export\ExportContainer;
 
+/**
+ * Testy dla ExportContainer
+ *
+ * @author Paweł Macyszyn <pawel.macyszyn@netteam.pl>
+ */
 class ExportContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ExportContainer
-     */
-    protected $exportContainer;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        $this->export = \Mockery::mock('NetTeam\Bundle\DataTableBundle\Export\ExportInterface');
-        $this->exportContainer = new ExportContainer();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        $this->export = null;
-        $this->exportContainer = null;
-    }
-
-    public function testAdd()
-    {
-        $export1 = $this->getMockExport()
-            ->shouldReceive('getName')->andReturn('extension_type1')->once()
-            ->getMock();
-
-        $export2 = $this->getMockExport()
-            ->shouldReceive('getName')->andReturn('extension_type2')->once()
-            ->getMock();
-
-        $this->exportContainer->add($export1);
-        $this->exportContainer->add($export2);
-        $this->assertSame($export1, $this->exportContainer->get('extension_type1'));
-        $this->assertSame($export2, $this->exportContainer->get('extension_type2'));
-    }
-
-    /**
      * @expectedException \InvalidArgumentException
      */
-    public function testAddTwice()
+    public function testNonStringArgument()
     {
-        $export = $this->getMockExport()
-            ->shouldReceive('getName')->andReturn('extension_type')->twice()
-            ->getMock();
+        $exportContainer = new ExportContainer($this->getMockContainer(), array());
 
-        $this->exportContainer->add($export);
-        $this->exportContainer->add($export);
+        $exportContainer->get(new \DateTime());
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @dataProvider invalidNameProvider
+     * @expectedException NetTeam\Bundle\DataTableBundle\Export\Exception\ExportNotFoundException
      */
-    public function testInvalidName($name)
+    public function testNonExistingAlias()
     {
-        $export = $this->getMockExport()
-            ->shouldReceive('getName')->andReturn($name)
-            ->getMock();
+        $exportContainer = new ExportContainer($this->getMockContainer(), array());
 
-        $this->exportContainer->add($export);
+        $exportContainer->get('alias');
     }
 
-    public function invalidNameProvider()
+    /**
+     * @expectedException NetTeam\Bundle\DataTableBundle\Export\Exception\ExportContainerInvalidResultException
+     */
+    public function testInvalidReturn()
     {
-        return array(
-            array(null),
-            array(''),
-            array(new \DateTime())
-        );
+        $container = $this->getMockContainer()
+            ->shouldReceive('get')->andReturn('im not implementing ExportInterface')->once()
+            ->getMock();
+
+        $exportContainer = new ExportContainer($container, array('alias' => 'name'));
+
+        $exportContainer->get('alias');
+    }
+
+    public function testValidGet()
+    {
+        $container = $this->getMockContainer()
+            ->shouldReceive('get')->andReturn($this->getMockExport())->once()
+            ->getMock();
+
+        $exportContainer = new ExportContainer($container, array('alias' => 'name'));
+
+        $export = $exportContainer->get('alias');
+        $this->assertInstanceOf('NetTeam\Bundle\DataTableBundle\Export\ExportInterface', $export);
+    }
+
+    protected function getMockContainer()
+    {
+        return \Mockery::mock('Symfony\Component\DependencyInjection\ContainerInterface');
     }
 
     protected function getMockExport()

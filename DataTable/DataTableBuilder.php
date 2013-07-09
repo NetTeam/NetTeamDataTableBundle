@@ -82,9 +82,9 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     /**
      * Dostępne rozszerzenia do eksportu danych
      *
-     * @var ExportInterface[]
+     * @var array
      */
-    private $exports;
+    private $exports = array();
 
     /**
      * @param string          $route  Unique list name
@@ -434,10 +434,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
 
     private function prepareData()
     {
-        // TODO: pofiltrować
         $this->filtering();
-
-        //posortować
         $this->sorting();
     }
 
@@ -831,12 +828,17 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     /**
      * Dodaje rozszerzenie do eksportu danych z datatable
      *
-     * @param string $export
+     * @param string $export   Alias serwisu implementującego ExportInterface
+     * @param string $filename Nazwa wygenerowanego pliku
+     * @param array  $options
      * @return $this
      */
-    public function addExport($export)
+    public function addExport($export, $filename, array $options = array())
     {
-        $this->exports[$export] = 'export.extension.' . $export;
+        $this->exports[$export] = array(
+            'filename' => $filename,
+            'options' => $options,
+        );
 
         return $this;
     }
@@ -845,10 +847,14 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
      * Tablica z rozszerzeniami do eksportu danych z datatable
      *
      * array(
-     *     'extension' => 'translation key',
+     *     'alias' => array(
+     *         'filename' => string,
+     *         'options' => array(...),
+     *     ),
+     *     ...
      * )
      *
-     * @return string[]
+     * @return array
      */
     public function getExports()
     {

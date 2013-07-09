@@ -23,11 +23,17 @@ class DoctrineSQLSource implements SourceInterface
     protected $rowCallback;
     protected $dataCallback;
 
+    /**
+     * @param NativeQuery $query
+     */
     public function __construct(NativeQuery $query)
     {
         $this->query = $query;
     }
 
+    /**
+     * @return NativeQuery
+     */
     public function getQuery()
     {
         return $this->query;
@@ -38,6 +44,9 @@ class DoctrineSQLSource implements SourceInterface
 
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getData($offset, $limit)
     {
         $results = $this->getResult($offset, $limit);
@@ -53,6 +62,9 @@ class DoctrineSQLSource implements SourceInterface
         return $results;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDataAll()
     {
         $results = $this->getResult();
@@ -68,26 +80,41 @@ class DoctrineSQLSource implements SourceInterface
         return $results;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function globalSearch(array $keys, $search)
     {
         return null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function addSorting($column, $order)
     {
         $this->sorting[] = sprintf("%s %s", $column, $order);
     }
 
+    /**
+     * @param callable $callback
+     */
     public function setRowCallback(\Closure $callback)
     {
         $this->rowCallback = $callback;
     }
 
+    /**
+     * @param callable $callback
+     */
     public function setDataCallback(\Closure $callback)
     {
         $this->dataCallback = $callback;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function count()
     {
         $em = $this->query->getEntityManager();
@@ -103,6 +130,11 @@ class DoctrineSQLSource implements SourceInterface
         return $this->count;
     }
 
+    /**
+     * @param  integer $offset
+     * @param  integer $limit
+     * @return array
+     */
     protected function getResult($offset = null, $limit = null)
     {
         $sql = $this->query->getSQL();
