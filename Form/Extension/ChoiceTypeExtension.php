@@ -23,7 +23,7 @@ class ChoiceTypeExtension extends AbstractTypeExtension
 
         if ($builder->hasAttribute('attr')) {
             $attr = $builder->getAttribute('attr');
-            if (is_array($attr['data-filter-default'])) {
+            if (isset($attr['data-filter-default']) && is_array($attr['data-filter-default'])) {
                 $attr['data-filter-default'] = json_encode($attr['data-filter-default']);
                 $builder->setAttribute('attr', $attr);
             }
