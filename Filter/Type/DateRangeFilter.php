@@ -15,29 +15,31 @@ class DateRangeFilter extends FilterType
 {
 
     protected $options = array();
-
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilder $builder)
     {
         $label = $this->getOption('label');
-        if (!isset($label['from'], $label['to'])) {
-            throw new \Exception("DateRangeFilter label must be an array with keys 'from' and 'to'.");
-        }
+        $default = $this->getOption('default');
 
         $builder->add('from', 'datepicker', array(
-            'attr' => array('size' => 5),
+            'attr' => array('size' => 5, 'data-filter-default' => $default['from']),
             'required' => $this->getOption('required'),
             'max_length' => '10',
             'label' => $label['from'],
         ));
 
         $builder->add('to', 'datepicker', array(
-            'attr' => array('size' => 5),
+            'attr' => array('size' => 5, 'data-filter-default' => $default['to']),
             'required' => $this->getOption('required'),
             'max_length' => '10',
             'label' => $label['to'],
         ));
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultOptions()
     {
         return array(
@@ -48,7 +50,9 @@ class DateRangeFilter extends FilterType
             )
         );
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getData()
     {
         $default = $this->getOption('default');
@@ -62,14 +66,18 @@ class DateRangeFilter extends FilterType
 
         return new FilterValue($default);
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function apply(\Closure $callback, $data)
     {
         if ($data['from'] || $data['to']) {
             $callback($data['from'], $data['to']);
         }
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getAlias()
     {
         return 'date_range';

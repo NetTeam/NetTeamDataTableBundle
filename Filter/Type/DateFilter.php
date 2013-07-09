@@ -15,18 +15,22 @@ class DateFilter extends FilterType
 {
 
     protected $options = array();
-
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilder $builder)
     {
         $label = $this->getOption('label');
         $builder->add('date', 'datepicker', array(
-            'attr' => array('size' => 5),
+            'attr' => array('size' => 5, 'data-filter-default' => $this->getOption('default')),
             'required' => $this->getOption('required'),
             'max_length' => '10',
             'label' => $label,
         ));
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultOptions()
     {
         return array(
@@ -34,7 +38,9 @@ class DateFilter extends FilterType
             'label' => 'date',
         );
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getData()
     {
         $default = $this->getOption('default');
@@ -44,14 +50,18 @@ class DateFilter extends FilterType
 
         return new FilterValue(array('date' => $default));
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function apply(\Closure $callback, $data)
     {
         if ($data['date']) {
             $callback($data['date']);
         }
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getAlias()
     {
         return 'date';

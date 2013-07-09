@@ -1,4 +1,6 @@
 ## CHANGELOG ##
+#### v1.0.8 (YYYY-MM-DD) ####
+- Poprawka resetowania filtrów
 
 #### v1.0.7 (2013-07-05) ####
 - Helper dla testów funkcjonalnych `DatatableTest`
