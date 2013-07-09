@@ -17,13 +17,24 @@ class ChoiceTypeExtensionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->formBuilder = M::mock('Symfony\Component\Form\FormBuilder');
-        $this->formBuilder->shouldReceive('hasAttribute')->once()->with('attr')->andReturn(true);
-        $this->formBuilder->shouldReceive('getAttribute')->once()->with('attr')->andReturn(array('data-filter-default' => json_encode(array('test1','test2'))));
-        $this->formBuilder->shouldReceive('setAttribute')->once()->with('attr', array('data-filter-default' => json_encode(array('test1','test2'))));
     }
 
     public function testBuildForm()
     {
+        $dateTypeExtension = new ChoiceTypeExtension();
+        $this->formBuilder->shouldReceive('hasAttribute')->once()->with('attr')->andReturn(true);
+        $this->formBuilder->shouldReceive('getAttribute')->once()->with('attr')->andReturn(array('data-filter-default' => json_encode(array('test1','test2'))));
+        $this->formBuilder->shouldReceive('setAttribute')->once()->with('attr', array('data-filter-default' => json_encode(array('test1','test2'))));
+
+        $dateTypeExtension->buildForm($this->formBuilder, array());
+    }
+
+    public function testBuildFormNoFilterDefaultOption()
+    {
+        $this->formBuilder->shouldReceive('hasAttribute')->once()->with('attr')->andReturn(true);
+        $this->formBuilder->shouldReceive('getAttribute')->once()->with('attr')->andReturn(array());
+        $this->formBuilder->shouldReceive('setAttribute')->never();
+
         $dateTypeExtension = new ChoiceTypeExtension();
         $dateTypeExtension->buildForm($this->formBuilder, array());
     }
@@ -31,6 +42,7 @@ class ChoiceTypeExtensionTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         unset($this->formBuilder);
+
     }
 
 }
