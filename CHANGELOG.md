@@ -8,6 +8,10 @@
 #### v1.0.6 (2013-07-05) ####
 - Zmiana rzutowania klucza wyszukiwania w globalSearch na string w php, a nie w SQL
 
+#### v1.0.6 (YYYY-MM-DD) ####
+- Usunięta niedziałająca funkcjonalność eksportu do CSV
+- Dodane eksportowanie do XLS
+
 #### v1.0.5 (2013-07-04) ####
 - Dodanie setlocale w testach StateStorage
 - Dodanie domyslnej wartosci do choice

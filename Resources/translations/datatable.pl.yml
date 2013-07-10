@@ -17,3 +17,9 @@ no_action_selected: Nie wybrano akcji
 apply: Wybierz
 reset: Resetuj
 actions: Akcje
+
+export:
+    header: Eksport
+    submit: Wybierz
+    extension:
+        xls: Eksport do pliku XLS

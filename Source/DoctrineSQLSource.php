@@ -17,25 +17,26 @@ class DoctrineSQLSource implements SourceInterface
      * @var NativeQuery
      */
     private $query;
-    private $querySQL;
     private $count;
     private $sorting = array();
+
     protected $rowCallback;
     protected $dataCallback;
 
+    /**
+     * @param NativeQuery $query
+     */
     public function __construct(NativeQuery $query)
     {
         $this->query = $query;
-        $this->querySQL = $this->query->getSQL();
-        $em = $this->query->getEntityManager();
+    }
 
-        $rsm = new ResultSetMapping;
-        $rsm->addScalarResult('count', 'count');
-
-        $sql = "SELECT count(*) as count FROM (" . $this->querySQL . ") as foo";
-        $query = $em->createNativeQuery($sql, $rsm);
-        $query->setParameters($this->query->getParameters());
-        $this->count = $query->getSingleScalarResult();
+    /**
+     * @return NativeQuery
+     */
+    public function getQuery()
+    {
+        return $this->query;
     }
 
     public function replaceFields($find, $replace)
@@ -43,6 +44,9 @@ class DoctrineSQLSource implements SourceInterface
 
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getData($offset, $limit)
     {
         $results = $this->getResult($offset, $limit);
@@ -58,6 +62,9 @@ class DoctrineSQLSource implements SourceInterface
         return $results;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDataAll()
     {
         $results = $this->getResult();
@@ -73,34 +80,64 @@ class DoctrineSQLSource implements SourceInterface
         return $results;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function globalSearch(array $keys, $search)
     {
         return null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function addSorting($column, $order)
     {
         $this->sorting[] = sprintf("%s %s", $column, $order);
     }
 
+    /**
+     * @param callable $callback
+     */
     public function setRowCallback(\Closure $callback)
     {
         $this->rowCallback = $callback;
     }
 
+    /**
+     * @param callable $callback
+     */
     public function setDataCallback(\Closure $callback)
     {
         $this->dataCallback = $callback;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function count()
     {
+        $em = $this->query->getEntityManager();
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('count', 'count');
+
+        $sql = "SELECT count(*) as count FROM (" . $this->query->getSQL() . ") as foo";
+        $query = $em->createNativeQuery($sql, $rsm);
+        $query->setParameters($this->query->getParameters());
+        $this->count = $query->getSingleScalarResult();
+
         return $this->count;
     }
 
+    /**
+     * @param  integer $offset
+     * @param  integer $limit
+     * @return array
+     */
     protected function getResult($offset = null, $limit = null)
     {
-        $sql = $this->querySQL;
+        $sql = $this->query->getSQL();
         if (count($this->sorting)) {
             $sql .= " ORDER BY " . implode($this->sorting, ', ');
         }
