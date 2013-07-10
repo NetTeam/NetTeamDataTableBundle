@@ -16,11 +16,11 @@ class EnumFilter extends FilterType
 
     public function buildForm(FormBuilder $builder)
     {
-
+        $attr = array_merge($this->getOption('attr'), array('data-filter-default' => $this->getOption('default')));
         $options = array(
             'required' => $this->getOption('required'),
             'label' => $this->getOption('label'),
-            'attr' => $this->getOption('attr'),
+            'attr' => $attr,
             'multiple' => $this->getOption('multiple'),
             'class' => $this->getOption('class'),
             'trans_prefix' => $this->getOption('trans_prefix'),
@@ -41,7 +41,7 @@ class EnumFilter extends FilterType
 
     public function getData()
     {
-        return new FilterValue();
+        return new FilterValue(array('enum' => $this->getOption('default')));
     }
 
     public function apply(\Closure $callback, $data)

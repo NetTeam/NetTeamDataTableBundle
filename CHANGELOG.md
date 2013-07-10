@@ -1,6 +1,8 @@
 ## CHANGELOG ##
+
 #### v1.0.8 (YYYY-MM-DD) ####
 - Poprawka resetowania filtrów
+- Dodanie EnumFiltra
 
 #### v1.0.7 (2013-07-05) ####
 - Helper dla testów funkcjonalnych `DatatableTest`
@@ -14,9 +16,6 @@
 
 #### v1.0.4 (2013-06-27) ####
 - Hotfix zapisywania stanu filtrów
-
-#### (2013-MM-DD) ####
-- Dodanie EnumFiltra
 
 #### v1.0.3 (2013-06-26) ####
 - Dodanie zapisywania stanu fitrów
