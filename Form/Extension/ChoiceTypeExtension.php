@@ -3,7 +3,7 @@
 namespace NetTeam\Bundle\DataTableBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class ChoiceTypeExtension extends AbstractTypeExtension
 {
@@ -18,7 +18,7 @@ class ChoiceTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         if ($builder->hasAttribute('attr')) {

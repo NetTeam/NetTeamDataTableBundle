@@ -3,7 +3,7 @@
 namespace NetTeam\Bundle\DataTableBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class DateTypeExtension extends AbstractTypeExtension
 {
@@ -18,7 +18,7 @@ class DateTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         if ($builder->hasAttribute('attr') && $builder->hasAttribute('formatter')) {
