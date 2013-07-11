@@ -2,23 +2,48 @@
 
 namespace NetTeam\Bundle\DataTableBundle\Controller;
 
-use NetTeam\Bundle\DataTableBundle\DataTableEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
+use NetTeam\Bundle\DataTableBundle\DataTableEvents;
 use NetTeam\Bundle\DataTableBundle\DataTable\DataTableFactory;
 use NetTeam\Bundle\DataTableBundle\Util\JsonResponseBuilder;
 use NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder;
 use NetTeam\Bundle\DataTableBundle\Event\PostBuildEvent;
+use NetTeam\Bundle\DataTableBundle\Export\ExportContainer;
 
 class DataTableController
 {
+    /**
+     * @var DataTableFactory
+     */
     private $factory;
+
+    /**
+     * @var JsonResponseBuilder
+     */
     private $jsonBuilder;
+
+    /**
+     * @var EngineInterface
+     */
     private $templating;
+
+    /**
+     * @var Request
+     */
     private $request;
+
+    /**
+     * @var EventDispatcher
+     */
     private $dispatcher;
+
+    /**
+     * @var ExportContainer
+     */
+    private $exportContainer;
 
     /**
      * @param \NetTeam\Bundle\DataTableBundle\DataTable\DataTableFactory $factory
@@ -26,15 +51,16 @@ class DataTableController
      * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface $templating
      * @param \Symfony\Component\HttpFoundation\Request                  $request
      * @param \Symfony\Component\EventDispatcher\EventDispatcher         $dispatcher
+     * @param ExportService                                              $xlsExportService
      */
-
-    public function __construct(DataTableFactory $factory, JsonResponseBuilder $jsonBuilder, EngineInterface $templating, Request $request, EventDispatcher $dispatcher)
+    public function __construct(DataTableFactory $factory, JsonResponseBuilder $jsonBuilder, EngineInterface $templating, Request $request, EventDispatcher $dispatcher, ExportContainer $exportContainer)
     {
         $this->factory     = $factory;
         $this->jsonBuilder = $jsonBuilder;
         $this->templating  = $templating;
         $this->request     = $request;
         $this->dispatcher  = $dispatcher;
+        $this->exportContainer = $exportContainer;
     }
 
     /**
@@ -78,42 +104,28 @@ class DataTableController
     }
 
     /**
-     * @param  string                                     $name
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  string   $name
+     * @return Response
      */
     public function export($name)
     {
         $builder = $this->factory->create($name, $this->request->query->all());
-
         $builder->updateFilterValues($this->request);
-        $echo = $this->request->get('sEcho');
 
         $this->updateSearch($builder);
         $this->updateSorting($builder);
 
-        $data = $builder->getDataAllArray();
-        $columns = $builder->getColumns();
-        $count = $builder->countRows();
+        $exportType = $this->request->query->get('export');
+        $exports = $builder->getExports($exportType);
 
-        $export = $builder->getExport($this->request->get('export'));
-
-        $content = $this->templating->render('NetTeamDataTableBundle:Export:export.csv.twig', array(
-            'echo' => $echo,
-            'data' => $data,
-            'count' => $count,
-            'columns' => $columns,
-            'bulkActions' => $builder->getBulkActions(),
-            'bulkColumn' => $builder->getBulkActionsColumn(),
-            'actions' => $builder->getActions(),
-            'alias' => $name,
-            'export' => $export
-                ));
-        $response = new Response($content);
-        foreach ($export->getHeaders() as $key => $val) {
-            $response->headers->set($key, $val);
+        if (!array_key_exists($exportType, $exports)) {
+            throw new \InvalidArgumentException(sprintf('DataTable "%s" does not support "%s" export', $name, $exportType));
         }
 
-        return $response;
+        $exportConfig = $exports[$exportType];
+        $exporter = $this->exportContainer->get($exportType);
+
+        return $exporter->export($exportConfig['filename'], $builder->getColumns(), $builder->getDataAllArray(), $exportConfig['options']);
     }
 
     /**

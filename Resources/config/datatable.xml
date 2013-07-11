@@ -27,6 +27,7 @@
             <argument type="service" id="templating" />
             <argument type="service" id="request" />
             <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="nt_datatable.export.container" />
         </service>
 
         <service id="nt_datatable.util.json_response" class="%nt_datatable.util.json_response.class%" public="false">

@@ -49,14 +49,10 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     private $actions;
     private $actionsTemplate =
         'NetTeamDataTableBundle::actions.html.twig';
-    private $exports;
     private $searchableKeys = array();
     private $sortingColumn;
     private $sortingOrder;
     private $jQueryUI = false;
-    private static $exportTypes = array(
-        'csv' => 'NetTeam\Bundle\DataTableBundle\Export\CsvExport'
-    );
     private $filterContainer;
     private $additionalJSTemplate;
 
@@ -87,6 +83,13 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     private $statePreserved = true;
 
     /**
+     * Dostępne rozszerzenia do eksportu danych
+     *
+     * @var array
+     */
+    private $exports = array();
+
+    /**
      * @param string          $route  Unique list name
      * @param SourceInterface $source Data source
      * @param string          $name   Data table name
@@ -98,7 +101,6 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         $this->source = $source;
         $this->name = $name;
         $this->bulkActionsColumn = new BulkActionColumn();
-        $this->exports = array();
         $this->buttons = array();
     }
 
@@ -146,14 +148,6 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         return array_merge($this->routeParameters, $this->requiredRouteParameters);
     }
 
-    /**
-     * @param  string $exportName
-     * @return array
-     */
-    public function getRouteExportParameters($exportName)
-    {
-        return array_merge($this->routeParameters, $this->requiredRouteParameters, array('export' => $exportName));
-    }
     /**
      *
      * @param  array                                                      $parameters
@@ -260,62 +254,6 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     public function hasActions()
     {
         return 0 !== count($this->actions);
-    }
-
-    /**
-     * @param  type                                                       $name
-     * @param  type                                                       $key
-     * @param  type                                                       $value
-     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
-     */
-    public function setExportOption($name, $key, $value)
-    {
-        $this->export[$name]->setOptions($key, $value);
-
-        return $this;
-    }
-
-    /**
-     * @param  string                                                     $name
-     * @param  string                                                     $type
-     * @param  array                                                      $options
-     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
-     */
-    public function addExport($name, $type, $options = array())
-    {
-        if (self::$exportTypes[$type]) {
-            $this->exports[$name] = new self::$exportTypes[$type];
-            $this->exports[$name]->setOptions($options);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getExports()
-    {
-        return $this->exports;
-    }
-
-    public function buildExports()
-    {
-        foreach ($this->exports as $export) {
-            if (!($export instanceof ExportInterface)) {
-                throw new \Exception('export should be instance of ExportInterface');
-            }
-            $export->build();
-        }
-    }
-
-    /**
-     * @param  string                                                 $name
-     * @return NetTeam\Bundle\DataTableBundle\Export\ExportInterfacet
-     */
-    public function getExport($name)
-    {
-        return isset($this->exports[$name]) ? $this->exports[$name] : null;
     }
 
     /**
@@ -499,10 +437,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
 
     private function prepareData()
     {
-        // TODO: pofiltrować
         $this->filtering();
-
-        //posortować
         $this->sorting();
     }
 
@@ -933,4 +868,39 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         return $this->editInPlaceSaveAction;
     }
 
+    /**
+     * Dodaje rozszerzenie do eksportu danych z datatable
+     *
+     * @param string $export   Alias serwisu implementującego ExportInterface
+     * @param string $filename Nazwa wygenerowanego pliku
+     * @param array  $options
+     * @return $this
+     */
+    public function addExport($export, $filename, array $options = array())
+    {
+        $this->exports[$export] = array(
+            'filename' => $filename,
+            'options' => $options,
+        );
+
+        return $this;
+    }
+
+    /**
+     * Tablica z rozszerzeniami do eksportu danych z datatable
+     *
+     * array(
+     *     'alias' => array(
+     *         'filename' => string,
+     *         'options' => array(...),
+     *     ),
+     *     ...
+     * )
+     *
+     * @return array
+     */
+    public function getExports()
+    {
+        return $this->exports;
+    }
 }

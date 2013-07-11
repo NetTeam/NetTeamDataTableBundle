@@ -15,16 +15,22 @@ class TextFilter extends FilterType
 {
 
     protected $options = array();
-
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilder $builder)
     {
+        $attr =  array_merge($this->getOption('attr'), array('data-filter-default' => $this->getOption('default')));
+
         $builder->add('value', 'text', array(
-            'attr' => $this->getOption('attr'),
+            'attr' => $attr,
             'label' => $this->getOption('label'),
             'required' => $this->getOption('required'),
         ));
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultOptions()
     {
         return array(
@@ -34,19 +40,25 @@ class TextFilter extends FilterType
             ),
         );
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getData()
     {
-        return new FilterValue();
+        return new FilterValue(array('value' => $this->getOption('default')));
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function apply(\Closure $callback, $data)
     {
         if ($data['value']) {
             $callback($data['value']);
         }
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getAlias()
     {
         return 'text';

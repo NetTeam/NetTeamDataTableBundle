@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.1.7 (2013-07-11)
+- Merge z 1.0 (tag v1.0.8)
+
 #### v1.1.6 (2013-07-05)
 - Merge z 1.0 (tag v1.0.7)
 
@@ -18,11 +21,19 @@
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
 
+#### v1.0.8 (2013-07-11) ####
+- Poprawka resetowania filtrów
+- Dodanie EnumFiltra
+
 #### v1.0.7 (2013-07-05) ####
 - Helper dla testów funkcjonalnych `DatatableTest`
 
 #### v1.0.6 (2013-07-05) ####
 - Zmiana rzutowania klucza wyszukiwania w globalSearch na string w php, a nie w SQL
+
+#### v1.0.6 (YYYY-MM-DD) ####
+- Usunięta niedziałająca funkcjonalność eksportu do CSV
+- Dodane eksportowanie do XLS
 
 #### v1.0.5 (2013-07-04) ####
 - Dodanie setlocale w testach StateStorage

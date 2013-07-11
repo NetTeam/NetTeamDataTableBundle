@@ -65,4 +65,17 @@ class DataTableBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($dtb->getActions()));
     }
 
+    public function testAddExport()
+    {
+        $source = $this->getMock('NetTeam\Bundle\DataTableBundle\Source\SourceInterface');
+        $dtb = new DataTableBuilder('test_list', $source);
+
+        $this->assertEquals(0, count($dtb->getExports()));
+
+        $dtb->addExport('alias1', 'filename1')
+            ->addExport('alias2', 'filename1')
+            ->addExport('alias3', 'filename1');
+
+        $this->assertEquals(3, count($dtb->getExports()));
+    }
 }

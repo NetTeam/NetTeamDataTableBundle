@@ -14,10 +14,13 @@ use NetTeam\Bundle\DataTableBundle\Filter\Type\FilterType;
  */
 class ChoiceFilter extends FilterType
 {
-
+    /**
+     *
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilder $builder)
     {
-        $this->checkRequiredOptions();
+        $this->checkType();
 
         $options = array(
             'required' => $this->getOption('required'),
@@ -29,6 +32,7 @@ class ChoiceFilter extends FilterType
         );
 
         $type = $this->getOption('type');
+        $attr = array_merge($this->getOption('attr'), array('data-filter-default' => $this->getOption('default')));
 
         if ($type == 'choice') {
             $options['choices'] = $this->getOption('choices');
@@ -44,7 +48,10 @@ class ChoiceFilter extends FilterType
 
         $builder->add('choice', $type, $options);
     }
-
+    /**
+     *
+     * {@inheritdoc}
+     */
     public function getDefaultOptions()
     {
         return array(
@@ -53,8 +60,11 @@ class ChoiceFilter extends FilterType
             'type' => 'choice',
         );
     }
-
-    private function checkRequiredOptions()
+    /**
+     * Checks type of form field
+     * @throws UnexpectedTypeException Throws exception if $option['type'] isn't one of 'choice', 'entity' or 'document'
+     */
+    private function checkType()
     {
         $availableTypes = array('choice', 'entity', 'document');
         $type = $this->getOption('type');
@@ -73,19 +83,27 @@ class ChoiceFilter extends FilterType
             }
         }
     }
-
+    /**
+     *
+     * {@inheritdoc}
+     */
     public function getData()
     {
         return new FilterValue(array('choice' => $this->getOption('default')));
     }
-
+    /**
+     *
+     * {@inheritdoc}
+     */
     public function apply(\Closure $callback, $data)
     {
         if ($data['choice']) {
             $callback($data['choice']);
         }
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getAlias()
     {
         return 'choice';

@@ -20,11 +20,12 @@ class DataTableExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('datatable.xml');
         $loader->load('filter.xml');
-        $loader->load('listeners.xml');
         $loader->load('state_storage.xml');
-
+        $loader->load('form_extension.xml');
+        $loader->load('listener.xml');
         $loader->load('templating.xml');
         $loader->load('twig.xml');
+        $loader->load('export.xml');
     }
 
     /**

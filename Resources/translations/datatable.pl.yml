@@ -21,3 +21,9 @@ edit_in_place:
     edit: Edytuj
     save: Zapisz
     cancel: Anuluj
+
+export:
+    header: Eksport
+    submit: Wybierz
+    extension:
+        xls: Eksport do pliku XLS

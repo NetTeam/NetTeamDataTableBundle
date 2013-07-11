@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!-- Serwis do eksportowania -->
+        <parameter key="nt_datatable.export.container.class">NetTeam\Bundle\DataTableBundle\Export\ExportContainer</parameter>
+
+        <!-- Eksportery -->
+        <parameter key="nt_datatable.xls.export.class">NetTeam\Bundle\DataTableBundle\Export\XlsExport</parameter>
+    </parameters>
+
+    <services>
+        <!-- Kontener na eksportery, definicja nadpisywana w Compiler Pass -->
+        <service id="nt_datatable.export.container" class="%nt_datatable.export.container.class%">
+            <argument type="service" id="service_container" />
+            <argument type="collection" /> <!-- Nadpisywany parametr -->
+        </service>
+
+        <!-- Eksportery -->
+        <service id="nt_datatable.xls.export" class="%nt_datatable.xls.export.class%" public="true">
+            <argument type="service" id="xls.service_xls5" />
+            <argument type="service" id="translator" />
+            <tag name="nt_datatable.export" alias="xls" />
+        </service>
+    </services>
+</container>
