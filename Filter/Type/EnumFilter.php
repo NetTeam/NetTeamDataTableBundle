@@ -5,6 +5,7 @@ namespace NetTeam\Bundle\DataTableBundle\Filter\Type;
 use Symfony\Component\Form\FormBuilder;
 use NetTeam\Bundle\DataTableBundle\Filter\Value\FilterValue;
 use NetTeam\Bundle\DataTableBundle\Filter\Type\FilterType;
+use NetTeam\DDD\Enum;
 
 /**
  * EnumFilter
@@ -34,6 +35,7 @@ class EnumFilter extends FilterType
     {
         return array(
             'class' => null,
+            'attr' => array(),
             'trans_prefix' => '',
             'trans_domain' => 'messages',
         );
@@ -46,7 +48,7 @@ class EnumFilter extends FilterType
 
     public function apply(\Closure $callback, $data)
     {
-        if ($data['enum']) {
+        if (!$data['enum']->is(Enum::__NULL)) {
             $callback($data['enum']);
         }
     }

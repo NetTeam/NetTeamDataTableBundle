@@ -8,10 +8,14 @@
             "homepage": "http://netteam.pl"
         }
     ],
+    "repositories": [
+        { "type": "composer", "url": "http://composer.nts/" }
+    ],
     "require": {
         "php": ">=5.3.2",
         "symfony/framework-bundle": "2.0.*",
-        "doctrine/orm": "~2.2"
+        "doctrine/orm": "~2.2",
+        "netteam/ddd-bundle": "1.0.*"
     },
     "require-dev": {
         "mockery/mockery": ">=0.7.2",
@@ -21,5 +25,6 @@
     "autoload": {
         "psr-0": { "NetTeam\\Bundle\\DataTableBundle": "" }
     },
-    "target-dir": "NetTeam/Bundle/DataTableBundle"
+    "target-dir": "NetTeam/Bundle/DataTableBundle",
+    "minimum-stability": "dev"
 }
