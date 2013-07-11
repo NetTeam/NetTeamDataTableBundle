@@ -1,6 +1,6 @@
 ## CHANGELOG ##
 
-#### v1.0.8 (YYYY-MM-DD) ####
+#### v1.0.8 (2013-07-11) ####
 - Poprawka resetowania filtrów
 - Dodanie EnumFiltra
 
