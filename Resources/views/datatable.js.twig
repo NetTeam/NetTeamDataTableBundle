@@ -71,8 +71,6 @@ $(document).ready(function() {
                 "sPaginationType": "full_numbers",
             {% endif %}
 
-            {% include "NetTeamDataTableBundle:TableTools:config.js.twig" %},
-
             "bPaginate": {{ datatable.hasPagination() ? 'true' : 'false' }},
             "bInfo": {{ datatable.hasPagination() ? 'true' : 'false' }},
             "bFilter": {{ datatable.hasPagination() ? 'true' : 'false' }},
