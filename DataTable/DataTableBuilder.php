@@ -6,7 +6,6 @@ use NetTeam\Bundle\DataTableBundle\Filter\Button;
 use NetTeam\Bundle\DataTableBundle\Action\Action;
 use NetTeam\Bundle\DataTableBundle\BulkAction\Column as BulkActionColumn;
 use NetTeam\Bundle\DataTableBundle\Filter\FilterContainer;
-use NetTeam\Bundle\DataTableBundle\Export\CsvExport;
 use NetTeam\Bundle\DataTableBundle\Export\ExportInterface;
 use NetTeam\Bundle\DataTableBundle\Column\ColumnInterface;
 use NetTeam\Bundle\DataTableBundle\Factory\ColumnFactory;
