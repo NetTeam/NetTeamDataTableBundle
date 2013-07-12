@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.0.9 (2013-07-12) ####
+- Poprawienie Dependency
+
 #### v1.0.8 (2013-07-11) ####
 - Poprawka resetowania filtrów
 - Dodanie EnumFiltra
