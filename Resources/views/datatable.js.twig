@@ -17,6 +17,12 @@
 
 $(document).ready(function() {
        var dTable = $('#datatables_table_{{ alias }}').dataTable( {
+            {% if datatable.visibleHeight %}"sScrollY": "{{datatable.visibleHeight|raw}}",
+            {% endif -%}
+            {% if datatable.visibleWidth %}"sScrollX": "{{datatable.visibleWidth|raw}}",
+            {% endif -%}
+            {% if datatable.minWidth %}"sScrollXInner": "{{datatable.minWidth|raw}}",
+            {% endif -%}
             "aoColumns": [
                 {% if datatable.bulkActions %}
                     { "bSortable": false, {{ _self.sClass(datatable.bulkActionsColumn) }}, {{ _self.sWidth(datatable.bulkActionsColumn) }} },
