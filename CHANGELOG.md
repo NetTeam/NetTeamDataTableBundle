@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.1.8 (2013-07-18)
+- Merge z 1.0 (tag v1.0.9)
+
 #### v1.1.7 (2013-07-11)
 - Merge z 1.0 (tag v1.0.8)
 
@@ -20,6 +23,9 @@
 
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
+
+#### v1.0.9 (2013-07-12) ####
+- Poprawienie Dependency
 
 #### v1.0.8 (2013-07-11) ####
 - Poprawka resetowania filtrów
