@@ -1,6 +1,6 @@
 ## CHANGELOG ##
 
-#### v1.0.10 (2013-MM-DD) ####
+#### v1.0.10 (2013-07-22) ####
 - Możliwe ustawienie szerokości i wysokości widocznej części tabeli, oraz jej minimalnej szerokości
 - Dodanie README.md
 
