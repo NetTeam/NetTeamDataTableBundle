@@ -24,6 +24,10 @@
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
 
+#### v1.0.10 (2013-07-22) ####
+- Możliwe ustawienie szerokości i wysokości widocznej części tabeli, oraz jej minimalnej szerokości
+- Dodanie README.md
+
 #### v1.0.9 (2013-07-12) ####
 - Poprawienie Dependency
 

@@ -89,6 +89,30 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     private $exports = array();
 
     /**
+     * Ustawia widoczną część tabeli na podaną wysokość i udostępnia
+     * scroll'a, aby móc nawigować po całej tabeli
+     *
+     * @var string
+     */
+    private $visibleHeight = null;
+
+    /**
+     * Ustawia widoczną część tabeli na podaną szerokość i udostępnia
+     * scroll'a, aby móc nawigować po całej tabeli
+     *
+     * @var string
+     */
+    private $visibleWidth = null;
+
+    /**
+     * Pozwala na zwiększenie szerokości tabeli do podanej wartości,
+     * gdy ustawiony jest visibleWidth
+     *
+     * @var string
+     */
+    private $minWidth = null;
+
+    /**
      * @param string          $route  Unique list name
      * @param SourceInterface $source Data source
      * @param string          $name   Data table name
@@ -901,5 +925,53 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     public function getExports()
     {
         return $this->exports;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVisibleHeight()
+    {
+        return $this->visibleHeight;
+    }
+
+    /**
+     * @param string $visibleHeight
+     */
+    public function setVisibleHeight($visibleHeight)
+    {
+        $this->visibleHeight = $visibleHeight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVisibleWidth()
+    {
+        return $this->visibleWidth;
+    }
+
+    /**
+     * @param string $visibleWidth
+     */
+    public function setVisibleWidth($visibleWidth)
+    {
+        $this->visibleWidth = $visibleWidth;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMinWidth()
+    {
+        return $this->minWidth;
+    }
+
+    /**
+     * @param string $minWidth
+     */
+    public function setMinWidth($minWidth)
+    {
+        $this->minWidth = $minWidth;
     }
 }
