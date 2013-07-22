@@ -2,6 +2,7 @@
 
 #### v1.0.10 (2013-MM-DD) ####
 - Możliwe ustawienie szerokości i wysokości widocznej części tabeli, oraz jej minimalnej szerokości
+- Dodanie README.md
 
 #### v1.0.9 (2013-07-12) ####
 - Poprawienie Dependency
