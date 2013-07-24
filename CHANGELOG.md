@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.0.11 (2013-MM-DD) ####
+- Dołożony collapse, gdy elementy nie zapełniają minHeight datatable'a
+
 #### v1.0.10 (2013-07-22) ####
 - Możliwe ustawienie szerokości i wysokości widocznej części tabeli, oraz jej minimalnej szerokości
 - Dodanie README.md
