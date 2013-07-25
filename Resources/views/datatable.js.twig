@@ -23,6 +23,7 @@ $(document).ready(function() {
             {% endif -%}
             {% if datatable.minWidth %}"sScrollXInner": "{{datatable.minWidth|raw}}",
             {% endif -%}
+            "bScrollCollapse": true,
             "aoColumns": [
                 {% if datatable.bulkActions %}
                     { "bSortable": false, {{ _self.sClass(datatable.bulkActionsColumn) }}, {{ _self.sWidth(datatable.bulkActionsColumn) }} },
