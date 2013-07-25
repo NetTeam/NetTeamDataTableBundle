@@ -1,6 +1,6 @@
 ## CHANGELOG ##
 
-#### v1.1.10 (XXXX-XX-XX) ####
+#### v1.1.10 (2013-07-25) ####
 - Zmiana zależności od Symfony2 na wersje >=2.2.
 
 #### v1.1.9 (2013-07-22)
