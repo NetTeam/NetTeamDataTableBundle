@@ -1,6 +1,6 @@
 ## CHANGELOG ##
 
-#### v1.0.11 (2013-MM-DD) ####
+#### v1.0.11 (2013-08-05) ####
 - Dołożony collapse, gdy elementy nie zapełniają minHeight datatable'a
 
 #### v1.0.10 (2013-07-22) ####
