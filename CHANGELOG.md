@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.1.11 (XXXX-XX-XX) ####
+- Merge z 1.0 (tag vX.Y.Z)
+
 #### v1.1.10 (2013-07-25) ####
 - Zmiana zależności od Symfony2 na wersje >=2.2.
 
@@ -29,6 +32,9 @@
 
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
+
+#### v1.0.11 (2013-08-05) ####
+- Dołożony collapse, gdy elementy nie zapełniają minHeight datatable'a
 
 #### v1.0.10 (2013-07-22) ####
 - Możliwe ustawienie szerokości i wysokości widocznej części tabeli, oraz jej minimalnej szerokości

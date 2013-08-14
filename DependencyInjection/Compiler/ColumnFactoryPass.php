@@ -21,6 +21,7 @@ class ColumnFactoryPass extends AbstractColumnFactoryPass
             'text' => 'NetTeam\Bundle\DataTableBundle\Column\TextColumn',
             'edit_in_place' => 'NetTeam\Bundle\DataTableBundle\Column\EditInPlaceColumn',
             'collection' => 'NetTeam\Bundle\DataTableBundle\Column\Collection\CollectionColumn',
+            'custom' => 'NetTeam\Bundle\DataTableBundle\Column\CustomColumn',
         );
 
         return $columns;
