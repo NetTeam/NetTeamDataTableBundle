@@ -6,6 +6,8 @@ use NetTeam\Bundle\DataTableBundle\Column\CustomColumn;
 
 /**
  * @author Paweł A. Wacławczyk <p.a.waclawczyk@gmail.com>
+ *
+ * @group Unit
  */
 class CustomColumnTest extends \PHPUnit_Framework_TestCase
 {

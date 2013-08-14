@@ -16,6 +16,7 @@ class ColumnFactoryPass extends AbstractColumnFactoryPass
             'plain_text' => 'NetTeam\Bundle\DataTableBundle\Column\PlainTextColumn',
             'text' => 'NetTeam\Bundle\DataTableBundle\Column\TextColumn',
             'collection' => 'NetTeam\Bundle\DataTableBundle\Column\Collection\CollectionColumn',
+            'custom' => 'NetTeam\Bundle\DataTableBundle\Column\CustomColumn',
         );
 
         return $columns;
