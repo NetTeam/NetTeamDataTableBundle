@@ -19,3 +19,8 @@ actions: Aktionen
 edit_in_place:
     edit: 'Bearbeiten'
     save: 'Speichern'
+
+column:
+    bool:
+        textTrue: Ja
+        textFalse: Nein
