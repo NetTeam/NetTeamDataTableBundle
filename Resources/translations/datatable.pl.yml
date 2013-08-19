@@ -22,6 +22,11 @@ edit_in_place:
     save: Zapisz
     cancel: Anuluj
 
+column:
+    bool:
+        textTrue: Tak
+        textFalse: Nie
+
 export:
     header: Eksport
     submit: Wybierz
