@@ -2,6 +2,7 @@
 
 #### v1.1.11 (XXXX-XX-XX) ####
 - Merge z 1.0 (tag vX.Y.Z)
+- Dodanie obsługi parametru domeny tłumaczeń do kolumn tekstowych oraz tablicowych
 
 #### v1.1.10 (2013-07-25) ####
 - Zmiana zależności od Symfony2 na wersje >=2.2.
