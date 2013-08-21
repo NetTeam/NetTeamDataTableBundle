@@ -4,6 +4,7 @@
 - Merge z 1.0 (tag vX.Y.Z)
 - Dodanie obsługi parametru domeny tłumaczeń do kolumn tekstowych oraz tablicowych
 - Dodanie możliwości zmiany tłumaczeń dla kolumny Bool
+- Dodanie getterów i setterów odpowiedzialnych za sortowanie w DataTableBuilder
 
 #### v1.1.10 (2013-07-25) ####
 - Zmiana zależności od Symfony2 na wersje >=2.2.
@@ -34,6 +35,11 @@
 
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
+
+#### v1.0.12 (2013-XX-XX) ####
+- Dodanie `CustomColumn`
+- Pominięcie testu z powodu nie działajacej zmiany locale
+- Dodanie getterów i setterów odpowiedzialnych za sortowanie w DataTableBuilder
 
 #### v1.0.11 (2013-08-05) ####
 - Dołożony collapse, gdy elementy nie zapełniają minHeight datatable'a
