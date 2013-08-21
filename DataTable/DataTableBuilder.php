@@ -894,11 +894,14 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * @param string $visibleHeight
+     * @param  string                                                     $visibleHeight
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
      */
     public function setVisibleHeight($visibleHeight)
     {
         $this->visibleHeight = $visibleHeight;
+
+        return $this;
     }
 
     /**
@@ -910,11 +913,14 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * @param string $visibleWidth
+     * @param  string                                                     $visibleWidth
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
      */
     public function setVisibleWidth($visibleWidth)
     {
         $this->visibleWidth = $visibleWidth;
+
+        return $this;
     }
 
     /**
@@ -926,10 +932,30 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * @param string $minWidth
+     * @param  string                                                     $minWidth
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
      */
     public function setMinWidth($minWidth)
     {
         $this->minWidth = $minWidth;
+
+        return $this;
     }
+
+    /**
+     * @return \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface
+     */
+    public function getSortingColumn()
+    {
+        return $this->columns[$this->sortingColumn];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSortingOrder()
+    {
+        return $this->sortingOrder;
+    }
+
 }
