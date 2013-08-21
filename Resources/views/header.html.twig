@@ -10,7 +10,7 @@
                 </th>
             {% endif %}
             {% for column in datatable.columns %}
-            <th>{{ column.caption|trans({}, column.parameters.translation_domain|default('')) }}</th>
+            <th>{{ column.caption|trans({}, column.parameters.translation_domain|default('messages')) }}</th>
             {% endfor %}
         </tr>
     </thead>

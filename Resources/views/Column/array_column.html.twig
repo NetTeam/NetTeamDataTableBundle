@@ -4,7 +4,7 @@
 {% if item is array %}
     {% include "NetTeamDataTableBundle:Column:array_column_recursive.html.twig" with { 'value' : item, 'separator': record.separator } %}
 {% else %}
-    {{ item|trans({}, translation_domain|default(''))|replace({ '\n' : '<br />' }) }}{% if not loop.last %}{{ record.separator|raw }}{% endif %}
+    {{ item|trans({}, translation_domain|default('messages'))|replace({ '\n' : '<br />' }) }}{% if not loop.last %}{{ record.separator|raw }}{% endif %}
 {% endif %}
 {% endfor %}
 {% endblock %}
