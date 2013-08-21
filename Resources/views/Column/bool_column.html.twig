@@ -2,8 +2,8 @@
 
 {% block columnValue %}
     {% if record.value %}
-       {{ text_true|trans({}, translation_domain|default('')) }}
+       {{ text_true|trans({}, translation_domain|default('messages')) }}
     {% else %}
-        {{ text_false|trans({}, translation_domain|default('')) }}
+        {{ text_false|trans({}, translation_domain|default('messages')) }}
     {% endif %}
 {% endblock %}

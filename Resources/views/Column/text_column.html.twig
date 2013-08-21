@@ -1,6 +1,6 @@
 {% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
 {% block columnValue %}
-{% set value = record.value|default('')|trans({}, translation_domain|default('')) %}
+{% set value = record.value|default('')|trans({}, translation_domain|default('messages')) %}
 {% if record.raw|default(false) %}
     {{ value|replace({ '\n' : '<br />',  '\r' : '' })|raw }}
 {% else %}
