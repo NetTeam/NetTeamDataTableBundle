@@ -1,5 +1,9 @@
 ## CHANGELOG ##
 
+#### v1.0.12 (2013-XX-XX) ####
+- Dodanie `CustomColumn`
+- Pominięcie testu z powodu nie działajacej zmiany locale
+
 #### v1.0.11 (2013-08-05) ####
 - Dołożony collapse, gdy elementy nie zapełniają minHeight datatable'a
 
