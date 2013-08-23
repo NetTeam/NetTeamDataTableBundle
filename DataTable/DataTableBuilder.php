@@ -985,11 +985,15 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * @return \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface
+     * @return \NetTeam\Bundle\DataTableBundle\Column\ColumnInterface|null
      */
     public function getSortingColumn()
     {
-        return $this->columns[$this->sortingColumn];
+        if ($this->sortingColumn !== null) {
+            return $this->columns[$this->sortingColumn];
+        }
+
+        return null;
     }
 
     /**
