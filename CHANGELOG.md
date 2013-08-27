@@ -1,4 +1,6 @@
 ## CHANGELOG ##
+#### v1.0.13 (2013-MM-DD) ####
+- Czyszczenie bulk action w nagłówku tabeli w momencie przeładowania danych
 
 #### v1.0.12 (2013-08-27) ####
 - Dodanie `CustomColumn`
