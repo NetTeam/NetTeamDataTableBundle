@@ -1,6 +1,6 @@
 ## CHANGELOG ##
 
-#### v1.0.12 (2013-XX-XX) ####
+#### v1.0.12 (2013-08-27) ####
 - Dodanie `CustomColumn`
 - Pominięcie testu z powodu nie działajacej zmiany locale
 - Dodanie getterów i setterów odpowiedzialnych za sortowanie w DataTableBuilder
