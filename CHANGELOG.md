@@ -1,7 +1,7 @@
 ## CHANGELOG ##
 
-#### v1.1.11 (XXXX-XX-XX) ####
-- Merge z 1.0 (tag vX.Y.Z)
+#### v1.1.11 (2013-08-28) ####
+- Merge z 1.0 (tag v1.0.13)
 - Dodanie obsługi parametru domeny tłumaczeń do kolumn tekstowych oraz tablicowych
 - Dodanie możliwości zmiany tłumaczeń dla kolumny Bool
 - Dodanie getterów i setterów odpowiedzialnych za sortowanie w DataTableBuilder
@@ -36,7 +36,10 @@
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
 
-#### v1.0.12 (2013-XX-XX) ####
+#### v1.0.13 (2013-08-28) ####
+- Czyszczenie bulk action w nagłówku tabeli w momencie przeładowania danych
+
+#### v1.0.12 (2013-08-27) ####
 - Dodanie `CustomColumn`
 - Pominięcie testu z powodu nie działajacej zmiany locale
 - Dodanie getterów i setterów odpowiedzialnych za sortowanie w DataTableBuilder

@@ -59,6 +59,7 @@ $(document).ready(function() {
                     "success": function(json) {
                         $('#datatables_table_{{ alias }}').trigger("dTable.serverData", json);
                         fnCallback(json);
+                        $('#bulk-all-checkbox-{{ alias }}').attr('checked',false);
                     },
                 });
             },
