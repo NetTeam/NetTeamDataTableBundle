@@ -1,5 +1,6 @@
 ## CHANGELOG ##
-#### v1.0.13 (2013-MM-DD) ####
+
+#### v1.0.13 (2013-08-28) ####
 - Czyszczenie bulk action w nagłówku tabeli w momencie przeładowania danych
 
 #### v1.0.12 (2013-08-27) ####
