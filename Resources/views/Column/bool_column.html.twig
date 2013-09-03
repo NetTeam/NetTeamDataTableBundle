@@ -1,4 +1,4 @@
 {% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
 {% block columnValue %}
-{{  record.value ? 'tak' : 'nie' }}
+{{  record.value ? 'boolean.true'|trans({}, 'datatable') : 'boolean.false'|trans({}, 'datatable') }}
 {% endblock %}

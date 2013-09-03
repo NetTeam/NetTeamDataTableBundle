@@ -12,7 +12,17 @@ oPaginate:
     sPrevious: 'Zurück'
     sNext:     'Nächster'
     sLast:     'Letzter'
-# no_record_selected: Nie wybrano żadnego rekordu
-# no_action_selected: Nie wybrano akcji
+no_record_selected: Wählen Sie keine Aufzeichnung
+no_action_selected: Nicht ausgewählte Aktien
 apply: Wählen
+reset: Zurücksetzen
 actions: Aktionen
+
+export:
+    header: Export
+    submit: Wählen
+    extension:
+        xls: to XLS exportieren
+
+boolean.true: Ja
+boolean.false: Nein

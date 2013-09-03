@@ -23,3 +23,6 @@ export:
     submit: Wybierz
     extension:
         xls: Eksport do pliku XLS
+
+boolean.true: Tak
+boolean.false: Nie
