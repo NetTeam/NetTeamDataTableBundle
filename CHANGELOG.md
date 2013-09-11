@@ -1,6 +1,6 @@
 ## CHANGELOG ##
 
-#### v1.0.14 (2013-09-03) ####
+#### v1.0.14 (XXX-XX-XX) ####
 - Translacje dla kolumny typu bool
 
 #### v1.0.13 (2013-08-28) ####
