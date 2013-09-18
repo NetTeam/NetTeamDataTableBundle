@@ -1,9 +1,13 @@
 {% extends "NetTeamDataTableBundle:Column:column.html.twig" %}
 
 {% block columnValue %}
+<<<<<<< HEAD
     {% if record.value %}
        {{ text_true|trans({}, translation_domain|default('messages')) }}
     {% else %}
         {{ text_false|trans({}, translation_domain|default('messages')) }}
     {% endif %}
+=======
+{{  record.value ? 'boolean.true'|trans({}, 'datatable') : 'boolean.false'|trans({}, 'datatable') }}
+>>>>>>> 1.0
 {% endblock %}

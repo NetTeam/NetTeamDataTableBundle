@@ -15,7 +15,9 @@ oPaginate:
 no_record_selected: Record has not been selected
 no_action_selected: Action has not been selected
 apply: Apply
+reset: Reset
 actions: Actions
+
 edit_in_place:
     edit: Edit
     save: Save
@@ -25,3 +27,12 @@ column:
     bool:
         textTrue: Yes
         textFalse: No
+
+export:
+    header: Export
+    submit: Select
+    extension:
+        xls: Export to XLS
+
+boolean.true: Yes
+boolean.false: No

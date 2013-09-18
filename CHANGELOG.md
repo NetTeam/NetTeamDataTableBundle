@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.1.13 (2013-09-18) ####
+- Merge z 1.0 (tag v1.0.14)
+
 #### v1.1.11 (2013-08-28) ####
 - Merge z 1.0 (tag v1.0.13)
 - Dodanie obsługi parametru domeny tłumaczeń do kolumn tekstowych oraz tablicowych
@@ -35,6 +38,9 @@
 
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
+
+#### v1.0.14 (2013-09-03) ####
+- Translacje dla kolumny typu bool
 
 #### v1.0.13 (2013-08-28) ####
 - Czyszczenie bulk action w nagłówku tabeli w momencie przeładowania danych
