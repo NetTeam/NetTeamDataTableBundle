@@ -8,7 +8,6 @@ namespace NetTeam\Bundle\DataTableBundle\Tests\Functional;
 class DatatableFilter implements DatatableFilterInterface
 {
     const PARAM_PREFIX = 'filter-';
-    const FIELD_PREFIX = 'type-';
 
     /**
      * Wartości pól
@@ -57,8 +56,8 @@ class DatatableFilter implements DatatableFilterInterface
         $result = array();
         foreach ($this->fields as $index => $item) {
             foreach ($item as $field => $value) {
-                // np. filter-datatable[type-0][field]=value
-                $result[] = sprintf("%s%s[%s%d][%s]=%s", self::PARAM_PREFIX, $datatableName, self::FIELD_PREFIX , $index, $field, urlencode($value));
+                // np. filter-datatable[filtrName][field]=value
+                $result[] = sprintf("%s%s[%s][%s]=%s", self::PARAM_PREFIX, $datatableName, $index, $field, urlencode($value));
             }
         }
 
