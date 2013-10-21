@@ -68,6 +68,23 @@ class DatatableTest extends \PHPUnit_Framework_Assert
     }
 
     /**
+     *
+     * Sprawdzenie liczby zwracanych rekordów w odpowiedzi JSON dla zadanego filtru.
+     *
+     * @param DatatableFilterInterface $filters      wartości filtrów
+     * @param                          $totalRecords
+     */
+    public function assertTotalRecordResponse(DatatableFilterInterface $filter, $totalRecords)
+    {
+        $url = $this->buildUrl($filter);
+
+        $this->crawler = $this->client->request('GET', $url);
+        $response = $this->client->getResponse();
+        $json_content = json_decode($response->getContent(), 'Response is empty');
+        $this->assertEquals($totalRecords, $json_content['iTotalRecords']);
+    }
+
+    /**
      * Buduje url dla datatable, łącznie z filtrami.
      *
      * @param DatatableFilterInterface $filter wartości filtrów

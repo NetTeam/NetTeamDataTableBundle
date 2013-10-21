@@ -3,6 +3,7 @@
 #### v1.1.14 (2013-MM-DD) ####
 - Poprawka po blędnym merge
 - Poprawka tłumaczeń kolumny boolean
+- Zmiana testów, sprawdzenie liczby zwracanych rekordów w odpowiedzi JSON dla zadanego filtru
 
 #### v1.1.13 (2013-09-18) ####
 - Merge z 1.0 (tag v1.0.14)
