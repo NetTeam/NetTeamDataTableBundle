@@ -2,6 +2,7 @@
     "name": "netteam/datatable-bundle",
     "type": "symfony-bundle",
     "description": "NetTeam DataTable Bundle",
+    "license": "MIT",
     "authors": [
         {
             "name": "NetTeam Solutions",
