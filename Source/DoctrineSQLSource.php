@@ -94,6 +94,15 @@ class DoctrineSQLSource implements SourceInterface
     public function addSorting($column, $order)
     {
         $this->sorting[] = sprintf("%s %s", $column, $order);
+
+        $sql = $this->query->getSQL();
+
+        if (count($this->sorting)) {
+            $sql .= " ORDER BY " . implode( ', ', $this->sorting);
+        }
+
+        $this->query->setSQL($sql);
+
     }
 
     /**
@@ -138,9 +147,6 @@ class DoctrineSQLSource implements SourceInterface
     protected function getResult($offset = null, $limit = null)
     {
         $sql = $this->query->getSQL();
-        if (count($this->sorting)) {
-            $sql .= " ORDER BY " . implode($this->sorting, ', ');
-        }
 
         if (null !== $limit && null !== $offset) {
             $sql .= " LIMIT " . (int) $limit . " OFFSET " . (int) $offset;

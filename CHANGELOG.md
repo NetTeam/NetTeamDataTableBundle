@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.0.15 (YYYY-MM-DD) ####
+- Changed sorting function
+
 #### v1.0.14 (2013-09-03) ####
 - Translacje dla kolumny typu bool
 
