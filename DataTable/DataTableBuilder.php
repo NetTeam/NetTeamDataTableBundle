@@ -22,14 +22,14 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
 {
 
     /**
-     * Url zwracający dane
+     * URL which returns data
      */
     private $route;
     private $requiredRouteParameters = array();
     private $routeParameters = array();
 
     /**
-     * Źródło danych
+     * Data source
      * @var NetTeam\Bundle\DataTableBundle\Source\SourceInterface
      */
     private $source;
@@ -37,7 +37,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     private $pagination = true;
 
     /**
-     * Definicje kolumn
+     * Columns definitions
      */
     private $columns = array();
     private $globalSearch;
@@ -82,31 +82,30 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     private $statePreserved = true;
 
     /**
-     * Dostępne rozszerzenia do eksportu danych
+     * Possible extensions for data export
      *
      * @var array
      */
     private $exports = array();
 
     /**
-     * Ustawia widoczną część tabeli na podaną wysokość i udostępnia
-     * scroll'a, aby móc nawigować po całej tabeli
+     * Sets height for visible part of table 
+     & Scroll for table navigation
      *
      * @var string
      */
     private $visibleHeight = null;
 
     /**
-     * Ustawia widoczną część tabeli na podaną szerokość i udostępnia
-     * scroll'a, aby móc nawigować po całej tabeli
+     * Sets width for visible part of table
+     * Scroll for table navigation
      *
      * @var string
      */
     private $visibleWidth = null;
 
     /**
-     * Pozwala na zwiększenie szerokości tabeli do podanej wartości,
-     * gdy ustawiony jest visibleWidth
+     * If visibleWidth is set then allows to extend table width 
      *
      * @var string
      */
@@ -415,7 +414,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * Sortuje po domyślnej kolumnie
+     * Sorts by default column
      */
     private function defaultSorting()
     {
@@ -433,8 +432,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     private function columnSorting(ColumnInterface $column, $order)
     {
         if ($column->isSortable()) {
-            //sprawdzic czy istnieje mozliwosc sortowania na "source" i wyrzucić wyjątkiem jeżeli nie
-            //np przez hasMethod
+            // check if it is possible to sort on "source" and throw exception if it's not (e.g. via hasMethod)
             $keys = $column->getSortableKeys();
 
             foreach ($keys as $key) {
@@ -444,9 +442,9 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * Ustawia wybrane sortowanie
-     * @param int    $sortingColumn    identyfikator sortowanej kolumny
-     * @param string $sortingDirection porządek sortowania
+     * Sets choosen sorting
+     * @param int    $sortingColumn    id of sorted column
+     * @param string $sortingDirection sort order
      */
     public function setSorting($sortingColumn, $sortingOrder)
     {
@@ -584,7 +582,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * Dodawanie pojedyńczej akcji do DataTable
+     * Adds single action to DataTable
      *
      * @param string $caption
      * @param string $route
@@ -600,7 +598,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * Dodawanie kolekcji akcji do DataTable
+     * Adds collection of actions to DataTable
      *
      * @param array $actions
      * @return $this
@@ -696,7 +694,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * Dopisuje filtr do datatable
+     * Adds filter to DataTable
      * @param  string           $type     typ filtru, domyslny: default
      * @param  string           $name     label przy filtrze
      * @param  \Closure         $callback
@@ -825,7 +823,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * Dodaje button w sekcji filtrów
+     * Adds button in filter section
      *
      * @param string $id
      * @param string $name
@@ -892,10 +890,10 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * Dodaje rozszerzenie do eksportu danych z datatable
+     * Adds extension to data export from DataTable
      *
-     * @param string $export   Alias serwisu implementującego ExportInterface
-     * @param string $filename Nazwa wygenerowanego pliku
+     * @param string $export   Alias for service which implements ExportInterface
+     * @param string $filename Name of generated file
      * @param array  $options
      * @return $this
      */
@@ -910,7 +908,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * Tablica z rozszerzeniami do eksportu danych z datatable
+     * Array with extensions for data export from DataTable
      *
      * array(
      *     'alias' => array(
