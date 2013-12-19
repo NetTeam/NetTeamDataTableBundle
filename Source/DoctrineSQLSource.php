@@ -93,7 +93,28 @@ class DoctrineSQLSource implements SourceInterface
      */
     public function addSorting($column, $order)
     {
+        $sql = $this->query->getSQL();
+
+        $this->checkIllegalParametersInSql($sql);
+
+        $sql .= sprintf(" ORDER BY %s %s", $column, $order);
+
         $this->sorting[] = sprintf("%s %s", $column, $order);
+
+        $this->query->setSQL($sql);
+    }
+
+    /**
+     * @param $sql
+     *
+     * @return bool
+     * @throws \InvalidArgumentException
+     */
+    private function checkIllegalParametersInSql($sql)
+    {
+        if (preg_match('/order by|limit|offset|fetch|for/i', $sql)) {
+            throw new \InvalidArgumentException("Parameters ORDER BY, LIMIT, OFFSET, FETCH, FOR are not allowed in DoctrineSQLSource query");
+        }
     }
 
     /**
@@ -138,9 +159,8 @@ class DoctrineSQLSource implements SourceInterface
     protected function getResult($offset = null, $limit = null)
     {
         $sql = $this->query->getSQL();
-        if (count($this->sorting)) {
-            $sql .= " ORDER BY " . implode($this->sorting, ', ');
-        }
+
+        $this->checkIllegalParametersInSql($sql);
 
         if (null !== $limit && null !== $offset) {
             $sql .= " LIMIT " . (int) $limit . " OFFSET " . (int) $offset;
