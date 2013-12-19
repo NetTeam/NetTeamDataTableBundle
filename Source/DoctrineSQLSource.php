@@ -24,11 +24,17 @@ class DoctrineSQLSource implements SourceInterface
     protected $dataCallback;
 
     /**
+     * @var bool
+     */
+    private $isSorted;
+
+    /**
      * @param NativeQuery $query
      */
     public function __construct(NativeQuery $query)
     {
         $this->query = $query;
+        $this->isSorted = false;
     }
 
     /**
