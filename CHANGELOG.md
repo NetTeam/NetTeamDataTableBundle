@@ -1,6 +1,6 @@
 ## CHANGELOG ##
 
-#### v1.0.15 (YYYY-MM-DD) ####
+#### v1.0.15 (2013-12-20) ####
 - Changes in sorting data in DoctrineSQLSource
 - Remove unused js files: TableTools.js, ZeroClipboard.js
 
