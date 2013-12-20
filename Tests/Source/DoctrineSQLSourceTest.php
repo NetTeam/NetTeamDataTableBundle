@@ -41,7 +41,6 @@ class DoctrineSQLSourceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test adding a double sorting
-     * @expectedException \InvalidArgumentException
      */
     public function testAddSortingTwice()
     {
@@ -50,6 +49,8 @@ class DoctrineSQLSourceTest extends \PHPUnit_Framework_TestCase
         $doctrineSQLSource = new DoctrineSQLSource($this->nativeQuery);
         $doctrineSQLSource->addSorting('name', 'ASC');
         $doctrineSQLSource->addSorting('surname', 'DESC');
+
+        $this->assertEquals("SELECT * FROM users ORDER BY name ASC, surname DESC", $this->nativeQuery->getSql());
     }
 
     /**
