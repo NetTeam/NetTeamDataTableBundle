@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.1.14 (2013-12-20)
+- Merge 1.0 (tag v1.0.15)
+
 #### v1.1.13 (2013-12-11) ####
 - Fix after unproper merge
 - Fix translations for boolean column 
@@ -43,6 +46,10 @@
 
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
+
+#### v1.0.15 (2013-12-20) ####
+- Changes in sorting data in DoctrineSQLSource
+- Remove unused js files: TableTools.js, ZeroClipboard.js
 
 #### v1.0.14 (2013-09-03) ####
 - Translacje dla kolumny typu bool

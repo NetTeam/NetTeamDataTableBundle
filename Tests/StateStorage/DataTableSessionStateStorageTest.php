@@ -90,10 +90,8 @@ class DataTableSessionStateStorageTest extends \PHPUnit_Framework_TestCase
 
     public function testSetShouldNormalizeContext()
     {
-        $this->markTestSkipped('Ustawianie locale nie działa.');
-
         $locale = setlocale(LC_NUMERIC, 0);
-        setlocale(LC_ALL, 'pl_PL.UTF-8');
+        setlocale(LC_ALL, 'en_US.UTF-8');
 
         $context = array(
             'integer' => 1,
@@ -109,12 +107,12 @@ class DataTableSessionStateStorageTest extends \PHPUnit_Framework_TestCase
 
         $normalizedContext = array(
             'integer' => '1',
-            'float' => '1,567',
+            'float' => '1.567',
             'boolean' => '1',
             'array' => array(
                 'integer' => '25',
                 'array' => array(
-                    'float' => '12,889',
+                    'float' => '12.889',
                 ),
             ),
         );

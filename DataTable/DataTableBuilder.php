@@ -334,11 +334,6 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         return $column;
     }
 
-    private function filtering()
-    {
-        $this->globalSearch();
-    }
-
     private function globalSearch()
     {
         if ($this->hasGlobalSearch() && $this->globalSearch != '') {
@@ -404,7 +399,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         return !empty($this->searchableKeys);
     }
 
-    private function sorting()
+    public function sorting()
     {
         if ($this->sortingColumn !== null) {
             $this->columnSorting($this->columns[$this->sortingColumn], $this->sortingOrder);
@@ -455,13 +450,6 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
         $this->sortingColumn = $sortingColumn;
         $this->sortingOrder = $sortingOrder;
     }
-
-    private function prepareData()
-    {
-        $this->filtering();
-        $this->sorting();
-    }
-
     /**
      *
      * @param  integer $offset
@@ -470,7 +458,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
      */
     public function getData($offset, $limit)
     {
-        $this->prepareData();
+        $this->globalSearch();
 
         return $this->source->getData($offset, $limit);
     }
@@ -480,7 +468,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
      */
     public function getDataAll()
     {
-        $this->prepareData();
+        $this->globalSearch();
 
         return $this->source->getDataAll();
     }

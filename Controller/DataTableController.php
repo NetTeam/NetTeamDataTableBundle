@@ -148,6 +148,7 @@ class DataTableController
             $sortingColumn = $this->request->get('iSortCol_0');
             $sortingDirection = strtoupper($this->request->get('sSortDir_0'));
             $builder->setSorting($sortingColumn, $sortingDirection);
+            $builder->sorting();
         }
     }
 }
