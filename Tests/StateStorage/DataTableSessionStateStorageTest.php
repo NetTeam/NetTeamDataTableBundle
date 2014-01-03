@@ -127,6 +127,7 @@ class DataTableSessionStateStorageTest extends \PHPUnit_Framework_TestCase
             'getContext' => $normalizedContext,
         ));
 
+
         $sessionStorage = \Mockery::mock('Symfony\Component\HttpFoundation\SessionStorage\SessionStorageInterface')->shouldIgnoreMissing();
         $session = new Session($sessionStorage);
 
