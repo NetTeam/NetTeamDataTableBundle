@@ -64,7 +64,6 @@ class DataTableSessionStateStorage implements DataTableStateStorageInterface
     {
          $filters = $this->session->get(self::SESSION_KEY);
          $key = $this->createKey($dataTableBuilder);
-
          return isset($filters[$key]);
     }
 

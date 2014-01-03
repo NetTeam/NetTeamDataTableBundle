@@ -19,6 +19,10 @@ class DoctrineSQLSource implements SourceInterface
     private $query;
     private $count;
     private $sorting = array();
+    /**
+     * @var bool
+     */
+    private $isSorted;
 
     protected $rowCallback;
     protected $dataCallback;
