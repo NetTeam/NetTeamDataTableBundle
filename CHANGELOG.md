@@ -1,5 +1,6 @@
 ## CHANGELOG ##
-#### v1.0.16 (2014-XX-XX) ####
+
+#### v1.1.15 (2014-01-07) ####
 - Fix StatestorageTest
 - Fix sorting in DoctrineSQLSource
 
