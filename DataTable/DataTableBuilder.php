@@ -43,11 +43,10 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     private $globalSearch;
     private $bulkActions;
     private $bulkActionsColumn;
-    private $bulkActionsTemplate =
-            'NetTeamDataTableBundle::bulk_actions.html.twig';
+    private $bulkActionsTemplate = "NetTeamDataTableBundle::bulk_actions.html.twig";
+    private $bulkActionsLowerTemplate = false;
     private $actions;
-    private $actionsTemplate =
-        'NetTeamDataTableBundle::actions.html.twig';
+    private $actionsTemplate = "NetTeamDataTableBundle::actions.html.twig";
     private $searchableKeys = array();
     private $sortingColumn;
     private $sortingOrder;
@@ -572,9 +571,9 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     /**
      * Adds single action to DataTable
      *
-     * @param string $caption
-     * @param string $route
-     * @param array  $params
+     * @param  string $caption
+     * @param  string $route
+     * @param  array  $params
      * @return $this
      */
     public function addAction($caption, $route, array $params = array())
@@ -588,7 +587,7 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     /**
      * Adds collection of actions to DataTable
      *
-     * @param array $actions
+     * @param  array $actions
      * @return $this
      */
     public function addActions(array $actions)
@@ -757,6 +756,26 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
      * @param  string                                                     $template
      * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
      */
+    public function setBulkActionsLowerTemplate($template)
+    {
+        $this->setBulkActionsTemplate($template);
+        $this->bulkActionsLowerTemplate = true;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasBulkActionsLowerTemplate()
+    {
+        return $this->bulkActionsLowerTemplate;
+    }
+
+    /**
+     * @param  string                                                     $template
+     * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
+     */
     public function setActionsTemplate($template)
     {
         $this->actionsTemplate = $template;
@@ -880,9 +899,9 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     /**
      * Adds extension to data export from DataTable
      *
-     * @param string $export   Alias for service which implements ExportInterface
-     * @param string $filename Name of generated file
-     * @param array  $options
+     * @param  string $export   Alias serwisu implementującego ExportInterface
+     * @param  string $filename Nazwa wygenerowanego pliku
+     * @param  array  $options
      * @return $this
      */
     public function addExport($export, $filename, array $options = array())

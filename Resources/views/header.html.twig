@@ -1,26 +1,33 @@
 {% if datatable.bulkActions %}
 <form>
+    {% if not datatable.hasBulkActionsLowerTemplate %}
+    <div class="bulk_container">
+       {% include bulkActionsTemplate %}
+    </div>
+    {% endif %}
 {% endif %}
-<table cellpadding="0" cellspacing="0" border="0" class="nt_datatables_table{% if options.class is defined %} {{ options.class }}{% endif %}" id="datatables_table_{{ alias }}" data-alias="{{ alias }}">
-    <thead>
-        <tr>
-            {% if datatable.bulkActions %}
-                <th>
-                    {% include "NetTeamDataTableBundle:BulkAction:" ~ datatable.bulkActionsColumn.getHeaderTemplate ~ ".html.twig" with { 'column' : datatable.bulkActionsColumn, 'alias' : alias }%}
-                </th>
-            {% endif %}
-            {% for column in datatable.columns %}
-            <th>{{ column.caption|trans({}, column.parameters.translation_domain|default('messages')) }}</th>
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+    <table cellpadding="0" cellspacing="0" border="0" class="nt_datatables_table{% if options.class is defined %} {{ options.class }}{% endif %}" id="datatables_table_{{ alias }}" data-alias="{{ alias }}">
+        <thead>
+            <tr>
+                {% if datatable.bulkActions %}
+                    <th>
+                        {% include "NetTeamDataTableBundle:BulkAction:" ~ datatable.bulkActionsColumn.getHeaderTemplate ~ ".html.twig" with { 'column' : datatable.bulkActionsColumn, 'alias' : alias }%}
+                    </th>
+                {% endif %}
+                {% for column in datatable.columns %}
+                <th>{{ column.caption|trans }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 {% if datatable.bulkActions %}
+    {% if datatable.hasBulkActionsLowerTemplate %}
     <div class="bulk_container table-actions">
         {% include bulkActionsTemplate %}
     </div>
+    {% endif %}
 </form>
 {% endif %}
 {% if datatable.actions %}

@@ -51,6 +51,10 @@
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
 
+#### v1.0.16 (2014-01-09) ####
+- Fix StatestorageTest
+- Fix sorting in DoctrineSQLSource
+
 #### v1.0.15 (2013-12-20) ####
 - Changes in sorting data in DoctrineSQLSource
 - Remove unused js files: TableTools.js, ZeroClipboard.js
