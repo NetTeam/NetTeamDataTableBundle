@@ -738,12 +738,15 @@ class DataTableBuilder implements ColumnFactoryAwareInterface
     }
 
     /**
-     * @param  string                                                     $template
+     * @param  string|null                                                $template
      * @return \NetTeam\Bundle\DataTableBundle\DataTable\DataTableBuilder
      */
-    public function setBulkActionsLowerTemplate($template)
+    public function setBulkActionsLowerTemplate($template = null)
     {
-        $this->setBulkActionsTemplate($template);
+        if (null !== $template) {
+            $this->setBulkActionsTemplate($template);
+        }
+
         $this->bulkActionsLowerTemplate = true;
 
         return $this;
