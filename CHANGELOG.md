@@ -1,5 +1,8 @@
 ## CHANGELOG ##
 
+#### v1.1.16 (2014-07-14) ####
+- Merge 1.0 (tag v1.0.17)
+
 #### v1.1.15 (2014-01-07) ####
 - Fix StatestorageTest
 - Fix sorting in DoctrineSQLSource
@@ -50,6 +53,9 @@
 
 #### v1.1.1 (2013-06-07) ####
 - Dodanie edit in place
+
+#### v1.0.17 (2014-07-14) ####
+- Lower template for bulk actions
 
 #### v1.0.16 (2014-01-09) ####
 - Fix StatestorageTest
