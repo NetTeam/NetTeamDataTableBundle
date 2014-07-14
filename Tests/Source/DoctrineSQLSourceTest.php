@@ -24,6 +24,7 @@ class DoctrineSQLSourceTest extends \PHPUnit_Framework_TestCase
         // Not mock because class \Doctrine\ORM\NativeQuery is marked final
         $configurationORM = \Mockery::mock('\Doctrine\ORM\Configuration');
         $configurationORM->shouldReceive('isSecondLevelCacheEnabled')->andReturn(false);
+        $configurationORM->shouldReceive('getDefaultQueryHints')->andReturn(array());
 
         $entityManager->shouldReceive('getConfiguration')->andReturn($configurationORM);
 
