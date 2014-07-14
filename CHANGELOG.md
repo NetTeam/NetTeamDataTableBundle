@@ -1,4 +1,8 @@
 ## CHANGELOG ##
+
+#### v1.0.17 (2014-07-14) ####
+- Lower template for bulk actions
+
 #### v1.0.16 (2014-01-09) ####
 - Fix StatestorageTest
 - Fix sorting in DoctrineSQLSource
