@@ -203,7 +203,10 @@ $(document).ready(function() {
                   window.location = url;
               }
               if (!beforeSend.isDefaultPrevented()) {
-                  $.getJSON(url, refresh);
+                  $.getJSON(url, function(json) {
+                      $('#datatables_table_{{ alias }}').trigger("Bulk.onSubmit", json);
+                      refresh();
+                  });
                   event.preventDefault();
                   event.stopImmediatePropagation();
               }
