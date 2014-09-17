@@ -1,5 +1,9 @@
 ## CHANGELOG ##
 
+
+#### v1.0.18 (2014-09-17) ####
+- Add trigger for bulk actions ajax
+
 #### v1.0.17 (2014-07-14) ####
 - Lower template for bulk actions
 
