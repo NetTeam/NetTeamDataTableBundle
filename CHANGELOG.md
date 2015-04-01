@@ -1,6 +1,9 @@
 ## CHANGELOG ##
 
 
+#### v1.0.19 (2015-04-01) ####
+- Fix remove LIMIT for SQL query in count method
+
 #### v1.0.18 (2014-09-17) ####
 - Add trigger for bulk actions ajax
 
