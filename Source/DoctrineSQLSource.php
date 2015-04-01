@@ -27,6 +27,7 @@ class DoctrineSQLSource implements SourceInterface
      * @var bool
      */
     private $isSorted;
+    private $isLimit;
 
     /**
      * @param NativeQuery $query
@@ -35,6 +36,7 @@ class DoctrineSQLSource implements SourceInterface
     {
         $this->query = $query;
         $this->isSorted = false;
+        $this->isLimit = false;
     }
 
     /**
@@ -134,8 +136,17 @@ class DoctrineSQLSource implements SourceInterface
         $rsm = new ResultSetMapping;
         $rsm->addScalarResult('count', 'count');
 
-        $sql = "SELECT count(*) as count FROM (" . $this->query->getSQL() . ") as foo";
-        $query = $em->createNativeQuery($sql, $rsm);
+        $sql = $this->query->getSQL();
+        if ($this->isLimit) {
+            // Usuwamy z zapytania LIMIT bo nie będzie prawidłowej liczby pozycji
+            $sql = preg_replace(
+                array('/ LIMIT \d+/','/ OFFSET \d+/'),
+                array('',''),
+                $sql
+            );
+        }
+        $countSql = "SELECT count(*) AS count FROM (" . $sql . ") AS foo";
+        $query = $em->createNativeQuery($countSql, $rsm);
         $query->setParameters($this->query->getParameters());
         $this->count = $query->getSingleScalarResult();
 
@@ -151,10 +162,13 @@ class DoctrineSQLSource implements SourceInterface
     {
         $sql = $this->query->getSQL();
 
-        if (null !== $limit && null !== $offset) {
-            $sql .= " LIMIT " . (int) $limit . " OFFSET " . (int) $offset;
-        } elseif (null !== $limit) {
-            $sql .= " LIMIT " . (int) $limit;
+        if (!$this->isLimit) {
+            if (null !== $limit && null !== $offset) {
+                $sql .= " LIMIT " . (int) $limit . " OFFSET " . (int) $offset;
+            } elseif (null !== $limit) {
+                $sql .= " LIMIT " . (int) $limit;
+            }
+            $this->isLimit = true;
         }
 
         $this->query->setSQL($sql);
