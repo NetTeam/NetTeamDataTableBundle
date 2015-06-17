@@ -9,6 +9,7 @@ class ColumnFactoryPass extends AbstractColumnFactoryPass
         $columns = array(
             'array' => 'NetTeam\Bundle\DataTableBundle\Column\ArrayColumn',
             'bool' => 'NetTeam\Bundle\DataTableBundle\Column\BoolColumn',
+            'checkbox' => 'NetTeam\Bundle\DataTableBundle\Column\CheckboxColumn',
             'date' => 'NetTeam\Bundle\DataTableBundle\Column\DateColumn',
             'date_time' => 'NetTeam\Bundle\DataTableBundle\Column\DateTimeColumn',
             'money' => 'NetTeam\Bundle\DataTableBundle\Column\MoneyColumn',
